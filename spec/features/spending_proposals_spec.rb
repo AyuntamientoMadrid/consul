@@ -5,17 +5,40 @@ feature 'Spending proposals' do
   let(:author) { create(:user, :level_two, username: 'Isabel') }
 
   scenario 'Index' do
-    visit spending_proposals_path
-
-    expect(page).to_not have_link('Create spending proposal', href: new_spending_proposal_path)
-    expect(page).to have_content 'For create spending proposals you must sign in'
-
-    login_as(author)
+    spending_proposals = [create(:spending_proposal), create(:spending_proposal), create(:spending_proposal)]
 
     visit spending_proposals_path
 
-    expect(page).to have_link('Create spending proposal', href: new_spending_proposal_path)
-    expect(page).to_not have_content 'Only verified users can create spending proposals, verify your account'
+    expect(page).to have_selector('#investment-projects .investment-project', count: 3)
+    spending_proposals.each do |spending_proposal|
+      within('#investment-projects') do
+        expect(page).to have_content spending_proposal.title
+        expect(page).to have_css("a[href='#{spending_proposal_path(spending_proposal)}']", text: spending_proposal.title)
+      end
+    end
+  end
+
+  context("Search") do
+    scenario 'Search by text' do
+      spending_proposal1 = create(:spending_proposal, title: "Get Schwifty")
+      spending_proposal2 = create(:spending_proposal, title: "Schwifty Hello")
+      spending_proposal3 = create(:spending_proposal, title: "Do not show me")
+
+      visit spending_proposals_path
+
+      within(".expanded #search_form") do
+        fill_in "search", with: "Schwifty"
+        click_button "Search"
+      end
+
+      within("#investment-projects") do
+        expect(page).to have_css('.investment-project', count: 2)
+
+        expect(page).to have_content(spending_proposal1.title)
+        expect(page).to have_content(spending_proposal2.title)
+        expect(page).to_not have_content(spending_proposal3.title)
+      end
+    end
   end
 
   scenario 'Create' do
@@ -23,6 +46,11 @@ feature 'Spending proposals' do
 
     visit spending_proposals_path
     click_link 'Create spending proposal'
+
+    expect(current_path).to eq(page_path('proposal_type'))
+    within('#new_spending_proposal_container') do
+      click_link 'Create proposal'
+    end
 
     expect(current_path).to eq(new_spending_proposal_path)
 
@@ -117,42 +145,6 @@ feature 'Spending proposals' do
     expect(page).to have_content(spending_proposal.geozone.name)
   end
 
-  scenario "Show (as valuator)" do
-    user = create(:user)
-    admin = create(:valuator, user: user)
-    login_as(admin.user)
-
-    spending_proposal = create(:spending_proposal,
-                                geozone: create(:geozone),
-                                association_name: 'People of the neighbourhood')
-
-    visit spending_proposal_path(spending_proposal)
-
-    expect(page).to have_content(spending_proposal.title)
-    expect(page).to have_content(spending_proposal.description)
-    expect(page).to have_content(spending_proposal.author.name)
-    expect(page).to have_content(spending_proposal.association_name)
-    expect(page).to have_content(spending_proposal.geozone.name)
-  end
-
-  scenario "Show (as author)" do
-    author = create(:user)
-    login_as(author)
-
-    spending_proposal = create(:spending_proposal,
-                                geozone: create(:geozone),
-                                association_name: 'People of the neighbourhood',
-                                author: author)
-
-    visit spending_proposal_path(spending_proposal)
-
-    expect(page).to have_content(spending_proposal.title)
-    expect(page).to have_content(spending_proposal.description)
-    expect(page).to have_content(spending_proposal.author.name)
-    expect(page).to have_content(spending_proposal.association_name)
-    expect(page).to have_content(spending_proposal.geozone.name)
-  end
-
   scenario "Show (as user)" do
     user = create(:user)
     login_as(user)
@@ -163,16 +155,21 @@ feature 'Spending proposals' do
 
     visit spending_proposal_path(spending_proposal)
 
-    expect(page).to_not have_content(spending_proposal.title)
-    expect(page).to have_content("You do not have permission to access this page")
+    expect(page).to have_content(spending_proposal.title)
+    expect(page).to have_content(spending_proposal.description)
+    expect(page).to have_content(spending_proposal.author.name)
+    expect(page).to have_content(spending_proposal.association_name)
+    expect(page).to have_content(spending_proposal.geozone.name)
   end
 
   context "Destroy" do
 
-    scenario "User can destroy owned spending proposals" do
+    scenario "Admin can destroy owned spending proposals" do
+      admin = create(:administrator)
       user = create(:user, :level_two)
       spending_proposal = create(:spending_proposal, author: user)
-      login_as(user)
+
+      login_as(admin.user)
 
       visit user_path(user)
       within("#spending_proposal_#{spending_proposal.id}") do

@@ -66,7 +66,11 @@ Rails.application.routes.draw do
   end
 
   scope '/participatory_budget' do
-    resources :spending_proposals, only: [:index, :new, :create, :show, :destroy], path: 'investment_projects'
+    resources :spending_proposals, only: [:index, :new, :create, :show, :destroy], path: 'investment_projects' do
+      member do
+        post :vote
+      end
+    end
   end
 
   resources :stats, only: [:index]
@@ -271,4 +275,5 @@ Rails.application.routes.draw do
   get 'participatory_budget', to: 'spending_proposals#index', as: 'participatory_budget'
   get 'delegacion', to: 'representatives#new', as: 'delegation'
   resources :pages, path: '/', only: [:show]
+  get 'participatory_budget/in_two_minutes', to: 'pages#show', id: 'participatory_budget/in_two_minutes'
 end

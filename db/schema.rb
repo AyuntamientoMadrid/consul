@@ -342,10 +342,13 @@ ActiveRecord::Schema.define(version: 20160330143851) do
     t.integer  "price_first_year",            limit: 8
     t.string   "time_scope"
     t.datetime "unfeasible_email_sent_at"
+    t.integer  "cached_votes_up"
+    t.tsvector "tsv"
   end
 
   add_index "spending_proposals", ["author_id"], name: "index_spending_proposals_on_author_id", using: :btree
   add_index "spending_proposals", ["geozone_id"], name: "index_spending_proposals_on_geozone_id", using: :btree
+  add_index "spending_proposals", ["tsv"], name: "index_spending_proposals_on_tsv", using: :gin
 
   create_table "survey_answers", force: :cascade do |t|
     t.string   "survey_code"
