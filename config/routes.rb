@@ -252,6 +252,8 @@ Rails.application.routes.draw do
     resources :spending_proposals, only: [:new, :create, :show]
   end
 
+  resources :representatives, only: [:new, :create]
+
   resources :survey_answers, only: [:new, :create]
 
   resources :open_answers, only: [:show, :index]
@@ -267,5 +269,6 @@ Rails.application.routes.draw do
   get "ordenanza-de-transparencia", to: "legislations#show", id: 1, as: :ordenanza_transparencia
   get '/blog' => redirect("http://diario.madrid.es/participa/")
   get 'participatory_budget', to: 'spending_proposals#index', as: 'participatory_budget'
+  get 'delegacion', to: 'representatives#new', as: 'delegation'
   resources :pages, path: '/', only: [:show]
 end
