@@ -185,7 +185,7 @@ feature 'Spending proposals' do
 
   end
 
-  scenario 'Create notice' do
+  xscenario 'Create notice' do
     login_as(author)
 
     visit new_spending_proposal_path
