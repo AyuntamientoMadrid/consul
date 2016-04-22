@@ -58,6 +58,7 @@ feature 'Admin spending proposals' do
     end
 
     scenario "Filtering by geozone", :js do
+      Capybara.current_driver = :no_js_errors
       geozone = create(:geozone, name: "District 9")
       create(:spending_proposal, title: "Realocate visitors", geozone: geozone)
       create(:spending_proposal, title: "Destroy the city")
@@ -99,6 +100,7 @@ feature 'Admin spending proposals' do
     end
 
     scenario "Filtering by admin", :js do
+      Capybara.current_driver = :no_js_errors
       user = create(:user, username: 'Admin 1')
       administrator = create(:administrator, user: user)
 
@@ -140,10 +142,11 @@ feature 'Admin spending proposals' do
       expect(page).to have_content('There is 1 investment project')
       expect(page).to_not have_link("Destroy the city")
       expect(page).to have_link("Realocate visitors")
-
+      Capybara.use_default_driver
     end
 
     scenario "Filtering by valuator", :js do
+      Capybara.current_driver = :no_js_errors
       user = create(:user)
       valuator = create(:valuator, user: user, description: 'Valuator 1')
 
@@ -187,6 +190,7 @@ feature 'Admin spending proposals' do
       expect(page).to have_content('There is 1 investment project')
       expect(page).to_not have_link("Destroy the city")
       expect(page).to have_link("Realocate visitors")
+      Capybara.use_default_driver
     end
 
     scenario "Current filter is properly highlighted" do
@@ -404,6 +408,7 @@ feature 'Admin spending proposals' do
         expect(page).to have_content 'Education'
         expect(page).to_not have_content 'Health'
       end
+      Capybara.use_default_driver
     end
 
     scenario "Adds non existent tags" do

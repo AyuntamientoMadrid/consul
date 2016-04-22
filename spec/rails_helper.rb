@@ -35,6 +35,10 @@ end
 
 Capybara.javascript_driver = :poltergeist
 
+Capybara.register_driver :no_js_errors do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+end
+
 Capybara.exact = true
 
 OmniAuth.config.test_mode = true
