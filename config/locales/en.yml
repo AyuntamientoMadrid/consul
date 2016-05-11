@@ -456,6 +456,7 @@ en:
         new: Create
       title: Spending proposal title
     index:
+      available: "Available:"
       title: Participatory budgeting
       unfeasible: Unfeasible investment projects
       unfeasible_text: "The proposals must meet a number of criteria (legality, concreteness, be the responsibility of the city, not exceed the limit of the budget; %{definitions}) to be declared viable and reach the stage of final vote. All proposals don't meet these criteria are marked as unfeasible and published in the following list, along with its report of infeasibility."
@@ -471,24 +472,25 @@ en:
       sidebar:
         back: Back to select page
         district: District
-        geozones: Scope of operation
+        my_ballot: My ballot
         votes: Supports remaining
         votes_district: "You can only vote in the district %{district}"
-        forum_proposals: "See investment proposals from the district discussion space"
-        forum_proposals_title: "Discussion spaces"
       orders:
         random: random
         confidence_score: highest rated
     welcome:
-      city: All city
-      city_link: See results of the preselection for the city
+      city_link: Vote city proposals
       delegation: Delegation of votes
-      description_html: As we evaluate the proposals submitted, you can see in the following links the final order of the proposals in the preselection stage.
+      delegation_info_html: "Si activas la delegación en cualquiera de los espacios, tus votos se realizarán<br> automáticamente sobre las propuestas que haya decidido el espacio correspondiente."
+      delegation_meetings: espacios presenciales de debate
+      delegation_text: Delega tu votación en lo que se decida en cualquiera de los %{meetings}
+      delegation_title: Delegación de voto
       districts: Districts
-      districts_link: See results of the preselection for the districts
+      districts_link: Vote district proposals
       in_two_minutes: All information about participatory budgets
-      title: "On May 15 we start with the final vote"
-      unfeasible_link: See unfeasible investment projects
+      title: "You already can vote investment projetcs!"
+      text_first_html: "Desde hoy <strong>15 de mayo</strong> hasta el día <strong>30 de junio</strong> puedes votar las propuestas de inversión de los Presupuestos participativos 2016."
+      text_second_html: "Puedes votar todas las propuestas que quieras hasta alcanzar el presupuesto destinado para el ámbito de <strong>toda la ciudad</strong> y del <strong>distrito</strong> que hayas seleccionado."
     new:
       back_link: Back
       more_info: "Important, not to be ruled out your proposal must comply:"
@@ -506,14 +508,30 @@ en:
     wrong_price_format: Only integer numbers
     spending_proposal:
       spending_proposal: Investment project
+      add: Add
+      already_added: You have already added this investment project
       already_supported: You have already supported this. Share it!
       forum: District discussion space
-      support: Support
       support_title: Support this project
       supports:
         one: 1 support
         other: "%{count} supports"
         zero: No supports
+      vote: Vote
+    header:
+      check_ballot: Check my ballot
+      different_district_active: You have active votes in another district.
+  ballots:
+    show:
+      city_wide: City Wide
+      district_wide: District Wide
+      info_html: "You can change your vote at any time <strong>until June 30</strong>"
+      title: Your ballot
+      amount_spent: Amount spent
+      remove: Remove vote
+      voted_html:
+        one: "You voted <span>one</span> proposal with a total cost of <span>%{amount_spent}</span>."
+        other: "You voted <span>%{count}</span> proposals with a total cost of <span>%{amount_spent}</span>."
   stats:
     index:
       visits: Visits
@@ -537,6 +555,12 @@ en:
       deleted_proposal: This proposal has been deleted
       delete_spending_proposal: Delete
       confirm_deletion_spending_proposal: Are you sure? This action can not be undone
+      ballot_link_text:
+        zero: You have not voted for any proposal yet.
+        one: You voted for one proposal with a total cost of %{amount_spent}.
+        other: You voted for %{count} proposals with a total cost of %{amount_spent}.
+      ballot_verified_only: Only verified users can vote on participatory budget, %{verify_account}.
+      verify_account: verify your account
       filters:
         comments:
           one: 1 Comment
@@ -550,6 +574,7 @@ en:
         spending_proposals:
           one: 1 Spending proposal
           other: "%{count} Spending proposals"
+        ballot: Participatory budget
       no_activity: User has no public activity
       private_activity: This user decided to keep the activity list private
       retire: Retire
@@ -574,7 +599,9 @@ en:
       not_voting_allowed: Voting phase is closed
       no_city_supports_available: You have already used all your city-wide supports.
       no_district_supports_available: You have already used all your district-wide supports.
-      different_district_assigned: You already supported other district proposals.
+      different_district_assigned: You have already supported other district proposals.
+      different_geozone_assigned: You have already supported other district proposals. %{my_geozone}.
+      not_enough_money: "This proposal's price is more than the available amount left"
       confirm_first_vote_on_district: "Everyone can support the proposal of the city and one district of their choice, If you accept you support this proposal and only can support the proposals for %{district}. This district can't change later. Do you want support this proposal and select this district?"
       confirm_discard_delegation: "If you vote you will stop delegating. "
   welcome:

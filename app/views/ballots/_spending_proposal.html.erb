@@ -1,0 +1,16 @@
+<tr id="<%= dom_id(spending_proposal) %>" >
+  <td>
+    <% if feature?("spending_proposal_features.final_voting_allowed") %>
+      <%= link_to ballot_line_path(id: spending_proposal.id),
+                  title: t('ballots.show.remove'),
+                  method: :delete,
+                  remote: true do %>
+         <span class="icon-x delete"></span>&nbsp;
+      <% end %>
+    <% end %>
+    <%= link_to spending_proposal.title, spending_proposal %>
+  </td>
+  <td class="text-right">
+    <%= format_price(spending_proposal.price) %>
+  </td>
+</tr>
