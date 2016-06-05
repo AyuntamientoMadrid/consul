@@ -84,6 +84,10 @@ Rails.application.routes.draw do
     get :results, on: :collection
   end
 
+  resources :audits, only: [] do
+    resources :statements, only: [:new, :create, :show]
+  end
+
   resources :stats, only: [:index]
 
   resources :legislations, only: [:show]

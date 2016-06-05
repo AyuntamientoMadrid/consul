@@ -7,7 +7,9 @@ en:
         debate: "Debate created successfully."
         proposal: "Proposal created successfully."
         spending_proposal: "Investment project created successfully. You can access it from %{activity}"
+        statement: "Thank you. We have received your document."
         representative: "You have updated your representative"
+
       save_changes:
         notice: Changes saved
       update:

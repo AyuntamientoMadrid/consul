@@ -13,6 +13,7 @@ es:
         Todos juntos conseguiremos que cualquier país pueda disfrutar de esta herramienta. ¡Un millón de gracias!
     more_information:
       description:
+        citizen_audit: Auditoría Ciudadana Municipal de Deuda y Políticas Públicas del Ayuntamiento de Madrid
         faq: Preguntas frecuentes sobre problemas técnicos
         how_it_works: Descubre todo lo que puedes hacer en esta web
         how_to_use: Utilízalo libremente o ayúdanos a mejorarlo, es software libre
@@ -58,6 +59,7 @@ es:
 
           Si eres programador, puedes ver el código y ayudarnos a mejorarlo en [aplicación Consul](https://github.com/ayuntamientomadrid 'github consul' ).
       titles:
+        citizen_audit: Auditoría Ciudadana
         faq: Soluciones a problemas técnicos (FAQ)
         how_it_works: "¿Cómo funciona este Portal de Gobierno Abierto?"
         how_to_use: Utilízalo en tu municipio
@@ -84,10 +86,11 @@ es:
         process_2_description: Contamos contigo para que decidas rellenando una pequeña encuesta como quieres que sea este nuevo espacio en tu ciudad.
         process_2_button: Más información sobre la remodelación
         process_3_title: "#PlenoAbierto"
-        process_3_description: Envía una propuesta o lanza una pregunta, y si están entre las cinco más votadas podrás formularla en persona a los grupos políticos en el Pleno Abierto del 24 de abril.
-        process_3_description_close: Apoya las propuestas y preguntas enviadas. Las cinco más votadas serán formuladas en persona a los grupos políticos en el Pleno Abierto del 24 de abril.
-        process_3_button: Enviar una propuesta o pregunta
-        process_3_button_close: Ver propuestas y preguntas
+        process_3_description: Apoya las propuestas y preguntas enviadas. Las cinco más votadas serán formuladas en persona a los grupos políticos en el Pleno Abierto del 24 de abril.
+        process_3_button: Ver propuestas y preguntas
+        process_4_title: "#AuditoríaCiudadana"
+        process_4_description: Auditoría Ciudadana Municipal de Deuda y Políticas Públicas del Ayuntamiento de Madrid
+        process_4_button: Más información sobre la Auditoría
         title: Procesos sectoriales
       process_1:
         title: Ayúdanos a mejorar la Ordenanza de Transparencia de la Ciudad de Madrid
@@ -139,3 +142,36 @@ es:
       support_button: Votar propuestas de inversión
       title_html: Tú decides cómo invertir 60 millones de euros<br> para tu ciudad
       title_page: Presupuestos participativos
+  citizen_audit:
+    welcome:
+      title: "AUDITORÍA CIUDADANA"
+      subtitle: "Auditoría Ciudadana Municipal de Deuda y Políticas Públicas del Ayuntamiento de Madrid"
+      step_1_html: "1 <span>Identificación de casos y recopilación de indicios</span>"
+      step_2_html: "2 <span>Análisis de la información y de impactos</span>"
+      step_3_html: "3 <span>Presentación de resultados y Consultas ciudadanas</span>"
+      send_information: "Enviar información"
+      send_information_text: "Si tienes conocimiento de alguna actuación municipal que haya podido generar impactos negativos sobre la ciudadanía no dudes en enviarnos la información."
+      more_info: "Más información sobre la auditoría ciudadana"
+      what_is: "¿Qué es la Auditoria Ciudadana del Ayuntamiento de Madrid?"
+      what_is_text: |-
+        Es un proceso de identificación y análisis de aquellas políticas municipales que hayan podido tener un impacto negativo sobre la ciudadanía madrileña.
+
+        Estos impactos negativos no son solo de tipo económico (efectos sobre el nivel de endeudamiento, inversión, o empleo, por ejemplo), sino también de tipo social, medioambiental o de género. Estudiar las malas prácticas que han generado estos impactos negativos permitirá tomar medidas que impidan su repetición en el futuro.
+
+        Además, la información obtenida permitirá a la ciudadanía mejorar su conocimiento sobre la gestión municipal, ampliando así su capacidad de decisión en este ámbito.
+      impact_title: "¿Qué tipo de impactos analiza la Auditoría?"
+      impact_text: "La auditoría que llevamos a cabo es integral porque analiza toda aquella intervención pública con indicios de haber generado impacto negativo en distintas dimensiones."
+      impact_1: Financiero
+      impact_2: Económico
+      impact_3: Social
+      impact_4: Medioambiental
+      impact_5: De género
+      participatory_title: "¿Qué papel juega la participación ciudadana en la Auditoría?"
+      participatory_text: |-
+        La participación ciudadana es un pilar básico de la Auditoría. Se habilitarán mecanismos para que la participación pueda darse en los siguientes ámbitos:
+
+        - Identificación de casos de políticas municipales con posibles impactos negativos sobre la ciudadanía que deban ser sometidos a la Auditoría.
+        - Aportación de indicios de posibles impactos negativos, ya sean de tipo financiero, económico, social, medioambiental o de género.
+        - Participar en el proceso de análisis de impactos.
+        - Conocer los resultados parciales y finales de la Auditoría.
+        - Proponer y participar en consultas ciudadanas que se deriven de los resultados obtenidos por la Auditoría, tomando las decisiones finales sobre las actuaciones más relevantes a tomar como resultado de la Auditoría.

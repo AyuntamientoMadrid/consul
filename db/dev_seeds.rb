@@ -401,8 +401,11 @@ puts "Open plenary proposal"
   puts "#{proposal.title}"
 end
 
-puts "Creating banners"
 
+puts "Debt Audit"
+Audit.create!(name: "Madrid 2016")
+
+puts "Creating banners"
 Proposal.last(3).each do |proposal|
   title = Faker::Lorem.sentence(word_count = 3)
   description = Faker::Lorem.sentence(word_count = 12)

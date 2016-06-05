@@ -12,6 +12,7 @@
 // 09. Featured
 // 10. Processes
 // 11. Spending proposals votes
+// 12. Audit debt
 //
 
 // 01. Global styles
@@ -122,6 +123,13 @@ blockquote p {
 
 .pagination li {
   display: inline-block;
+}
+
+.field-attachment {
+  left: 96px;
+  position: absolute;
+  width: auto;
+  z-index: -1;
 }
 
 // 02. Header
@@ -1540,6 +1548,87 @@ ul.ballot-list {
         -moz-transition: font-size 0.3s;
         transition: font-size 0.3s;
       }
+    }
+  }
+}
+
+// 12. Audit debt
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+.audit {
+
+  h3 {
+    color: #4d525b;
+  }
+
+  .expanded.gray {
+    background: #ebebeb;
+  }
+
+  .expanded.divider {
+    border-top: 1px solid $border;
+  }
+}
+
+.jumbo-audit {
+  background: #c7ad8e image-url('audit_debt_bg.jpg') no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  padding-bottom: $line-height;
+  padding-top: $line-height;
+
+  @include breakpoint(medium) {
+    padding-bottom: $line-height*2;
+    padding-top: $line-height*2;
+  }
+
+  h1 {
+    font-weight: 100;
+    margin: 0;
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(66);
+      line-height: rem-calc(60);
+    }
+  }
+
+  p {
+    margin-bottom: $line-height*2;
+  }
+
+  .panel {
+    border: 0;
+    border-bottom: 1px solid #fcb94f;
+
+    @include breakpoint(medium) {
+      border: 0;
+    }
+
+    &.active {
+      background: #fcb94f;
+      box-shadow: 0px 4px 10px 2px #c9943e;
+
+      h2 {
+        color: white;
+      }
+
+      .button {
+        background: white;
+        color: black;
+      }
+    }
+  }
+
+  h2 {
+    margin-bottom: $line-height;
+
+    @include breakpoint(medium) {
+      font-size: rem-calc(60);
+    }
+
+    span {
+      font-size: rem-calc(24);
+      display: block;
     }
   }
 }

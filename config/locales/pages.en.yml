@@ -13,6 +13,7 @@ en:
         Together we can make this open government tool available to any country. Thanks a million!
     more_information:
       description:
+        citizen_audit: Auditoría Ciudadana Municipal de Deuda y Políticas Públicas del Ayuntamiento de Madrid
         faq: Frecuently asked question about tecnical problems
         how_it_works: Find out all you can do with this web site
         how_to_use: Use it freely or help us to improve it, it is free software
@@ -58,6 +59,7 @@ en:
 
           If you are a programmer, you can see the code and help us to improve it at [Consul app](https://github.com/ayuntamientomadrid 'consul github ' ).
       titles:
+          citizen_audit: Citizen Audit
           faq: Solution to tecnical problemas (FAQ)
           how_it_works: How does this Open Government Portal work?
           how_to_use: Use it in your local government
@@ -84,10 +86,11 @@ en:
         process_2_description: We count on you for decide how you want it this new space in your city.
         process_2_button: More information
         process_3_title: "#PlenoAbierto"
-        process_3_description: Send a proposal or make a question. The five most voted will be made in person to the political groups in the Open Plenary Session of 24 April.
-        process_3_description_close: Supports proposals and questions. The five most voted will be made in person to the political groups in the Open Plenary Session of 24 April.
-        process_3_button: Send a proposal or question
-        process_3_button_close: See proposals and questions
+        process_3_description: Supports proposals and questions. The five most voted will be made in person to the political groups in the Open Plenary Session of 24 April.
+        process_3_button: See proposals and questions
+        process_4_title: "#CitizenAudit"
+        process_4_description: Municipal Citizen Debt Audit and Public Policy of the City of Madrid
+        process_4_button: More information about Citizen Audit
         title: Open processes
       process_1:
         title: Help us improve transparency Ordinance of the City of Madrid
@@ -134,3 +137,37 @@ en:
       support_button: Vote investment projects
       title_html: You decide how to invest 60 million euros<br> to your city
       title_page: Participatory budgeting
+  citizen_audit:
+    welcome:
+      title: "CITIZEN AUDIT"
+      subtitle: "Municipal Citizen Debt Audit and Public Policy of the City of Madrid"
+      step_1_html: "1 <span>Identification of cases and evidence collection</span>"
+      step_2_html: "2 <span>Information analysis and impact</span>"
+      step_3_html: "3 <span>Presentation of results and public consultations</span>"
+      send_information: "Send information"
+      send_information_text: "If you know of any municipal action that may have generated negative impacts on citizenship please send information."
+      more_info: "More information about the citizen audit"
+      what_is: "What is the Citizen Audit of the City of Madrid?"
+      what_is_text: |-
+
+        It is a process of identification and analysis of those municipal policies that may have had a negative impact on Madrid's citizenship.
+
+        These negative impacts are not only economic ( effects on the level of debt , investment, or employment, for example), but also social , environmental type or gender . Studying the bad practices that have generated these negative impacts will be allowed to take measures to prevent their recurrence in the future.
+
+        In addition , the information obtained will enable citizens to improve their knowledge of municipal management , expanding its decision-making capacity in this area.
+      impact_title: "What kind of impact does the Audit analyze?"
+      impact_text: "The audit we conduct is integral because it analyzes all evidence of negative impact on different dimensions that the public has generated."
+      impact_1: Financial
+      impact_2: Economic
+      impact_3: Social
+      impact_4: Environmental
+      impact_5: Genre type
+      participatory_title: "What is the role of citizen participation in the audit ?"
+      participatory_text: |-
+        Citizen participation is a cornerstone of the audit. Mechanisms for participation are enabled in the following fields:
+
+        - Identification of cases of municipal policies with possible negative impacts on citizens.
+        - Providing evidence of possible negative impacts, whether financial, economic, social, environmental or gender type .
+        - Participate in the impact analysis process.
+        - Knowledge of the partial and final results of the audit.
+        - Propose and participate in public consultations arising from the results obtained by the Audit, taking the final decisions on the most relevant proceedings, as a result of the audit.

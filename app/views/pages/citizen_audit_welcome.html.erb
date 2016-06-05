@@ -1,0 +1,102 @@
+<div class="audit">
+  <div class="expanded no-margin-top jumbo-audit">
+    <div class="row" data-equalizer data-equalize-on="medium">
+      <div class="small-12 column text-center">
+        <h1><%= t('citizen_audit.welcome.title') %></h1>
+        <p><%= t('citizen_audit.welcome.subtitle') %></p>
+
+        <div class="small-12 medium-4 column">
+          <div class="panel active" data-equalizer-watch>
+            <h2><%= t('citizen_audit.welcome.step_1_html') %></h2>
+            <%= link_to t('citizen_audit.welcome.send_information'), new_audit_statement_path(Audit.first), class: "button expanded" %>
+          </div>
+        </div>
+
+        <div class="small-12 medium-4 column">
+          <div class="panel" data-equalizer-watch>
+            <h2><%= t('citizen_audit.welcome.step_2_html') %></h2>
+          </div>
+        </div>
+
+        <div class="small-12 medium-4 column">
+          <div class="panel" data-equalizer-watch>
+            <h2><%= t('citizen_audit.welcome.step_3_html') %></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row margin-top">
+    <div class="small-12 medium-7 column">
+      <h3><%= t('citizen_audit.welcome.what_is') %></h3>
+
+      <%= markdown t("citizen_audit.welcome.what_is_text") %>
+
+      <%= link_to t('citizen_audit.welcome.more_info'), page_path("citizen_audit"), class: "button" %>
+    </div>
+
+    <div class="small-12 medium-5 column show-for-medium">
+      <%= image_tag "audit_debt_intro.png" %>
+    </div>
+  </div>
+
+
+  <div class="expanded gray padding margin">
+    <div class="row">
+      <div class="small-12 medium-9 column small-centered text-center">
+        <h3><%= t('citizen_audit.welcome.impact_title') %></h3>
+        <p><%= t('citizen_audit.welcome.impact_text') %></p>
+      </div>
+    </div>
+
+    <div class="row margin-top text-center">
+      <div class="small-6 medium-2 medium-offset-1 column">
+        <%= image_tag "audit_debt_icon_finance.png" %>
+        <h4><%= t('citizen_audit.welcome.impact_1') %></h4>
+      </div>
+
+      <div class="small-6 medium-2 column">
+      <%= image_tag "audit_debt_icon_economy.png" %>
+        <h4><%= t('citizen_audit.welcome.impact_2') %></h4>
+      </div>
+
+      <div class="small-6 medium-2 column">
+        <%= image_tag "audit_debt_icon_social.png" %>
+        <h4><%= t('citizen_audit.welcome.impact_3') %></h4>
+      </div>
+
+      <div class="small-6 medium-2 column">
+        <%= image_tag "audit_debt_icon_environment.png" %>
+        <h4><%= t('citizen_audit.welcome.impact_4') %></h4>
+      </div>
+
+      <div class="small-6 medium-2 column end">
+        <%= image_tag "audit_debt_icon_gender.png" %>
+        <h4><%= t('citizen_audit.welcome.impact_5') %></h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" data-equalizer>
+    <div class="small-12 medium-5 column show-for-medium" data-equalizer-watch>
+      <%= image_tag "audit_debt_citizens.jpg", class: "margin-top" %>
+    </div>
+
+    <div class="small-12 medium-7 column" data-equalizer-watch>
+      <h3><%= t('citizen_audit.welcome.participatory_title') %></h3>
+
+      <%= markdown t('citizen_audit.welcome.participatory_text') %>
+    </div>
+  </div>
+
+  <div class="expanded divider">
+    <div id="send_document" class="row margin-top">
+      <div class="small-12 medium-6 small-centered column text-center">
+        <h2><%= t('citizen_audit.welcome.send_information') %></h2>
+        <p><%= t('citizen_audit.welcome.send_information_text') %></p>
+        <%= link_to t('citizen_audit.welcome.send_information'), new_audit_statement_path(Audit.first), class: "button expanded" %>
+      </div>
+    </div>
+  </div>
+</div>

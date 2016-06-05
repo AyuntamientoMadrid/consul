@@ -148,4 +148,30 @@ feature 'Emails' do
     expect(email).to have_body_text(spending_proposal.feasible_explanation)
   end
 
+  context "Audit" do
+
+    scenario "Document" do
+      audit = create(:audit)
+
+      visit new_audit_statement_path(audit)
+
+      fill_in "statement_title", with: "Sketchy investment"
+      fill_in "statement_body",  with: "This investment..."
+      page.attach_file('audit-attachment', Rails.root + 'spec/support/attachments/citizen_audit.png')
+      click_button "Send information"
+
+      email = open_last_email
+      expect(email).to have_subject("Citizen Audit Document")
+      expect(email).to deliver_to("voodoorai2000@gmail.com")
+      expect(email).to be_delivered_from("anonymous@example.com")
+      expect(email).to have_body_text("Sketchy investment")
+      expect(email).to have_body_text("This investment...")
+      expect(email).to have_body_text("citizen_audit.png")
+
+      expect(current_email_attachments.first.filename).to eql "citizen_audit.png"
+      expect(current_email_attachments.first.content_type).to include("png")
+    end
+
+  end
+
 end

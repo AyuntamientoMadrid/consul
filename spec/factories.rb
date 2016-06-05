@@ -352,6 +352,15 @@ FactoryGirl.define do
     spending_proposal { FactoryGirl.build(:spending_proposal, feasible: true) }
   end
 
+  factory :audit do
+    name "Madrid 2016"
+  end
+
+  factory :statement do
+    audit
+    attachment { File.new("#{Rails.root}/spec/support/attachments/citizen_audit.png") }
+  end
+
   factory :banner do
     sequence(:title) { |n| "Banner title #{n}" }
     sequence(:description)  { |n| "This is the text of Banner #{n}" }
@@ -361,4 +370,5 @@ FactoryGirl.define do
     post_started_at Time.now - 7.days
     post_ended_at Time.now + 7.days
   end
+
 end
