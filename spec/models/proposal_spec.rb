@@ -840,7 +840,7 @@ describe Proposal do
   end
 
   describe "archived" do
-    before(:all) do
+    before(:each) do
       @new_proposal = create(:proposal)
       @archived_proposal = create(:proposal, :archived)
     end
