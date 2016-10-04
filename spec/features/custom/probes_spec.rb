@@ -124,6 +124,17 @@ feature 'Probes' do
         end
       end
 
+      scenario "A probe's debate should link to its probe" do
+        probe_option = @probe.probe_options.first
+
+        debate = create(:debate)
+        probe_option.update(debate: debate)
+
+        visit debate_path(probe_option.debate)
+
+        expect(page).to have_link "#RemodelingPlazaEspaña", href: '/proceso/plaza-espana'
+      end
+
       scenario "A probe option's debate should not be votable" do
         probe_option = @probe.probe_options.first
 
