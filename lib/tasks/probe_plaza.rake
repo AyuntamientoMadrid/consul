@@ -99,6 +99,21 @@ namespace :temp do
     end
   end
 
+  desc "Update debates with link to probe"
+  task plaza_update_debates: :environment do
+    probe = Probe.where(codename: "plaza").first
+
+    probe.probe_options.each do |probe_option|
+      puts "Updating debate for probe option: #{probe_option.name}"
+
+      description = "Este es uno de los proyectos presentados para la Remodelación de Plaza España, puedes participar en el proceso y votar el que más te guste en #{Rails.application.routes.url_helpers.plaza_url}<p>Los comentarios se han movido <a href='#{Rails.application.routes.url_helpers.probe_probe_option_url(probe_option.probe, probe_option)}'>aquí</a></p>"
+
+      debate = probe_option.debate
+      debate.update(description: description)
+      debate.save!
+    end
+  end
+
   desc "Migrates comments from debates to probe options in the plaza probe"
   task plaza_migrate_comments: :environment do
     probe = Probe.where(codename: "plaza").first
