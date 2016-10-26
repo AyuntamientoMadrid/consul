@@ -57,10 +57,6 @@ class SpendingProposal < ActiveRecord::Base
     super.try :html_safe
   end
 
-  def self.filter_params(params)
-    params.select{|x, _| %w{geozone_id administrator_id tag_name valuator_id}.include? x.to_s }
-  end
-
   def self.scoped_filter(params, current_filter)
     results = self
     results = limit_results(results, params)                      if params[:max_for_no_geozone].present? || params[:max_per_geozone].present?
