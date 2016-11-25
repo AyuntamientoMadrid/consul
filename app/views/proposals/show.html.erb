@@ -122,7 +122,11 @@
       <aside class="small-12 medium-3 column">
         <div class="sidebar-divider"></div>
         <h3><%= t("votes.supports") %></h3>
+<<<<<<< HEAD
         <div id="<%= dom_id(@proposal) %>_votes" class="text-center">
+=======
+        <div id="<%= dom_id(@proposal) %>_votes" class="supports text-center">
+>>>>>>> upstream/master
           <% if @proposal.successfull? %>
             <p>
               <%= t("proposal_ballots.successfull",

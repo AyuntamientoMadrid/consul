@@ -49,6 +49,7 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <% unless spending_proposal.unfeasible? %>
         <% if feature?("spending_proposal_features.phase2") %>
           <div id="<%= dom_id(spending_proposal) %>_votes"
@@ -63,6 +64,12 @@
           </div>
         <% end %>
       <% end %>
+=======
+      <div id="<%= dom_id(spending_proposal) %>_votes" class="small-12 medium-3 column supports-container">
+          <%= render 'votes',
+                    { spending_proposal: spending_proposal, vote_url: vote_spending_proposal_path(spending_proposal, value: 'yes') } %>
+      </div>
+>>>>>>> upstream/master
 
     </div>
   </div>

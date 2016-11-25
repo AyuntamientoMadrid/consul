@@ -67,6 +67,7 @@
                   proposal_ballots_path)).html_safe %>
             </p>
           <% elsif proposal.archived? %>
+<<<<<<< HEAD
             <div class="message">
               <strong>
                 <%= t("proposals.proposal.supports", count: proposal.total_votes) %>
@@ -77,6 +78,13 @@
             <%= render 'votes',
                        { proposal: proposal,
                          vote_url: vote_proposal_path(proposal, value: 'yes') } %>
+=======
+            <strong><%= t("proposals.proposal.supports", count: proposal.total_votes) %></strong>
+            <p><%= t("proposals.proposal.archived") %></p>
+          <% else %>
+            <%= render 'votes',
+                      { proposal: proposal, vote_url: vote_proposal_path(proposal, value: 'yes') } %>
+>>>>>>> upstream/master
           <% end %>
         </div>
       </div>
