@@ -459,10 +459,7 @@ DEPENDENCIES
   acts_as_votable
   ahoy_matey (~> 1.4.2)
   ancestry (~> 2.2.2)
-<<<<<<< HEAD
   animate-rails
-=======
->>>>>>> upstream/master
   browser
   bullet
   byebug
@@ -515,10 +512,7 @@ DEPENDENCIES
   rollbar (~> 2.13.3)
   rspec-rails (~> 3.5)
   rubocop (~> 0.45.0)
-<<<<<<< HEAD
   rubyzip
-=======
->>>>>>> upstream/master
   rvm1-capistrano3
   sass-rails (~> 5.0, >= 5.0.4)
   savon
@@ -534,9 +528,6 @@ DEPENDENCIES
   unicorn (~> 5.1.0)
   web-console (= 3.3.0)
   whenever
-<<<<<<< HEAD
 
 BUNDLED WITH
    1.13.6
-=======
->>>>>>> upstream/master
