@@ -48,11 +48,8 @@
 //= require embed_video
 //= require fixed_bar
 //= require banners
-<<<<<<< HEAD
 //= require countdown
 //= require probe
-=======
->>>>>>> upstream/master
 //= require social_share
 //= require custom
 
