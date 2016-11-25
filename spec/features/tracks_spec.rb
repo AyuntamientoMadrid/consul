@@ -233,7 +233,7 @@ feature 'Tracking' do
     end
 
     scenario 'Verify sms' do
-      user = create(:user, residence_verified_at: Time.now)
+      user = create(:user, residence_verified_at: Time.current)
       login_as(user)
 
       visit verification_path
