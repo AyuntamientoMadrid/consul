@@ -16,7 +16,7 @@ module TracksHelper
     if user.date_of_birth.blank?
       I18n.t("tracking.user_data.age.unknown")
     else
-      ((Date.today - user.date_of_birth.to_date).to_i / 365.25).to_i
+      ((Time.zone.today - user.date_of_birth.to_date).to_i / 365.25).to_i
     end
   end
 

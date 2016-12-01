@@ -6,14 +6,9 @@
 <% end %>
 
 <main id="investment-projects-main">
-
   <h1 class="sr-only"><%= t("shared.outline.budget") %></h1>
 
-  <% if setting["feature.spending_proposal_features.final_voting_allowed"].present? %>
-    <%= render 'header' %>
-  <% end %>
-
-  <div class="wrap row">
+  <div class="row">
     <div id="investment-projects" class="investment-projects-list small-12 medium-9 column">
 
       <div class="small-12 search-results margin-bottom">
