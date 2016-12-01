@@ -26,6 +26,7 @@ en:
         successful_login: Entrar
         successful_registration: Registrar
         successful_confirmation: Confirmar
+        access_registration_form: Ver formulario registro
         create: Crear
         vote: Votar
         support: Apoyar
@@ -41,6 +42,8 @@ en:
         start_phone_verification: Inicio verificación de teléfono
         residence_verified: Residencia verificada
       name:
+        landing_joaquin_reyes: "Landing Joaquin Reyes"
+        home_joaquin_reyes: "Home Joaquin Reyes"
         "yes": "Positivo"
         "no": "Negativo"
       dimension_value:
