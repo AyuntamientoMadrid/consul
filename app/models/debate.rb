@@ -152,4 +152,22 @@ class Debate < ActiveRecord::Base
     self.featured_at.present?
   end
 
+  def self.public_columns_for_api
+    ["id",
+     "title",
+     "description",
+     "created_at",
+     "cached_votes_total",
+     "cached_votes_up",
+     "cached_votes_down",
+     "comments_count",
+     "hot_score",
+     "confidence_score"]
+  end
+
+  def public_for_api?
+    return false unless author.public_activity?
+    hidden? ? false : true
+  end
+
 end

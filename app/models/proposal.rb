@@ -1,3 +1,4 @@
+require 'csv'
 class Proposal < ActiveRecord::Base
   include Flaggable
   include Taggable
@@ -201,6 +202,33 @@ class Proposal < ActiveRecord::Base
       ) AS ranked
       WHERE id = #{proposal.id}
       SQL
+  end
+
+  def self.public_columns_for_api
+    ["id",
+     "title",
+     "description",
+     "external_url",
+     "cached_votes_up",
+     "comments_count",
+     "hot_score",
+     "confidence_score",
+     "created_at",
+     "summary",
+     "video_url",
+     "geozone_id",
+     "retired_at",
+     "retired_reason",
+     "retired_explanation",
+     "proceeding",
+     "sub_proceeding"]
+  end
+
+  def public_for_api?
+    return false if hidden?
+    return false unless ["Derechos Humanos", nil].include?(proceeding)
+    return false unless author.public_activity?
+    return true
   end
 
   protected
