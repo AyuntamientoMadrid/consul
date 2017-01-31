@@ -6,9 +6,9 @@ es:
         title: Presidir mesa de votaciones
         info: Aquí puedes validar documentos de ciudadanos y guardar los resultados de las urnas
     menu:
-      voters: "Validar documento"
-      recounts: "Guardar recuento"
-      final_recounts: "Recuentos finales"
+      voters: "Validar documento y votar"
+      recounts: "Recuento diario"
+      final_recounts: "Recuento y escrutinio final"
     polls:
       index:
         title: "Listado de votaciones"
@@ -58,7 +58,7 @@ es:
       flash:
         create: "Documento verificado con el Padrón"
       new:
-        title: Validar documento
+        title: Validar documento y votar
         document_number: "Número de documento (incluida letra)"
         submit: Validar documento
         error_verifying_census: El Padrón no pudo verificar este documento.

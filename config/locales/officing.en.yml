@@ -6,8 +6,8 @@ en:
         title: Poll officing
         info: Here you can validate user documents and store voting results
     menu:
-      voters: Validate document
-      recounts: Store recount
+      voters: Validate document and vote
+      recounts: Daily recount
       final_recounts: Final recounts
     polls:
       index:
@@ -58,7 +58,7 @@ en:
       flash:
         create: "Document verified with Census"
       new:
-        title: Validate document
+        title: Validate document and vote
         document_number: "Document number (including letters)"
         submit: Validate document
         error_verifying_census: "The Census was unable to verify this document."
