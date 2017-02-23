@@ -38,6 +38,8 @@ feature 'Letters' do
   end
 
   scenario "Error on verify (everything blank)" do
+    fill_in 'residence_postal_code', with: ''
+
     click_button 'Validate document'
 
     expect(page).to have_content 'Voto NO VÁLIDO'
@@ -268,6 +270,10 @@ feature 'Letters' do
 
   context "No postal code" do
 
+    background do
+      fill_in 'residence_postal_code', with: ''
+    end
+
     scenario "Correct name" do
       fill_in 'residence_document_number', with: "12345678Z"
 
@@ -356,5 +362,9 @@ feature 'Letters' do
       expect(page).to have_content '9999999A'
     end
 
+  end
+
+  scenario "Default postal code" do
+    expect(find_field('residence_postal_code').value).to eq '280'
   end
 end
