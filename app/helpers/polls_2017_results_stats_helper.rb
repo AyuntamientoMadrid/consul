@@ -11,50 +11,7 @@ module Polls2017ResultsStatsHelper
   def percent_stat(num, denom)
     return "0" if num == 0
     return "-" if denom == 0
-    "%g" % ("%.2f" % (num*100.0/denom))
-  end
-
-  def poll_stats(poll)
-    ba_ids = poll.booth_assignment_ids
-
-    web = Poll::Voter.web.where(poll_id: poll.id).count
-    booth = Poll::Voter.booth.where(poll_id: poll.id).count
-    letter = Poll::Voter.letter.where(poll_id: poll.id).count
-
-    white_web = Poll::WhiteResult.web.where(booth_assignment_id: ba_ids).sum(:amount)
-    white_booth = Poll::WhiteResult.booth.where(booth_assignment_id: ba_ids).sum(:amount)
-    white_letter = Poll::WhiteResult.letter.where(booth_assignment_id: ba_ids).sum(:amount)
-
-    null_web = Poll::NullResult.web.where(booth_assignment_id: ba_ids).sum(:amount)
-    null_booth = Poll::NullResult.booth.where(booth_assignment_id: ba_ids).sum(:amount)
-    null_letter = Poll::NullResult.letter.where(booth_assignment_id: ba_ids).sum(:amount)
-
-    poll_stats = {
-      poll: poll,
-
-      total_votes: web + booth + letter + white_web + white_booth + white_letter + null_web + null_booth + null_letter,
-
-      web_votes: web,
-      booth_votes: booth,
-      letter_votes: letter,
-      total_valid_votes: web + booth + letter,
-
-      white_web_votes: white_web,
-      white_booth_votes: white_booth,
-      white_letter_votes: white_letter,
-      total_white_votes: white_web + white_booth + white_letter,
-
-      null_web_votes: null_web,
-      null_booth_votes: null_booth,
-      null_letter_votes: null_letter,
-      total_null_votes: null_web + null_booth + null_letter,
-
-      total_web: web + white_web + null_web,
-      total_booth: booth + white_booth + null_booth,
-      total_letter: letter + white_letter + null_letter,
-
-      total_total: web + booth + letter + white_web + white_booth + white_letter + null_web + null_booth + null_letter
-    }
+    number_to_percentage(num*100.0/denom, precision: 2, strip_insignificant_zeros: true, format: "%n")
   end
 
   def barajas_questions_valid_answers_mappings(answer)
@@ -221,5 +178,30 @@ module Polls2017ResultsStatsHelper
       "89" => "Redistribución del espacio público atendiendo a la prioridad del ciudadano que camina, el que va en bici y en transporte público por encima del coche privado."
     }
     @san_blas_questions_valid_answers_mapping[answer]
+  end
+
+  def population_by_geozone(geozone_name)
+    geozones_population = { "Arganzuela" => 152116,
+                            "Barajas" => 45417,
+                            "Carabanchel" => 244471,
+                            "Centro" => 135842,
+                            "Chamartín" => 141018,
+                            "Chamberí" => 134143,
+                            "Ciudad Lineal" => 211241,
+                            "Fuencarral-El Pardo" => 233791,
+                            "Hortaleza" => 176052,
+                            "Latina" => 231645,
+                            "Moncloa-Aravaca" => 112939,
+                            "Moratalaz" => 92764,
+                            "Puente de Vallecas" => 224655,
+                            "Retiro" => 114439,
+                            "Salamanca" => 139428,
+                            "San Blas-Canillejas" => 151965,
+                            "Tetuán" => 152742,
+                            "Usera" => 135368,
+                            "Vicálvaro" => 71111,
+                            "Villa de Vallecas" => 110063,
+                            "Villaverde" => 141569 }
+    geozones_population[geozone_name]
   end
 end

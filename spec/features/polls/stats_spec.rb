@@ -1,10 +1,13 @@
 require 'rails_helper'
+require 'rake'
 
-feature 'Stats' do
 
   background do
     admin = create(:administrator)
     login_as(admin.user)
+
+    Consul::Application.load_tasks
+    Rake::Task['stats:polls_2017'].invoke
   end
 
   scenario "Votes" do
