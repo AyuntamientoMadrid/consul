@@ -466,9 +466,9 @@ ActiveRecord::Schema.define(version: 20170225091223) do
     t.string   "document_number"
     t.string   "message"
     t.integer  "user_id"
+    t.string   "postal_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "postal_code"
     t.string   "census_name"
     t.string   "census_postal_code"
   end

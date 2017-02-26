@@ -52,30 +52,30 @@
       <h2 class="sr-only">TODA LA CIUDAD</h2>
 
       <!-- Propuestas y Plaza de España -->
-      <%= render "polls/results_2017/poll_1" %>
+      <%= render "polls/results_2017/poll_1" if @poll_1.present? %>
 
       <!-- Gran Vía -->
-      <%= render "polls/results_2017/poll_2" %>
+      <%= render "polls/results_2017/poll_2" if @poll_2.present?  %>
 
       <h2 class="sr-only">DISTRITOS</h2>
 
       <!-- Barajas -->
-      <%= render "polls/results_2017/poll_3" %>
+      <%= render "polls/results_2017/poll_3" if @poll_3.present?  %>
 
       <!-- San Blas - Canillejas -->
-      <%= render "polls/results_2017/poll_4" %>
+      <%= render "polls/results_2017/poll_4" if @poll_4.present?  %>
 
       <!-- Hortaleza -->
-      <%= render "polls/results_2017/poll_5" %>
+      <%= render "polls/results_2017/poll_5" if @poll_5.present?  %>
 
       <!-- Retiro -->
-      <%= render "polls/results_2017/poll_6" %>
+      <%= render "polls/results_2017/poll_6" if @poll_6.present?  %>
 
       <!-- Salamanca -->
-      <%= render "polls/results_2017/poll_7" %>
+      <%= render "polls/results_2017/poll_7" if @poll_7.present?  %>
 
       <!-- Vicálvaro -->
-      <%= render "polls/results_2017/poll_8" %>
+      <%= render "polls/results_2017/poll_8" if @poll_8.present?  %>
     </div>
   </div>
 </div>
