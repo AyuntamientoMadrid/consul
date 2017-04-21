@@ -268,6 +268,7 @@ feature 'Tracking' do
 
   #Requires testing social network registrations
   xscenario 'Register with social network'
+  xscenario 'Confirm email with social network'
 
   #Requires testing method track_proposal from track.js.coffee
   xcontext 'Proposals' do

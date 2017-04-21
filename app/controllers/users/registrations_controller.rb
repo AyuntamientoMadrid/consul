@@ -45,6 +45,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     current_user.registering_with_oauth = false
     if current_user.update(sign_up_params)
       current_user.send_oauth_confirmation_instructions
+      log_event("registration", "successful_confirmation")
       sign_in_and_redirect current_user, event: :authentication
     else
       render :finish_signup
