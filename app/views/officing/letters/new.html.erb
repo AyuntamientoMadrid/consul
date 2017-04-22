@@ -6,7 +6,7 @@
       <%= render "errors" %>
 
       <%= f.text_field :document_number, autocomplete: "off", autofocus: true %>
-      <%= f.text_field :postal_code, type: "number", autocomplete: "off" %>
+      <%= f.text_field :postal_code, type: "number", autocomplete: "off", value: "280" %>
 
       <input type="submit" value="<%= t("officing.residence.new.submit") %>" class="button expanded">
     <% end %>
