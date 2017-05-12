@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428111355) do
+ActiveRecord::Schema.define(version: 20170512102412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20170428111355) do
     t.integer  "budget_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phase",         default: "selecting"
   end
 
   add_index "budget_recommendations", ["user_id"], name: "index_budget_recommendations_on_user_id", using: :btree
@@ -960,8 +961,8 @@ ActiveRecord::Schema.define(version: 20170428111355) do
     t.datetime "password_changed_at",                                         default: '2016-11-03 12:11:02', null: false
     t.boolean  "created_from_signature",                                      default: false
     t.boolean  "officing_voter",                                              default: false
-    t.integer  "failed_email_digests_count",                                  default: 0
     t.text     "former_users_data_log",                                       default: ""
+    t.integer  "failed_email_digests_count",                                  default: 0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
