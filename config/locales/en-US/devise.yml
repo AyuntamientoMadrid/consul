@@ -1,4 +1,4 @@
-fr:
+en:
   devise:
     password_expired:
       expire_password: "Contraseña caducada"
