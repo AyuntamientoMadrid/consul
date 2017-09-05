@@ -142,7 +142,6 @@ en:
       start_debate: Start a debate
       top: Featured
       top_link_debates: '#TúPreguntas'
-      title: Debates
       section_header:
         icon_alt: Debates icon
         title: Debates
@@ -207,6 +206,9 @@ en:
     budget/investment: Investment
     user: Account
     verification/sms: phone
+    signature_sheet: Signature sheet
+    document: Document
+    topic: Topic
   forums:
     index:
       deactivate_link: "Deactivate"
@@ -222,9 +224,6 @@ en:
       no_city_votes: This Forum has not supported any city investment projects
       no_district_votes: This Forum has not supported any district investment projects
       confirm: You have already voted some investment projects. If you delegate your votes in %{forum}, your votes will be erased and you will vote whatever this forum votes.
-    signature_sheet: Signature sheet
-    document: Document
-    topic: Topic
   geozones:
     none: All city
   layouts:

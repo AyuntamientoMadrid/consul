@@ -142,7 +142,6 @@ es:
       start_debate: Empieza un debate
       top: Destacados
       top_link_debates: '#TúPreguntas'
-      title: Debates
       section_header:
         icon_alt: Icono de Debates
         title: Debates
@@ -207,6 +206,9 @@ es:
     budget/investment: el proyecto de gasto
     user: la cuenta
     verification/sms: el teléfono
+    signature_sheet: la hoja de firmas
+    document: el documento
+    topic: Tema
   forums:
     index:
       deactivate_link: "Desactivar"
@@ -222,9 +224,6 @@ es:
       no_city_votes: Este espacio de debate distrital aún no ha apoyado ningún proyecto de ciudad
       no_district_votes: Este espacio de debate distrital aún no ha apoyado ningún proyecto de distrito
       confirm: Ya has votado algunos proyectos de gasto. Si delegas tu voto en %{forum}, tus votos se eliminarán y pasarás a votar lo que vote este espacio distrital.
-    signature_sheet: la hoja de firmas
-    document: el documento
-    topic: Tema
   geozones:
     none: Toda la ciudad
   layouts:
