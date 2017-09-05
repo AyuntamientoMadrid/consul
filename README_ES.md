@@ -1,4 +1,6 @@
-![Logotipo de CONSUL](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
+# ⚠️ CUIDADO ❌: NO USES ESTE REPOSITORIO COMO BASE PARA UNA INSTALACIÓN DE CONSUL. Haz un fork de https://github.com/consul/consul
+
+![Logotipo de Consul](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
 
 # CONSUL
 
