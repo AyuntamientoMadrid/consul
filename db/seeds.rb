@@ -79,6 +79,7 @@ Setting['feature.public_stats'] = true
 Setting['feature.budgets'] = true
 Setting['feature.signature_sheets'] = true
 Setting['feature.legislation'] = true
+Setting['feature.community'] = nil
 
 # Spending proposals feature flags
 Setting['feature.spending_proposal_features.phase1'] = true
@@ -104,7 +105,7 @@ Setting['proposal_notification_minimum_interval_in_days'] = 3
 Setting['direct_message_max_per_day'] = 3
 
 # Email settings
-Setting['mailer_from_name'] = 'Consul'
+Setting['mailer_from_name'] = 'CONSUL'
 Setting['mailer_from_address'] = 'noreply@consul.dev'
 
 # Verification settings
