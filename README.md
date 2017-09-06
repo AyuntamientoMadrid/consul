@@ -1,4 +1,6 @@
-![Logo of CONSUL](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
+# ⚠️ WARNING ❌: DO NOT USE THIS REPO IF WANT TO INSTALL YOUR OWN CONSUL. Instead fork https://github.com/consul/consul
+
+![Logo of Consul](https://raw.githubusercontent.com/consul/consul/master/public/consul_logo.png)
 
 # CONSUL
 
