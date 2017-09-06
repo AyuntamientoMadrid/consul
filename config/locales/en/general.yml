@@ -73,6 +73,7 @@ en:
       most_voted: Most voted
       newest: Newest first
       oldest: Oldest first
+      most_commented: Most commented
     select_order: Sort by
     show:
       return_to_commentable: 'Go back to '
@@ -141,6 +142,18 @@ en:
       start_debate: Start a debate
       top: Featured
       top_link_debates: '#TúPreguntas'
+      section_header:
+        icon_alt: Debates icon
+        title: Citizen debates
+        description: Start a debate to share opinions with others about the topics you are concerned about of the city of Madrid.
+        help: Help about citizen debates
+      section_footer:
+        title: Help about citizen debates
+        help_text_1: "The space for citizen debates is aimed at anyone who can expose issues of their concern and those who want to share opinions with other people, preferably related to the city of Madrid."
+        help_text_2: 'To open a debate you need to sign up on %{org}. Users can also comment on open debates and rate them with the "I agree" or "I disagree" buttons found in each of them.'
+        help_text_3: "Keep in mind that a debate does not start any specific action. If you want to make a %{proposal} for the city or raise a investment project of %{budget} when the phase is open, go to the corresponding section."
+        proposals_link: proposal
+        budget_link: participatory budgeting
     new:
       form:
         submit_button: Start a debate
@@ -193,6 +206,9 @@ en:
     budget/investment: Investment
     user: Account
     verification/sms: phone
+    signature_sheet: Signature sheet
+    document: Document
+    topic: Topic
   forums:
     index:
       deactivate_link: "Deactivate"
@@ -219,7 +235,7 @@ en:
     footer:
       accessibility: Accessibility
       conditions: Terms and conditions of use
-      consul: Consul application
+      consul: CONSUL application
       consul_url: https://github.com/consul/consul
       contact_us: For technical assistance enters
       copyright: Ayuntamiento de Madrid, %{year}
@@ -269,7 +285,6 @@ en:
       proposals: Proposals
       spending_proposals: Participatory budgeting
       poll_questions: Voting
-      see_all: See proposals
       budgets: Participatory budgeting
       delegation: Delegation
       spending_proposals: Spending Proposals
@@ -395,6 +410,17 @@ en:
       start_proposal: Create proposal
       top: Top weekly
       top_link_proposals: The most supported proposals by category
+      section_header:
+        icon_alt: Proposals icon
+        title: Citizen proposals
+        description: Make a citizen proposal. If it gets enough supports it will go to voting phase, so you can get all the citizens of Madrid to decide how they want their city to be.
+        help: Help about citizen proposals
+      section_footer:
+        title: Help about citizen proposals
+        help_text_1: "The citizen proposals are an opportunity for neighbours and collectives of Madrid to decide directly how they want to shape their city. Any person can make a proposal about a topic or concern of their interest, for the City Council to make it, after it gets enough supports to be put to a citizens vote."
+        help_text_2: "To create a proposal, you must sign up on %{org}. The proposals that get the support of 1% of the users (persons over 16 years of age registered in Madrid; 27,064 people) in the web, goes to voting phase. To support proposals it is necessary to have a verified account."
+        help_text_3: "The City Council of Madrid celebrates a citizen vote when the proposals get the necessary supports. Once celebrated, if there are more people in favor than against, the City Council assumes the proposal and carries it out."
+        help_text_4: 'In February 2017 occurred the first citizen vote in which were approved the proposals "Madrid 100% sostenible" and "Billete único para el transporte público".'
     new:
       form:
         submit_button: Create proposal
@@ -478,6 +504,16 @@ en:
       cant_answer_verify: "You must verify your account in order to answer"
       already_answer: "You already have participated in this poll"
       more_info: "More information about voting"
+      section_header:
+        icon_alt: Voting icon
+        title: Citizen voting
+        description: Sign up to vote on citizen proposals and questions the City Council of Madrid ask to the neighbors. Make municipal decisions directly.
+        help: Help about citizen voting
+      section_footer:
+        title: Help about citizen voting
+        help_text_1: "Voting takes place when a citizen proposal supports reaches 1% of the census with voting rights. Voting can also include questions that the City Council of Madrid ask to the citizens decision."
+        help_text_2: "To participate in the next vote you have to sign up on %{org} and verify your account. All registered voters in the city over 16 years old can vote. The results of all votes are binding on the government."
+        help_text_3: "In the first vote on february 2017, moreover to decide about two citizen proposals, the City Council asked about the reforms of Gran Vía, about finalist projects to reform Plaza España and some issues in six districts of Madrid."
     show:
       dates_title: "Voting dates"
       cant_answer_not_logged_in: "You must %{signin} or %{signup} to participate."
@@ -600,8 +636,6 @@ en:
     unfollow: "Unfollow"
     unfollow_entity: "Unfollow %{entity}"
     outline:
-      debates: Debates
-      proposals: Proposals
       budget: Participatory budget
       searcher: Searcher
     go_to_page: "Go to page of "

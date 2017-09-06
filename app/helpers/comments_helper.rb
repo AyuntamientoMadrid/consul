@@ -48,7 +48,7 @@ module CommentsHelper
 
   def commentable_path(comment)
     commentable = comment.commentable
-
+    
     case comment.commentable_type
     when "Budget::Investment"
       budget_investment_path(commentable.budget_id, commentable)
@@ -60,6 +60,8 @@ module CommentsHelper
       legislation_process_question_path(commentable.process, commentable)
     when "Legislation::Annotation"
       legislation_process_draft_version_annotation_path(commentable.draft_version.process, commentable.draft_version, commentable)
+    when "Topic"
+      community_topic_path(comment.commentable.community, comment.commentable)
     else
       commentable
     end

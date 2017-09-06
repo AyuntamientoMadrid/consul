@@ -33,7 +33,7 @@ module Abilities
       can :unmark_featured, Debate
 
       can :comment_as_administrator, [Debate, Comment, Proposal, SpendingProposal, ProbeOption, Poll::Question, Budget::Investment,
-                                      Legislation::Question, Legislation::Annotation]
+                                      Legislation::Question, Legislation::Annotation, Topic]
 
       can [:search, :create, :index, :destroy], ::Administrator
       can [:search, :create, :index, :destroy], ::Moderator
@@ -79,6 +79,7 @@ module Abilities
 
       cannot :comment_as_moderator, [::Legislation::Question, Legislation::Annotation]
 
+      can [:create, :destroy], Document
     end
   end
 end
