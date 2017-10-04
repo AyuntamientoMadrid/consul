@@ -73,7 +73,10 @@ feature 'Polls' do
     end
 
     scenario 'Non-logged in users' do
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       visit poll_path(poll)
 
       expect(page).to have_content('You must Sign in or Sign up to participate')
@@ -85,7 +88,11 @@ feature 'Polls' do
     scenario 'Level 1 users' do
       poll.update(geozone_restricted: true)
       poll.geozones << geozone
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       login_as(create(:user, geozone: geozone))
       visit poll_path(poll)
 
@@ -98,7 +105,11 @@ feature 'Polls' do
     scenario 'Level 2 users in an incoming poll' do
       incoming_poll = create(:poll, :incoming, geozone_restricted: true)
       incoming_poll.geozones << geozone
-      create(:poll_question, poll: incoming_poll, valid_answers: 'Rey, Finn')
+
+      question = create(:poll_question, poll: incoming_poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Rey')
+      answer2 = create(:poll_question_answer, question: question, title: 'Finn')
+
       login_as(create(:user, :level_two, geozone: geozone))
 
       visit poll_path(incoming_poll)
@@ -114,7 +125,11 @@ feature 'Polls' do
     scenario 'Level 2 users in an expired poll' do
       expired_poll = create(:poll, :expired, geozone_restricted: true)
       expired_poll.geozones << geozone
-      create(:poll_question, poll: expired_poll, valid_answers: 'Luke, Leia')
+
+      question = create(:poll_question, poll: expired_poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Luke')
+      answer2 = create(:poll_question_answer, question: question, title: 'Leia')
+
       login_as(create(:user, :level_two, geozone: geozone))
 
       visit poll_path(expired_poll)
@@ -130,7 +145,11 @@ feature 'Polls' do
     scenario 'Level 2 users in a poll with questions for a geozone which is not theirs' do
       poll.update(geozone_restricted: true)
       poll.geozones << create(:geozone)
-      create(:poll_question, poll: poll, valid_answers: 'Vader, Palpatine')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Vader')
+      answer2 = create(:poll_question_answer, question: question, title: 'Palpatine')
+
       login_as(create(:user, :level_two))
 
       visit poll_path(poll)
@@ -145,7 +164,11 @@ feature 'Polls' do
     scenario 'Level 2 users reading a same-geozone poll' do
       poll.update(geozone_restricted: true)
       poll.geozones << geozone
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       login_as(create(:user, :level_two, geozone: geozone))
       visit poll_path(poll)
 
@@ -157,7 +180,10 @@ feature 'Polls' do
     end
 
     scenario 'Level 2 users reading a all-geozones poll' do
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       login_as(create(:user, :level_two))
       visit poll_path(poll)
 
@@ -168,11 +194,10 @@ feature 'Polls' do
       expect(page).to have_link('Chewbacca')
     end
 
-    xscenario 'Level 2 users who have already answered' do
-      #Not currently aplicable in this fork, users vote for polls not questions.
-      #In addition, in this fork we use AgoraVoting instead of using Poll::Answers.
-      #Activate once we have an option to vote either with AgoraVoting or Poll::Answers
-      question = create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+    scenario 'Level 2 users who have already answered' do
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
       user = create(:user, :level_two)
       create(:poll_answer, question: question, author: user, answer: 'Chewbacca')
 
@@ -187,7 +212,11 @@ feature 'Polls' do
     scenario 'Level 2 users answering', :js do
       poll.update(geozone_restricted: true)
       poll.geozones << geozone
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       user = create(:user, :level_two, geozone: geozone)
 
       login_as user
@@ -280,7 +309,11 @@ feature 'Polls' do
     scenario 'Level 2 users changing answer', :js do
       poll.update(geozone_restricted: true)
       poll.geozones << geozone
-      create(:poll_question, poll: poll, valid_answers: 'Han Solo, Chewbacca')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Han Solo')
+      answer2 = create(:poll_question_answer, question: question, title: 'Chewbacca')
+
       user = create(:user, :level_two, geozone: geozone)
 
       login_as user

@@ -4,10 +4,20 @@ feature "Voter" do
 
   context "Origin" do
 
+    let(:poll) { create(:poll, :current) }
+    let(:booth) { create(:poll_booth) }
+    let(:officer) { create(:poll_officer) }
+
+    background do
+      create(:geozone, :in_census)
+      create(:poll_shift, officer: officer, booth: booth, date: Date.current, task: :vote_collection)
+      booth_assignment = create(:poll_booth_assignment, poll: poll, booth: booth)
+      create(:poll_officer_assignment, officer: officer, booth_assignment: booth_assignment)
+    end
+
     scenario "Voting in web - Nvotes", :nvotes do
-      user  = create(:user, :in_census, id: rand(9999999))
-      poll = create(:poll)
-      nvote = create(:poll_nvote, user: user, poll: poll)
+      user_in_census  = create(:user, :in_census, id: rand(9999999))
+      nvote = create(:poll_nvote, user: user_in_census, poll: poll)
 
       simulate_nvotes_callback(nvote, poll)
 
@@ -17,7 +27,11 @@ feature "Voter" do
 
     scenario "Voting via web - Standard", :js do
       poll = create(:poll)
-      question = create(:poll_question, poll: poll, valid_answers: 'Yes, No')
+
+      question = create(:poll_question, poll: poll)
+      answer1 = create(:poll_question_answer, question: question, title: 'Yes')
+      answer2 = create(:poll_question_answer, question: question, title: 'No')
+
       user = create(:user, :level_two)
 
       login_as user
@@ -33,14 +47,7 @@ feature "Voter" do
     end
 
     scenario "Voting in booth", :js do
-      user  = create(:user, :in_census)
-      create(:geozone, :in_census)
-
-      poll = create(:poll)
-      officer = create(:poll_officer)
-
-      ba = create(:poll_booth_assignment, poll: poll)
-      create(:poll_officer_assignment, officer: officer, booth_assignment: ba)
+      user = create(:user, :in_census)
 
       login_through_form_as_officer(officer.user)
 
@@ -59,12 +66,12 @@ feature "Voter" do
     context "Trying to vote the same poll in booth and web" do
 
       let(:poll) { create(:poll) }
-      let(:question) { create(:poll_question, poll: poll, valid_answers: 'Yes, No') }
-      let!(:user) { create(:user, :in_census) }
 
-      let(:officer) { create(:poll_officer) }
-      let(:ba) { create(:poll_booth_assignment, poll: poll) }
-      let!(:oa) { create(:poll_officer_assignment, officer: officer, booth_assignment: ba) }
+      let(:question) { create(:poll_question, poll: poll) }
+      let!(:answer1) { create(:poll_question_answer, question: question, title: 'Yes') }
+      let!(:answer2) { create(:poll_question_answer, question: question, title: 'No') }
+
+      let!(:user) { create(:user, :in_census) }
 
       scenario "Trying to vote in web and then in booth", :js do
         login_as user
