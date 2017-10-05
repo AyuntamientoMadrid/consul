@@ -239,3 +239,11 @@ en:
     stats:
       title: "Estadísticas de la primera votación ciudadana"
       description: "Consulta los datos completos de número de votos, participación total y por distritos de la primera votación de propuestas ciudadanas de Madrid, el futuro de la Gran Vía y de la Plaza de España y de seis preguntas en distritos."
+  poll_questions:
+    show:
+      answer_this_question: "Go to voting page"
+      original_proposal: "Original proposal"
+      author: "Created by"
+      dates_title: "Voting dates"
+      more_info: "More information"
+
