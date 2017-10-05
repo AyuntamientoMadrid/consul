@@ -19,7 +19,7 @@
               class: 'large button',
               data: { no_turbolink: true } %>
       <% else %>
-        <%= render 'polls/reasons_for_not_answering', poll: @question.poll %>
+        <%= render 'polls/callout', poll: @question.poll %>
       <% end %>
     </div>
 
