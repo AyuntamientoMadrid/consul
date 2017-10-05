@@ -15,7 +15,8 @@ feature "Voter" do
       create(:poll_officer_assignment, officer: officer, booth_assignment: booth_assignment)
     end
 
-    scenario "Voting in web - Nvotes", :nvotes do
+    xscenario "Voting in web - Nvotes", :nvotes do
+      # TODO: Fix once NVotes comes back to use on this fork
       user_in_census  = create(:user, :in_census, id: rand(9999999))
       nvote = create(:poll_nvote, user: user_in_census, poll: poll)
 
