@@ -170,13 +170,11 @@ en:
       title: "Do you have an idea to change Madrid?"
       text: "Madrid City Council will carry out your proposal if it reaches a citizen voting. You need 27,064 supports in Decide Madrid, the 1% of the population with the right to vote."
       button: "Create a proposal"
-    proposals:
-      label: "Proposals"
-      title: "What is it and how to create a citizen proposal?"
-      text: "It is a participation tool which citizens use to decide directly on municipal policies."
-      link: "More information about how to create citizen proposals"
-      url: "https://diario.madrid.es/decidemadrid/2017/09/05/las-propuestas-ciudadanas-de-decide-madrid-paso-a-paso/"
-      alt: "Creation of a proposal on Decide Madrid"
+    header_budget:
+      label: "Participatory budgets 2018"
+      title: "Decide the citizen projects that Madrid City Council will do, you have:"
+      text: "100 million euros"
+      button: "Send your project"
     once_plazas:
       label: "Voting results"
       title: "Citizens approve the remodeling of eleven squares"
