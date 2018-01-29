@@ -327,7 +327,9 @@ feature 'Admin budget investments' do
         expect(page).to have_link "Street with #{n} supports"
       end
 
-      select "5", from: "max_per_heading"
+      click_link 'Advanced filters'
+      fill_in "max_per_heading", with: 5
+      click_button 'Filter'
 
       expect(page).to have_content('There are 15 investments')
       expect(page).not_to have_link "Park with 2 supports"
@@ -656,14 +658,19 @@ feature 'Admin budget investments' do
       expect(page).to have_content(selected_bi.title)
       expect(page).to have_content(winner_bi.title)
 
-      within('#filter-subnav') { click_link 'Val. fin. Feasible' }
+      click_link 'Advanced filters'
+      within('#advanced_filters') { find(:css, "#second_filter[value='feasible']").set(true) }
+      click_button 'Filter'
+
       expect(page).not_to have_content(unfeasible_bi.title)
       expect(page).not_to have_content(feasible_bi.title)
       expect(page).to have_content(feasible_vf_bi.title)
       expect(page).to have_content(selected_bi.title)
       expect(page).to have_content(winner_bi.title)
 
-      within('#filter-subnav') { click_link 'Selected' }
+      within('#advanced_filters') { find(:css, "#second_filter[value='selected']").set(true) }
+      click_button 'Filter'
+
       expect(page).not_to have_content(unfeasible_bi.title)
       expect(page).not_to have_content(feasible_bi.title)
       expect(page).not_to have_content(feasible_vf_bi.title)
@@ -712,7 +719,9 @@ feature 'Admin budget investments' do
         expect(page).to have_link('Selected')
       end
 
-      within('#filter-subnav') { click_link 'Selected' }
+      click_link 'Advanced filters'
+      within('#advanced_filters') { find(:css, "#second_filter[value='selected']").set(true) }
+      click_button 'Filter'
 
       within("#budget_investment_#{feasible_vf_bi.id}") do
         expect(page).not_to have_link('Select')
@@ -721,8 +730,10 @@ feature 'Admin budget investments' do
     end
 
     scenario "Unselecting an investment", :js do
-      visit admin_budget_budget_investments_path(budget)
-      within('#filter-subnav') { click_link 'Selected' }
+      visit admin_budget_budget_investments_path(@budget)
+      click_link 'Advanced filters'
+      within('#advanced_filters') { find(:css, "#second_filter[value='selected']").set(true) }
+      click_button 'Filter'
 
       expect(page).to have_content('There are 2 investments')
 
