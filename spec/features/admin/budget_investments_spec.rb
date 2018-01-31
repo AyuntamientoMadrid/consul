@@ -292,6 +292,23 @@ feature 'Admin budget investments' do
       expect(page).to have_select("tag_name", options: ["All tags", "Hospitals", "Teachers"])
     end
 
+    scenario "Filtering by tag, display only valuation tags of the current budget" do
+      new_budget = create(:budget)
+      investment1 = create(:budget_investment, budget: budget, tag_list: 'Roads')
+      investment2 = create(:budget_investment, budget: new_budget, tag_list: 'Accessibility')
+
+      investment1.set_tag_list_on(:valuation, 'Roads')
+      investment2.set_tag_list_on(:valuation, 'Accessibility')
+
+      investment1.save
+      investment2.save
+
+      visit admin_budget_budget_investments_path(budget_id: budget.id)
+
+      expect(page).to have_select("tag_name", options: ["All tags", "Roads"])
+      expect(page).not_to have_select("tag_name", options: ["All tags", "Accessibility"])
+    end
+
     scenario "Limiting by max number of investments per heading", :js do
       group_1 = create(:budget_group, budget: budget)
       group_2 = create(:budget_group, budget: budget)
@@ -492,11 +509,14 @@ feature 'Admin budget investments' do
     end
 
     scenario "Adds existing valuation tags", :js do
-      budget_investment1 = create(:budget_investment)
+      group = create(:budget_group, budget: budget)
+      heading = create(:budget_heading, group: group)
+
+      budget_investment1 = create(:budget_investment, heading: heading)
       budget_investment1.set_tag_list_on(:valuation, 'Education, Health')
       budget_investment1.save
 
-      budget_investment2 = create(:budget_investment)
+      budget_investment2 = create(:budget_investment, heading: heading)
 
       visit edit_admin_budget_budget_investment_path(budget_investment2.budget, budget_investment2)
 
@@ -526,6 +546,33 @@ feature 'Admin budget investments' do
       within "#tags" do
         expect(page).to have_content 'Refugees'
         expect(page).to have_content 'Solidarity'
+      end
+    end
+
+    scenario "Display valuation tags scoped by budget" do
+      budget1 = create(:budget)
+      budget2 = create(:budget)
+
+      group1 = create(:budget_group, budget: budget1)
+      group2 = create(:budget_group, budget: budget2)
+
+      heading1 = create(:budget_heading, group: group1)
+      heading2 = create(:budget_heading, group: group2)
+
+      budget_investment1 = create(:budget_investment, heading: heading1)
+      budget_investment1.set_tag_list_on(:valuation, 'Education 2017')
+      budget_investment1.save
+
+      budget_investment2 = create(:budget_investment, heading: heading2)
+      budget_investment2.set_tag_list_on(:valuation, 'Education 2018')
+      budget_investment2.save
+
+      visit admin_budget_budget_investment_path(budget1, budget_investment1)
+      click_link 'Edit classification'
+
+      within(".tags") do
+        expect(page).to have_content "Education 2017"
+        expect(page).to_not have_content "Education 2018"
       end
     end
 
