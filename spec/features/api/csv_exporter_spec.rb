@@ -425,16 +425,20 @@ feature 'CSV Exporter' do
       expect(csv).not_to include("Admin tag")
     end
 
-    scenario "Uppercase and lowercase tags work ok together for proposals" do
+    scenario "Uppercase and lowercase tags work ok together for proposals", :focus do
       create(:tag, name: "Health")
       create(:tag, name: "health")
       create(:proposal, tag_list: "health")
+      puts Proposal.last.inspect
+      puts Proposal.last.proceeding
       create(:proposal, tag_list: "Health")
+      puts Proposal.last.inspect
+      puts Proposal.last.proceeding
       @csv_exporter.export
 
       visit csv_path_for("tags")
       csv = parse_csv(page.html).flatten
-
+      puts csv.inspect
       expect(csv).to include("health")
       expect(csv).to include("Health")
     end
