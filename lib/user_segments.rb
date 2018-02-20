@@ -1,5 +1,5 @@
 class UserSegments
-  SEGMENTS = %w(all_users
+  EMAILS_DOWNLOAD_SEGMENTS = %w(all_users
                 proposal_authors
                 investment_authors
                 feasible_and_undecided_investment_authors
@@ -7,7 +7,7 @@ class UserSegments
                 winner_investment_authors)
 
   def self.all_users
-    User.newsletter.active
+    User.active
   end
 
   def self.proposal_authors
