@@ -132,8 +132,8 @@ end
 def attach_document(path, success = true)
   attach_file :document_attachment, path, make_visible: true
   if success
-    expect(page).to have_css ".loading-bar.complete"
+    expect(page).to have_content "Remove document"
   else
-    expect(page).to have_css ".loading-bar.errors"
+    expect(page).not_to have_content "Remove document"
   end
 end
