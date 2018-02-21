@@ -96,8 +96,9 @@ def attach_image(path, success = true)
   image_input = image.find("input[type=file]", visible: false)
   attach_file image_input[:id], path, make_visible: true
   if success
-    expect(page).to have_css ".loading-bar.complete"
+    expect(page).to have_content "Remove image"
   else
-    expect(page).to have_css ".loading-bar.errors"
+save_and_open_page
+    expect(page).not_to have_content "Remove image"
   end
 end
