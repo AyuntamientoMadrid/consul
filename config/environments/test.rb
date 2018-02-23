@@ -57,6 +57,9 @@ Rails.application.configure do
     if ENV['BULLET']
       Bullet.raise = true # raise an error if n+1 query occurs
     end
+    Capybara.configure do |config|
+      config.default_max_wait_time = 5
+    end
   end
 
 end
