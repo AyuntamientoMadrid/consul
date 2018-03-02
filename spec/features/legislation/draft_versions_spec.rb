@@ -61,8 +61,8 @@ feature 'Legislation Draft Versions' do
 
       select("Version 2")
 
-      expect(page).not_to have_content("Body of the first version")
-      expect(page).to have_content("Body of the second version")
+      expect(page).not_to have_selector("#sticky-panel", text: "Body of the first version")
+      expect(page).to have_selector("#sticky-panel", text: "Body of the second version")
     end
 
     context "for final versions" do
