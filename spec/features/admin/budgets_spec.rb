@@ -123,7 +123,7 @@ feature 'Admin budgets' do
     end
 
     scenario 'Try to destroy a budget with investments' do
-      create(:budget_investment, heading: heading)
+      create(:budget_investment, heading: heading, budget: budget)
 
       visit admin_budgets_path
       click_link 'Edit budget'
@@ -192,11 +192,11 @@ feature 'Admin budgets' do
       group = create(:budget_group, budget: budget)
       heading = create(:budget_heading, group: group, price: 4)
       unselected = create(:budget_investment, :unselected, heading: heading, price: 1,
-                                                           ballot_lines_count: 3)
+                                                           ballot_lines_count: 3, budget: budget)
       winner = create(:budget_investment, :winner, heading: heading, price: 3,
-                                                   ballot_lines_count: 2)
+                                                   ballot_lines_count: 2, budget: budget)
       selected = create(:budget_investment, :selected, heading: heading, price: 2,
-                                                       ballot_lines_count: 1)
+                                                       ballot_lines_count: 1, budget: budget)
 
       visit edit_admin_budget_path(budget)
       click_link 'Calculate Winner Investments'
