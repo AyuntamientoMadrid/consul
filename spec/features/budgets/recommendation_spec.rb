@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 feature 'Recommendations' do
+  let(:budget) { create(:budget) }
+  let(:heading) { create(:budget_heading, group: create(:budget_group, budget: budget)) }
 
   scenario "Create by phase" do
-    heading = create(:budget_heading)
-    budget = heading.budget
 
-    investment_to_select = create(:budget_investment, :feasible, heading: heading)
-    investment_to_ballot = create(:budget_investment, :selected, heading: heading)
+    investment_to_select = create(:budget_investment, :feasible, heading: heading, budget: budget)
+    investment_to_ballot = create(:budget_investment, :selected, heading: heading, budget: budget)
 
     user = create(:user)
     login_as(user)
@@ -48,7 +48,7 @@ feature 'Recommendations' do
   end
 
   scenario "Create (errors)" do
-    investment = create(:budget_investment)
+    investment = create(:budget_investment, budget: budget)
 
     user = create(:user)
     login_as(user)
@@ -67,15 +67,13 @@ feature 'Recommendations' do
     user1 = create(:user)
     user2 = create(:user)
 
-    heading = create(:budget_heading)
+    investment1 = create(:budget_investment, heading: heading, budget: budget)
+    investment2 = create(:budget_investment, heading: heading, budget: budget)
+    investment3 = create(:budget_investment, heading: heading, budget: budget)
 
-    investment1 = create(:budget_investment, heading: heading)
-    investment2 = create(:budget_investment, heading: heading)
-    investment3 = create(:budget_investment, heading: heading)
-
-    recommendation1 = create(:budget_recommendation, user: user1, investment: investment1, budget: heading.budget)
-    recommendation2 = create(:budget_recommendation, user: user1, investment: investment2, budget: heading.budget)
-    recommendation3 = create(:budget_recommendation, user: user2, investment: investment3, budget: heading.budget)
+    recommendation1 = create(:budget_recommendation, user: user1, investment: investment1, budget: budget)
+    recommendation2 = create(:budget_recommendation, user: user1, investment: investment2, budget: budget)
+    recommendation3 = create(:budget_recommendation, user: user2, investment: investment3, budget: budget)
 
     login_as(user2)
     visit user_path(user1)
@@ -93,7 +91,7 @@ feature 'Recommendations' do
     user1 = create(:user)
     user2 = create(:user, :level_two)
 
-    investment = create(:budget_investment, :feasible)
+    investment = create(:budget_investment, :feasible, budget: budget)
     create(:budget_recommendation, budget_id: investment.budget_id, investment: investment, user: user1)
     investment.budget.update(phase: 'selecting')
 
@@ -114,7 +112,7 @@ feature 'Recommendations' do
     user1 = create(:user)
     user2 = create(:user, :level_two)
 
-    investment = create(:budget_investment, :selected)
+    investment = create(:budget_investment, :selected, budget: budget)
     budget = investment.budget
     budget.update!(phase: 'balloting')
     create(:budget_recommendation, budget_id: investment.budget_id, investment: investment, user: user1, phase: 'balloting')
@@ -132,7 +130,7 @@ feature 'Recommendations' do
   end
 
   scenario "Destroy" do
-    investment = create(:budget_investment)
+    investment = create(:budget_investment, budget: budget)
     user = create(:user)
     create(:budget_recommendation, investment: investment, user: user)
 

@@ -53,11 +53,16 @@ feature 'Ballots' do
         district_heading1 = create(:budget_heading, group: districts, name: "District 1")
         district_heading2 = create(:budget_heading, group: districts, name: "District 2")
 
-        city_investment1      = create(:budget_investment, :selected, heading: city_heading1)
-        city_investment2      = create(:budget_investment, :selected, heading: city_heading1)
-        district1_investment1 = create(:budget_investment, :selected, heading: district_heading1)
-        district1_investment2 = create(:budget_investment, :selected, heading: district_heading1)
-        district2_investment1 = create(:budget_investment, :selected, heading: district_heading2)
+        city_investment1      = create(:budget_investment, :selected, heading: city_heading1,
+                                                                      budget: budget)
+        city_investment2      = create(:budget_investment, :selected, heading: city_heading1,
+                                                                      budget: budget)
+        district1_investment1 = create(:budget_investment, :selected, heading: district_heading1,
+                                                                      budget: budget)
+        district1_investment2 = create(:budget_investment, :selected, heading: district_heading1,
+                                                                      budget: budget)
+        district2_investment1 = create(:budget_investment, :selected, heading: district_heading2,
+                                                                      budget: budget)
 
         visit budget_path(budget)
         click_link "City"
@@ -89,7 +94,8 @@ feature 'Ballots' do
         district_heading1 = create(:budget_heading, group: districts, name: "District 1")
         district_heading2 = create(:budget_heading, group: districts, name: "District 2")
 
-        city_investment = create(:budget_investment, :selected, heading: city_heading)
+        city_investment = create(:budget_investment, :selected, heading: city_heading,
+                                                                budget: budget)
 
         visit budget_path(budget)
         click_link "City"
@@ -102,8 +108,10 @@ feature 'Ballots' do
     context "Adding and Removing Investments" do
 
       scenario "Add a investment", :js do
-        investment1 = create(:budget_investment, :selected, heading: new_york, price: 10000)
-        investment2 = create(:budget_investment, :selected, heading: new_york, price: 20000)
+        investment1 = create(:budget_investment, :selected, heading: new_york, price: 10000,
+                                                            budget: budget)
+        investment2 = create(:budget_investment, :selected, heading: new_york, price: 20000,
+                                                            budget: budget)
 
         visit budget_path(budget)
         click_link "States"
@@ -131,7 +139,8 @@ feature 'Ballots' do
       end
 
       scenario "Removing a investment", :js do
-        investment = create(:budget_investment, :selected, heading: new_york, price: 10000)
+        investment = create(:budget_investment, :selected, heading: new_york, price: 10000,
+                                                           budget: budget)
         ballot = create(:budget_ballot, user: user, budget: budget)
         ballot.investments << investment
 
@@ -167,13 +176,19 @@ feature 'Ballots' do
     context "Balloting in multiple headings" do
 
       scenario "Independent progress bar for headings", :js do
-        city_heading      = create(:budget_heading, group: city,      name: "All city",   price: 10000000)
-        district_heading1 = create(:budget_heading, group: districts, name: "District 1", price: 1000000)
-        district_heading2 = create(:budget_heading, group: districts, name: "District 2", price: 2000000)
+        city_heading      = create(:budget_heading, group: city,      name: "All city",
+                                                    price: 10000000)
+        district_heading1 = create(:budget_heading, group: districts, name: "District 1",
+                                                    price: 1000000)
+        district_heading2 = create(:budget_heading, group: districts, name: "District 2",
+                                                    price: 2000000)
 
-        investment1 = create(:budget_investment, :selected, heading: city_heading,      price: 10000)
-        investment2 = create(:budget_investment, :selected, heading: district_heading1, price: 20000)
-        investment3 = create(:budget_investment, :selected, heading: district_heading2, price: 30000)
+        investment1 = create(:budget_investment, :selected, heading: city_heading, price: 10000,
+                                                            budget: budget)
+        investment2 = create(:budget_investment, :selected, heading: district_heading1,
+                                                            price: 20000, budget: budget)
+        investment3 = create(:budget_investment, :selected, heading: district_heading2,
+                                                            price: 30000, budget: budget)
 
         visit budget_path(budget)
         click_link "City"
@@ -231,7 +246,8 @@ feature 'Ballots' do
     end
 
     scenario "Display progress bar after first vote", :js do
-      investment = create(:budget_investment, :selected, heading: new_york, price: 10000)
+      investment = create(:budget_investment, :selected, heading: new_york, price: 10000,
+                                                         budget: budget)
 
       visit budget_investments_path(budget, heading_id: new_york.id)
 
@@ -246,7 +262,7 @@ feature 'Ballots' do
 
   context "Groups" do
 
-    let!(:investment) { create(:budget_investment, :selected, heading: california) }
+    let!(:investment) { create(:budget_investment, :selected, heading: california, budget: budget) }
 
     background { login_as(user) }
 
@@ -265,8 +281,8 @@ feature 'Ballots' do
     end
 
     scenario 'Change my heading', :js do
-      investment1 = create(:budget_investment, :selected, heading: california)
-      investment2 = create(:budget_investment, :selected, heading: new_york)
+      investment1 = create(:budget_investment, :selected, heading: california, budget: budget)
+      investment2 = create(:budget_investment, :selected, heading: new_york, budget: budget)
 
       ballot = create(:budget_ballot, user: user, budget: budget)
       ballot.investments << investment1
@@ -366,7 +382,7 @@ feature 'Ballots' do
   end
 
   scenario 'Removing investments from ballot', :js do
-    investment = create(:budget_investment, :selected, price: 10, heading: new_york)
+    investment = create(:budget_investment, :selected, price: 10, heading: new_york, budget: budget)
     ballot = create(:budget_ballot, user: user, budget: budget)
     ballot.investments << investment
 
@@ -384,8 +400,10 @@ feature 'Ballots' do
   end
 
   scenario 'Removing investments from ballot (sidebar)', :js do
-    investment1 = create(:budget_investment, :selected, price: 10000, heading: new_york)
-    investment2 = create(:budget_investment, :selected, price: 20000, heading: new_york)
+    investment1 = create(:budget_investment, :selected, price: 10000, heading: new_york,
+                                                        budget: budget)
+    investment2 = create(:budget_investment, :selected, price: 20000, heading: new_york,
+                                                        budget: budget)
 
     ballot = create(:budget_ballot, budget: budget, user: user)
     ballot.investments << investment1 << investment2
@@ -421,7 +439,7 @@ feature 'Ballots' do
   end
 
   scenario 'Back link after removing an investment from Ballot', :js do
-    investment = create(:budget_investment, :selected, heading: new_york, price: 10)
+    investment = create(:budget_investment, :selected, heading: new_york, price: 10, budget: budget)
 
     login_as(user)
     visit budget_investments_path(budget, heading_id: new_york.id)
@@ -445,7 +463,7 @@ feature 'Ballots' do
   context 'Permissions' do
 
     scenario 'User not logged in', :js do
-      investment = create(:budget_investment, :selected, heading: new_york)
+      investment = create(:budget_investment, :selected, heading: new_york, budget: budget)
 
       visit budget_investments_path(budget, heading_id: new_york.id)
 
@@ -458,7 +476,7 @@ feature 'Ballots' do
 
     scenario 'User not verified', :js do
       unverified_user = create(:user)
-      investment = create(:budget_investment, :selected, heading: new_york)
+      investment = create(:budget_investment, :selected, heading: new_york, budget: budget)
 
       login_as(unverified_user)
       visit budget_investments_path(budget, heading_id: new_york.id)
@@ -472,7 +490,7 @@ feature 'Ballots' do
 
     scenario 'User is organization', :js do
       org = create(:organization)
-      investment = create(:budget_investment, :selected, heading: new_york)
+      investment = create(:budget_investment, :selected, heading: new_york, budget: budget)
 
       login_as(org.user)
       visit budget_investments_path(budget, heading_id: new_york.id)
@@ -484,7 +502,7 @@ feature 'Ballots' do
     end
 
     scenario 'Unselected investments' do
-      investment = create(:budget_investment, heading: new_york, title: "WTF asdfasfd")
+      investment = create(:budget_investment, heading: new_york, title: "Unselect", budget: budget)
 
       login_as(user)
       visit budget_path(budget)
@@ -509,8 +527,8 @@ feature 'Ballots' do
     end
 
     scenario 'Different district', :js do
-      bi1 = create(:budget_investment, :selected, heading: california)
-      bi2 = create(:budget_investment, :selected, heading: new_york)
+      bi1 = create(:budget_investment, :selected, heading: california, budget: budget)
+      bi2 = create(:budget_investment, :selected, heading: new_york, budget: budget)
 
       ballot = create(:budget_ballot, budget: budget, user: user)
       ballot.investments << bi1
@@ -526,8 +544,8 @@ feature 'Ballots' do
     end
 
     scenario 'Insufficient funds (on page load)', :js do
-      bi1 = create(:budget_investment, :selected, heading: california, price: 600)
-      bi2 = create(:budget_investment, :selected, heading: california, price: 500)
+      bi1 = create(:budget_investment, :selected, heading: california, price: 600, budget: budget)
+      bi2 = create(:budget_investment, :selected, heading: california, price: 500, budget: budget)
 
       ballot = create(:budget_ballot, budget: budget, user: user)
       ballot.investments << bi1
@@ -543,8 +561,8 @@ feature 'Ballots' do
     end
 
     xscenario 'Insufficient funds (added after create)', :js do
-      bi1 = create(:budget_investment, :selected, heading: california, price: 600)
-      bi2 = create(:budget_investment, :selected, heading: california, price: 500)
+      bi1 = create(:budget_investment, :selected, heading: california, price: 600, budget: budget)
+      bi2 = create(:budget_investment, :selected, heading: california, price: 500, budget: budget)
 
       login_as(user)
       visit budget_investments_path(budget, heading_id: california.id)
@@ -566,8 +584,8 @@ feature 'Ballots' do
     end
 
     scenario 'Insufficient funds (removed after destroy)', :js do
-      bi1 = create(:budget_investment, :selected, heading: california, price: 600)
-      bi2 = create(:budget_investment, :selected, heading: california, price: 500)
+      bi1 = create(:budget_investment, :selected, heading: california, price: 600, budget: budget)
+      bi2 = create(:budget_investment, :selected, heading: california, price: 500, budget: budget)
 
       ballot = create(:budget_ballot, budget: budget, user: user)
       ballot.investments << bi1
@@ -594,8 +612,8 @@ feature 'Ballots' do
     end
 
     scenario 'Insufficient funds (removed after destroying from sidebar)', :js do
-      bi1 = create(:budget_investment, :selected, heading: california, price: 600)
-      bi2 = create(:budget_investment, :selected, heading: california, price: 500)
+      bi1 = create(:budget_investment, :selected, heading: california, price: 600, budget: budget)
+      bi2 = create(:budget_investment, :selected, heading: california, price: 500, budget: budget)
 
       ballot = create(:budget_ballot, budget: budget, user: user)
       ballot.investments << bi1
@@ -623,7 +641,8 @@ feature 'Ballots' do
     end
 
     scenario "Edge case voting a non-elegible investment", :js do
-      investment1 = create(:budget_investment, :selected, heading: new_york, price: 10000)
+      investment1 = create(:budget_investment, :selected, heading: new_york, price: 10000,
+                                                          budget: budget)
 
       login_as(user)
       visit budget_path(budget)
@@ -648,7 +667,7 @@ feature 'Ballots' do
     scenario "Balloting is disabled when budget isn't in the balotting phase", :js do
       budget.update(phase: 'accepting')
 
-      bi1 = create(:budget_investment, :selected, heading: california, price: 600)
+      bi1 = create(:budget_investment, :selected, heading: california, price: 600, budget: budget)
 
       login_as(user)
 

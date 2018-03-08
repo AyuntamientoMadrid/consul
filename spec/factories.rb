@@ -327,7 +327,6 @@ FactoryBot.define do
 
   factory :budget_investment, class: 'Budget::Investment' do
     sequence(:title) { |n| "Budget Investment #{n} title" }
-    association :heading, factory: :budget_heading
     association :author, factory: :user
     description          'Spend money on this'
     price                10
@@ -335,6 +334,12 @@ FactoryBot.define do
     skip_map             '1'
     terms_of_service     '1'
     incompatible          false
+
+    before(:create) do |investment|
+      investment.budget = create(:budget) unless investment.budget.present?
+      investment.group = create(:budget_group, budget: investment.budget) unless investment.group.present?
+      investment.heading = create(:budget_heading, group: investment.group) unless investment.heading.present?
+    end
 
     trait :with_confidence_score do
       before(:save) { |i| i.calculate_confidence_score }

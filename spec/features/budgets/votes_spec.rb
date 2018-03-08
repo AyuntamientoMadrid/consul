@@ -17,9 +17,9 @@ feature 'Votes' do
     feature 'Index' do
 
       scenario "Index shows user votes on proposals" do
-        investment1 = create(:budget_investment, heading: heading)
-        investment2 = create(:budget_investment, heading: heading)
-        investment3 = create(:budget_investment, heading: heading)
+        investment1 = create(:budget_investment, heading: heading, budget: budget)
+        investment2 = create(:budget_investment, heading: heading, budget: budget)
+        investment3 = create(:budget_investment, heading: heading, budget: budget)
         create(:vote, voter: @manuela, votable: investment1, vote_flag: true)
 
         visit budget_investments_path(budget, heading_id: heading.id)

@@ -100,7 +100,7 @@ class Valuation::BudgetInvestmentsController < Valuation::BaseController
     end
 
     def restrict_access
-      unless current_user.administrator? || Setting['feature.budgets.valuators_allowed'].present?
+      unless current_user.administrator? || current_budget.valuating?
         raise ActionController::RoutingError.new('Not Found')
       end
     end

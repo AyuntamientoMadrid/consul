@@ -6,7 +6,9 @@ feature 'Custom urls' do
   let(:group)       { create(:budget_group,      name:  "Health",               budget: budget) }
   let!(:heading1)   { create(:budget_heading,    name:  "More hospitals",       group:  group)  }
   let!(:heading2)   { create(:budget_heading,    name:  "More medical centers", group:  group)  }
-  let!(:investment) { create(:budget_investment, title: "Pediatric's hospital", heading: heading1) }
+  let!(:investment) do
+    create(:budget_investment, title: "Pediatric's hospital", heading: heading1, budget: budget)
+  end
 
   scenario "budgets" do
     visit budget_path(budget)

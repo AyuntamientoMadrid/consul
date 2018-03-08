@@ -404,15 +404,18 @@ feature 'Admin budget investments' do
       streets = create(:budget_heading, group: group_2)
 
       [2, 4, 90, 100, 200, 300].each do |n|
-        create(:budget_investment, heading: parks, cached_votes_up: n, title: "Park with #{n} supports")
+        create(:budget_investment, heading: parks, budget: budget,
+                                  cached_votes_up: n, title: "Park with #{n} supports")
       end
 
       [21, 31, 51, 81, 91, 101].each do |n|
-        create(:budget_investment, heading: roads, cached_votes_up: n, title: "Road with #{n} supports")
+        create(:budget_investment, heading: roads, budget: budget,
+                                   cached_votes_up: n, title: "Road with #{n} supports")
       end
 
       [3, 10, 30, 33, 44, 55].each do |n|
-        create(:budget_investment, heading: streets, cached_votes_up: n, title: "Street with #{n} supports")
+        create(:budget_investment, heading: streets, budget: budget,
+                                  cached_votes_up: n, title: "Street with #{n} supports")
       end
 
       visit admin_budget_budget_investments_path(budget)
@@ -825,11 +828,11 @@ feature 'Admin budget investments' do
       group = create(:budget_group, budget: budget)
       heading = create(:budget_heading, group: group)
 
-      budget_investment1 = create(:budget_investment, heading: heading)
+      budget_investment1 = create(:budget_investment, heading: heading, budget: budget)
       budget_investment1.set_tag_list_on(:valuation, 'Education, Health')
       budget_investment1.save
 
-      budget_investment2 = create(:budget_investment, heading: heading)
+      budget_investment2 = create(:budget_investment, heading: heading, budget: budget)
 
       visit edit_admin_budget_budget_investment_path(budget_investment2.budget, budget_investment2)
 
@@ -846,7 +849,7 @@ feature 'Admin budget investments' do
     end
 
     scenario "Adds non existent valuation tags" do
-      budget_investment = create(:budget_investment)
+      budget_investment = create(:budget_investment, budget: budget)
 
       visit admin_budget_budget_investment_path(budget_investment.budget, budget_investment)
       click_link 'Edit classification'
@@ -872,11 +875,11 @@ feature 'Admin budget investments' do
       heading1 = create(:budget_heading, group: group1)
       heading2 = create(:budget_heading, group: group2)
 
-      budget_investment1 = create(:budget_investment, heading: heading1)
+      budget_investment1 = create(:budget_investment, heading: heading1, budget: budget1)
       budget_investment1.set_tag_list_on(:valuation, 'Education 2017')
       budget_investment1.save
 
-      budget_investment2 = create(:budget_investment, heading: heading2)
+      budget_investment2 = create(:budget_investment, heading: heading2, budget: budget2)
       budget_investment2.set_tag_list_on(:valuation, 'Education 2018')
       budget_investment2.save
 
@@ -1205,8 +1208,8 @@ feature 'Admin budget investments' do
     let(:group) { create(:budget_group, budget: budget) }
     let(:heading) { create(:budget_heading, group: group) }
 
-    let(:investment1) { create(:budget_investment, heading: heading) }
-    let(:investment2) { create(:budget_investment, heading: heading) }
+    let(:investment1) { create(:budget_investment, heading: heading, budget: budget) }
+    let(:investment2) { create(:budget_investment, heading: heading, budget: budget) }
 
     scenario "Mark as visible to valuator", :js do
       investment1.valuators << valuator
@@ -1230,7 +1233,7 @@ feature 'Admin budget investments' do
     end
 
     scenario "Unmark as visible to valuator", :js do
-      Setting['feature.budgets.valuators_allowed'] = true
+      budget.update(phase: 'valuating')
 
       valuator = create(:valuator)
       admin = create(:administrator)
@@ -1238,8 +1241,8 @@ feature 'Admin budget investments' do
       group = create(:budget_group, budget: budget)
       heading = create(:budget_heading, group: group)
 
-      investment1 = create(:budget_investment, heading: heading, visible_to_valuators: true)
-      investment2 = create(:budget_investment, heading: heading, visible_to_valuators: true)
+      investment1 = create(:budget_investment, heading: heading, visible_to_valuators: true, budget: budget)
+      investment2 = create(:budget_investment, heading: heading, visible_to_valuators: true, budget: budget)
 
       investment1.valuators << valuator
       investment2.valuators << valuator
