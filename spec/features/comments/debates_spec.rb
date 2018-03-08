@@ -186,7 +186,7 @@ feature 'Commenting debates' do
 
     click_button 'Publish comment'
 
-    expect(page).to have_content "Can't be blank"
+    expect(page).to have_selector("#new_comment .callout.alert", text: "Can't be blank")
   end
 
   scenario 'Reply', :js do
