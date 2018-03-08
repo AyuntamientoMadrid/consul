@@ -9,7 +9,6 @@ feature 'Valuation budget investments' do
 
   background do
     login_as(valuator.user)
-    Setting['feature.budgets.valuators_allowed'] = true
   end
 
   scenario 'Disabled with a feature flag' do
@@ -437,8 +436,8 @@ feature 'Valuation budget investments' do
       expect(page).to have_content('Only integer numbers', count: 2)
     end
 
-    scenario 'not visible to valuators unless setting enabled' do
-      Setting['feature.budgets.valuators_allowed'] = nil
+    scenario 'not visible to valuators when budget is not valuating' do
+      budget.update(phase: 'publishing_prices')
 
       investment = create(:budget_investment,
                            :visible_to_valuators,
@@ -452,8 +451,8 @@ feature 'Valuation budget investments' do
       to raise_error( ActionController::RoutingError)
     end
 
-    scenario 'visible to admins regardless of setting enabled' do
-      Setting['feature.budgets.valuators_allowed'] = nil
+    scenario 'visible to admins regardless of not being in valuating phase' do
+      budget.update(phase: 'publishing_prices')
 
       user = create(:user)
       admin = create(:administrator, user: user)
