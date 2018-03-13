@@ -8,6 +8,8 @@ es:
     ballots:
       show:
         zero: "Todavía no has votado ningún proyecto de gasto."
+      reasons_for_not_balloting:
+        different_heading_assigned_html: "Ya has votado proyectos de otro distrito: %{heading_link}"
     investments:
       form:
         tags_instructions: "Etiqueta este proyecto. Puedes elegir entre las categorías propuestas o introducir las que desees"
@@ -58,3 +60,6 @@ es:
       no_demographic_data: "* No se dispone de los datos demográficos de %{total} participantes."
       participatory_disclaimer: "** Las cifras de participación total se refieren a personas que han creado, apoyado o votado propuestas."
       heading_disclaimer: "*** Los datos de distrito se refieren al distrito en el que el usuario ha votado, no necesariamente en el que está empadronado."
+  votes:
+    budget_investments:
+      different_heading_assigned: "Sólo puedes apoyar proyectos de gasto de un distrito"

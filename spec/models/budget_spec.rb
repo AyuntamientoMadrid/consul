@@ -192,6 +192,7 @@ describe Budget do
 
   describe "#generate_phases" do
     let(:drafting_phase)          { budget.phases.drafting }
+    let(:informing_phase)         { budget.phases.informing }
     let(:accepting_phase)         { budget.phases.accepting }
     let(:reviewing_phase)         { budget.phases.reviewing }
     let(:selecting_phase)         { budget.phases.selecting }
@@ -204,7 +205,8 @@ describe Budget do
     it "generates all phases linked in correct order" do
       expect(budget.phases.count).to eq(Budget::Phase::PHASE_KINDS.count)
 
-      expect(drafting_phase.next_phase).to eq(accepting_phase)
+      expect(drafting_phase.next_phase).to eq(informing_phase)
+      expect(informing_phase.next_phase).to eq(accepting_phase)
       expect(accepting_phase.next_phase).to eq(reviewing_phase)
       expect(reviewing_phase.next_phase).to eq(selecting_phase)
       expect(selecting_phase.next_phase).to eq(valuating_phase)
@@ -215,7 +217,8 @@ describe Budget do
       expect(finished_phase.next_phase).to eq(nil)
 
       expect(drafting_phase.prev_phase).to eq(nil)
-      expect(accepting_phase.prev_phase).to eq(drafting_phase)
+      expect(informing_phase.prev_phase).to eq(drafting_phase)
+      expect(accepting_phase.prev_phase).to eq(informing_phase)
       expect(reviewing_phase.prev_phase).to eq(accepting_phase)
       expect(selecting_phase.prev_phase).to eq(reviewing_phase)
       expect(valuating_phase.prev_phase).to eq(selecting_phase)
@@ -223,6 +226,40 @@ describe Budget do
       expect(balloting_phase.prev_phase).to eq(publishing_prices_phase)
       expect(reviewing_ballots_phase.prev_phase).to eq(balloting_phase)
       expect(finished_phase.prev_phase).to eq(reviewing_ballots_phase)
+    end
+  end
+
+  describe "#formatted_amount" do
+    after do
+      I18n.locale = :en
+    end
+
+    it "correctly formats Euros with Spanish" do
+      budget.update(currency_symbol: '€')
+      I18n.locale = :es
+
+      expect(budget.formatted_amount(1000.00)).to eq ('1.000 €')
+    end
+
+    it "correctly formats Dollars with Spanish" do
+      budget.update(currency_symbol: '$')
+      I18n.locale = :es
+
+      expect(budget.formatted_amount(1000.00)).to eq ('1.000 $')
+    end
+
+    it "correctly formats Dollars with English" do
+      budget.update(currency_symbol: '$')
+      I18n.locale = :en
+
+      expect(budget.formatted_amount(1000.00)).to eq ('$1,000')
+    end
+
+    it "correctly formats Euros with English" do
+      budget.update(currency_symbol: '€')
+      I18n.locale = :en
+
+      expect(budget.formatted_amount(1000.00)).to eq ('€1,000')
     end
   end
 end

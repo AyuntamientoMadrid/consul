@@ -37,7 +37,7 @@ feature 'Commenting Budget::Investments' do
     expect(page).to have_content second_child.body
     expect(page).not_to have_content('Not viable')
 
-    expect(page).to have_link "Go back to #{investment.title}", href: budget_investment_path(investment.budget.id, investment)
+    expect(page).to have_link "Go back to #{investment.title}", href: budget_investment_path(investment.budget, investment)
 
     expect(page).to have_selector("ul#comment_#{parent_comment.id}>li", count: 2)
     expect(page).to have_selector("ul#comment_#{first_child.id}>li", count: 1)
@@ -472,17 +472,17 @@ feature 'Commenting Budget::Investments' do
       visit budget_investment_path(@budget, @investment)
 
       within("#comment_#{@comment.id}_votes") do
+        find('.in_favor a').click
         within('.in_favor') do
-          first('a').click
-          expect(page).to have_content "0"
+          expect(page).to have_content('0')
         end
 
+        find('.against a').click
         within('.against') do
-          first('a').click
-          expect(page).to have_content "1"
+          expect(page).to have_content('1')
         end
 
-        expect(page).to have_content "1 vote"
+        expect(page).to have_content('1 vote')
       end
     end
 
