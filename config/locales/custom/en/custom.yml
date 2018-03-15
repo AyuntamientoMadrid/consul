@@ -352,6 +352,7 @@ en:
     results:
       heading: "Results"
   polls:
+    not_available: Poll not available for public display
     results: Results
     stats: Statistics
     information: Information

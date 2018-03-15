@@ -352,6 +352,7 @@ es:
     results:
       heading: "Resultados"
   polls:
+    not_available: Encuesta no disponible para exhibición pública
     results: Resultados
     stats: Estadísticas
     information: Información
