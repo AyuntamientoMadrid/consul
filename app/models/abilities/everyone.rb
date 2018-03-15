@@ -9,9 +9,7 @@ module Abilities
       can :read, Poll
       can :results_2018, Poll
       can :stats_2018, Poll
-      can :results, Poll do |poll|
-        poll.expired? && poll.results_enabled?
-      end
+      can :results, Poll
       can :stats, Poll do |poll|
         poll.expired? && poll.stats_enabled?
       end

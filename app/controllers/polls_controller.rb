@@ -34,6 +34,9 @@ class PollsController < ApplicationController
   end
 
   def results
+    unless @poll.expired? && @poll.results_enabled?
+      redirect_to main_app.root_url, alert: t('polls.not_available')
+    end
   end
 
   def results_2017
