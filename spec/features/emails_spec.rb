@@ -364,7 +364,6 @@ feature 'Emails' do
   end
 
   context "Budgets" do
-
     background do
       Setting["feature.budgets"] = true
     end
@@ -423,52 +422,43 @@ feature 'Emails' do
       expect(email).to have_body_text(investment.unfeasibility_explanation)
     end
 
-    scenario "Selected investment" do
+    scenario 'Selected investment' do
       author1 = create(:user)
       author2 = create(:user)
-      author3 = create(:user)
 
       investment1 = create(:budget_investment, :selected,   author: author1, budget: budget)
-      investment2 = create(:budget_investment, :selected,   author: author2, budget: budget)
-      investment3 = create(:budget_investment, :unselected, author: author3, budget: budget)
+      investment2 = create(:budget_investment, :unselected, author: author2, budget: budget)
 
       reset_mailer
       budget.email_selected
 
       expect(find_email(investment1.author.email)).to be
-      expect(find_email(investment2.author.email)).to be
-      expect(find_email(investment3.author.email)).not_to be
+      expect(find_email(investment2.author.email)).not_to be
 
       email = open_last_email
-      investment = investment2
-      expect(email).to have_subject("Your investment project '#{investment.code}' has been selected")
-      expect(email).to deliver_to(investment.author.email)
-      expect(email).to have_body_text(investment.title)
+      expect(email).to have_subject("Your investment project '#{investment1.code}' has been selected")
+      expect(email).to deliver_to(investment1.author.email)
+      expect(email).to have_body_text(investment1.title)
     end
 
-    scenario "Unselected investment" do
+    scenario 'Unselected investment' do
       author1 = create(:user)
       author2 = create(:user)
-      author3 = create(:user)
 
       investment1 = create(:budget_investment, :unselected, author: author1, budget: budget)
-      investment2 = create(:budget_investment, :unselected, author: author2, budget: budget)
-      investment3 = create(:budget_investment, :selected,   author: author3, budget: budget)
+      investment2 = create(:budget_investment, :selected,   author: author2, budget: budget)
 
       reset_mailer
       budget.email_unselected
 
       expect(find_email(investment1.author.email)).to be
-      expect(find_email(investment2.author.email)).to be
-      expect(find_email(investment3.author.email)).not_to be
+      expect(find_email(investment2.author.email)).not_to be
 
       email = open_last_email
-      investment = investment2
-      expect(email).to have_subject("Your investment project '#{investment.code}' has not been selected")
-      expect(email).to deliver_to(investment.author.email)
-      expect(email).to have_body_text(investment.title)
+      expect(email).to have_subject("Your investment project '#{investment1.code}' has not been selected")
+      expect(email).to deliver_to(investment1.author.email)
+      expect(email).to have_body_text(investment1.title)
     end
-
   end
 
   context "Polls" do
