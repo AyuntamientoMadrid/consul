@@ -1,6 +1,22 @@
 require 'rails_helper'
 
 feature 'Poll Results' do
+
+  scenario 'Does not show polls without enabled results' do
+    poll = create(:poll, results_enabled: false)
+    visit results_poll_path(poll)
+
+    expect(page).to have_content("Poll not available for public display")
+  end
+
+  scenario 'Does not show incomplete polls' do
+    poll = create(:poll, ends_at: Date.yesterday)
+    visit results_poll_path(poll)
+
+    expect(page).to have_content("Poll not available for public display")
+  end
+
+
   scenario 'List each Poll question', :js do
     user1 = create(:user, :level_two)
     user2 = create(:user, :level_two)
