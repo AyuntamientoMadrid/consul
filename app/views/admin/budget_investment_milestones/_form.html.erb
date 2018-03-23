@@ -1,4 +1,10 @@
-<%= form_for [:admin, @investment.budget, @investment, @milestone] do |f| %>
+<% path = if @milestone.new_record?
+    admin_budget_budget_investment_budget_investment_milestones_path(@investment.budget, @investment.id)
+  else
+    admin_budget_budget_investment_budget_investment_milestone_path(@investment.budget, @investment.id, @milestone.id)
+  end %>
+
+<%= form_for [:admin, @investment.budget, @investment, @milestone], url: path do |f| %>
 
   <%= f.hidden_field :title, value: l(Time.current, format: :datetime), maxlength: Budget::Investment::Milestone.title_max_length %>
   <%= f.text_area :description, rows: 5 %>
