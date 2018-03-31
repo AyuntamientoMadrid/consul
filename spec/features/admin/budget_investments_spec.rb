@@ -208,38 +208,44 @@ feature 'Admin budget investments' do
       end
     end
 
-    scenario "Filtering by valuator", :js do
-      user = create(:user)
-      valuator = create(:valuator, user: user, description: 'Valuator 1')
+    context "Filtering by valuator" do
+      background do
+        user = create(:user)
+        valuator = create(:valuator, user: user, description: 'Valuator 1')
 
-      budget_investment = create(:budget_investment, title: "Realocate visitors", budget: budget)
-      budget_investment.valuators << valuator
+        budget_investment = create(:budget_investment, title: "Realocate visitors", budget: budget)
+        budget_investment.valuators << valuator
 
-      create(:budget_investment, title: "Destroy the city", budget: budget)
+        create(:budget_investment, title: "Destroy the city", budget: budget)
 
-      visit admin_budget_budget_investments_path(budget_id: budget.id)
-      expect(page).to have_link("Realocate visitors")
-      expect(page).to have_link("Destroy the city")
+        visit admin_budget_budget_investments_path(budget_id: budget.id)
+      end
 
-      select "Valuator 1", from: "valuator_or_group_id"
-      click_button 'Filter'
+      scenario "Should have budgets links", :js do
+        expect(page).to have_link("Realocate visitors")
+        expect(page).to have_link("Destroy the city")
+      end
 
-      expect(page).to have_content('There is 1 investment')
-      expect(page).not_to have_link("Destroy the city")
-      expect(page).to have_link("Realocate visitors")
+      scenario "Should have valuators budgets links", :js do
+        select "Valuator 1", from: "valuator_id"
 
-      select "All valuators", from: "valuator_or_group_id"
-      click_button 'Filter'
+        expect(page).to have_content('There is 1 investment')
+        expect(page).not_to have_link("Destroy the city")
+        expect(page).to have_link("Realocate visitors")
+      end
 
-      expect(page).to have_content('There are 2 investments')
-      expect(page).to have_link("Destroy the city")
-      expect(page).to have_link("Realocate visitors")
+      scenario "Should have all valuators budgets links", :js do
+        select "All valuators", from: "valuator_id"
 
-      select "Valuator 1", from: "valuator_or_group_id"
-      click_button 'Filter'
-      expect(page).to have_content('There is 1 investment')
-      expect(page).not_to have_link("Destroy the city")
-      expect(page).to have_link("Realocate visitors")
+        expect(page).to have_content('There are 2 investments')
+        expect(page).to have_link("Destroy the city")
+        expect(page).to have_link("Realocate visitors")
+
+        select "Valuator 1", from: "valuator_id"
+        expect(page).to have_content('There is 1 investment')
+        expect(page).not_to have_link("Destroy the city")
+        expect(page).to have_link("Realocate visitors")
+      end
     end
 
     scenario "Filtering by valuator group", :js do
