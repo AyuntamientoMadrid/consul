@@ -113,4 +113,22 @@ feature 'Admin budget investment milestones' do
     end
   end
 
+  context "create from updated spending proposal" do
+
+    scenario "Add milestone" do
+      investment = create(:budget_investment, original_spending_proposal_id: 8)
+      visit admin_budget_budget_investment_path(investment.budget, investment)
+
+      click_link 'Create new milestone'
+
+      fill_in 'budget_investment_milestone_description', with: 'New description milestone1'
+      fill_in 'budget_investment_milestone_publication_date', with: Date.current
+
+      click_button 'Create milestone'
+
+      expect(page).to have_content 'New description milestone1'
+      expect(page).to have_content Date.current
+    end
+  end
+
 end
