@@ -116,7 +116,7 @@ class Signature < ActiveRecord::Base
     [document_number,
      document_number_without_letter,
      format_spanish_id,
-     unformatted_spanish_id]
+     unformatted_spanish_id].uniq
   end
 
   def mark_as_verified
