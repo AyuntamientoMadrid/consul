@@ -838,6 +838,10 @@ FactoryBot.define do
   factory :signature do
     signature_sheet
     sequence(:document_number) { |n| "#{n}A" }
+
+    trait :verified do
+      verified true
+    end
   end
 
   factory :volunteer_poll do

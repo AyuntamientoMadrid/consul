@@ -13,6 +13,8 @@ class Signature < ActiveRecord::Base
   before_validation :clean_document_number
 
   def verify
+    return if exists?
+
     if user_exists?
       assign_vote_to_user
       mark_as_verified
@@ -23,10 +25,22 @@ class Signature < ActiveRecord::Base
     end
   end
 
+  def exists?
+    document_number_alternatives.any? do |document_number_alternative|
+      document_number_already_signed?(document_number_alternative)
+    end
+  end
+
+  def document_number_already_signed?(signature_document_number)
+    Signature.verified
+             .where(signature_sheet: SignatureSheet.where(signable: signature_sheet.signable))
+             .where(document_number: signature_document_number).any?
+  end
+
   def assign_vote_to_user
     set_user
     if signable.is_a? Budget::Investment
-      signable.vote_by(voter: user, vote: 'yes') if [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user))
+      signable.vote_by(voter: user, vote: 'yes') if user_can_sign?
     else
       signable.register_vote(user, "yes")
     end
@@ -39,7 +53,7 @@ class Signature < ActiveRecord::Base
   end
 
   def user_exists?
-    User.where(document_number: document_number).any?
+    possible_user_matches.count.positive?
   end
 
   def create_user
@@ -82,8 +96,28 @@ class Signature < ActiveRecord::Base
   end
 
   def set_user
-    user = User.where(document_number: document_number).first
+    user = possible_user_matches.first
     update(user: user)
+  end
+
+  def user_can_sign?
+    possible_user_matches.all? do |user_match|
+      [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user_match)) &&
+        Vote.where(votable: signable, voter: user_match).empty?
+    end
+  end
+
+  def possible_user_matches
+    document_number_alternatives.map do |document_number_alternative|
+      User.where(document_number: document_number_alternative).first
+    end.compact
+  end
+
+  def document_number_alternatives
+    [document_number,
+     document_number_without_letter,
+     format_spanish_id,
+     unformatted_spanish_id].uniq
   end
 
   def mark_as_verified
@@ -94,4 +128,29 @@ class Signature < ActiveRecord::Base
     %w(1 2 3 4)
   end
 
+  private
+
+    def document_number_without_letter
+      document_number.gsub(/[A-Za-z]/, "")
+    end
+
+    def format_spanish_id
+      format_spanish_id_digits(document_number_without_letter) +
+        calculate_spanish_id_letter(document_number_without_letter)
+    end
+
+    def format_spanish_id_digits(spanish_id_digits)
+      spanish_id_digits.length < 8 ? "%08d" % spanish_id_digits.to_i : spanish_id_digits
+    end
+
+    def calculate_spanish_id_letter(spanish_id_digits)
+      'TRWAGMYFPDXBNJZSQVHLCKE'[spanish_id_digits.to_i % 23].chr
+    end
+
+    def unformatted_spanish_id
+      spanish_id_formatted = document_number.upcase.match(/\A[0-9]+([A-Z]{1})\z/)
+      return unless spanish_id_formatted
+      spanish_id_letter = spanish_id_formatted[1]
+      document_number.chomp(spanish_id_letter).to_i.to_s
+    end
 end

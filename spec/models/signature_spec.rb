@@ -46,6 +46,70 @@ describe Signature do
     end
   end
 
+  describe "exists?" do
+
+    it "returns false if signature does not exist for a document number" do
+      expect(signature.exists?).to eq(false)
+    end
+
+    it "returns true if a verified signature exists for an exact document number" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+      new_signature = build(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified signature exists for same document number without letter" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+      new_signature = build(:signature, document_number: "12345678", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified signature exists for same document number with its letter and leading zeros" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "02345678T", signature_sheet: signature_sheet)
+
+      new_signature = build(:signature, document_number: "2345678", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified  signature exists for same document number but without spanish id format" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "2345678", signature_sheet: signature_sheet)
+
+      new_signature = build(:signature, document_number: "02345678T", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified signature exists for same document number in another sheet for same investment" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+      second_signature_sheet = create(:signature_sheet, signable: investment)
+      new_signature = build(:signature, document_number: "12345678Z", signature_sheet: second_signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+  end
+
   describe "#verify" do
 
     describe "existing user" do
@@ -124,6 +188,85 @@ describe Signature do
 
         signature_sheet = create(:signature_sheet, signable: investment)
         signature = create(:signature, document_number: user.document_number, signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (same document number without letter)" do
+        investment = create(:budget_investment)
+        user = create(:user, :level_two, document_number: "12345678")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with no-letter document number alternative)" do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "12345678Z")
+        user = create(:user, :level_two, document_number: "12345678")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with lettered document number alternative)" do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "12345678")
+        user = create(:user, :level_two, document_number: "12345678Z")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "12345678", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with spanish formatted document number alternative)" do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "2345678")
+        user = create(:user, :level_two, document_number: "02345678T")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "2345678", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with spanish unformatted document number alternative)" do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "02345678T")
+        user = create(:user, :level_two, document_number: "2345678")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "02345678T", signature_sheet: signature_sheet)
 
         expect(Vote.count).to eq(1)
 
@@ -215,6 +358,31 @@ describe Signature do
         signature.verify
         expect(signature).not_to be_verified
       end
+    end
+
+  end
+
+  describe "#unformatted_spanish_id" do
+    it "return nil when document_number does not match spanish id format" do
+      only_numbers_signature = build(:signature, document_number: "12345678")
+      only_numbers_leading_zero_signature = build(:signature, document_number: "02345678")
+      leading_letter_signature = build(:signature, document_number: "A12345678")
+      leading_trailing_letter_signature = build(:signature, document_number: "A12345678Z")
+      middle_letter_signature = build(:signature, document_number: "12345A678")
+      only_letters_signature = build(:signature, document_number: "ASDFG")
+
+      expect(only_numbers_signature.send(:unformatted_spanish_id)).to eq(nil)
+      expect(only_numbers_leading_zero_signature.send(:unformatted_spanish_id)).to eq(nil)
+      expect(leading_letter_signature.send(:unformatted_spanish_id)).to eq(nil)
+      expect(leading_trailing_letter_signature.send(:unformatted_spanish_id)).to eq(nil)
+      expect(middle_letter_signature.send(:unformatted_spanish_id)).to eq(nil)
+      expect(only_letters_signature.send(:unformatted_spanish_id)).to eq(nil)
+    end
+
+    it "return document number without without leading zeros and without trailing letter" do
+      signature = build(:signature, document_number: "02345678T")
+
+      expect(signature.send(:unformatted_spanish_id)).to eq("2345678")
     end
 
   end
