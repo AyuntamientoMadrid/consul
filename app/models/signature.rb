@@ -107,4 +107,16 @@ class Signature < ActiveRecord::Base
       document_number.gsub(/[A-Za-z]/, "")
     end
 
+    def format_spanish_id
+      format_spanish_id_digits(document_number_without_letter) +
+        calculate_spanish_id_letter(document_number_without_letter)
+    end
+
+    def format_spanish_id_digits(spanish_id_digits)
+      spanish_id_digits.length < 8 ? "%08d" % spanish_id_digits.to_i : spanish_id_digits
+    end
+
+    def calculate_spanish_id_letter(spanish_id_digits)
+      'TRWAGMYFPDXBNJZSQVHLCKE'[spanish_id_digits.to_i % 23].chr
+    end
 end
