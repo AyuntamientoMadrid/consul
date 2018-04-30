@@ -102,7 +102,8 @@ class Signature < ActiveRecord::Base
 
   def user_can_sign?
     possible_user_matches.all? do |user_match|
-      [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user_match))
+      [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user_match)) &&
+        Vote.where(votable: signable, voter: user_match).empty?
     end
   end
 
