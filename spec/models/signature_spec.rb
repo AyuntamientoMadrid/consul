@@ -177,6 +177,54 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
+      it "does not assign vote to user if already voted on budget investment (with no-letter document number alternative)", :focus do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "12345678Z")
+        user = create(:user, :level_two, document_number: "12345678")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with lettered document number alternative)", :focus do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "12345678")
+        user = create(:user, :level_two, document_number: "12345678Z")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "12345678", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
+      it "does not assign vote to user if already voted on budget investment (with spanish formatted document number alternative)", :focus do
+        investment = create(:budget_investment)
+        create(:user, :level_two, document_number: "2345678")
+        user = create(:user, :level_two, document_number: "02345678T")
+        vote = create(:vote, votable: investment, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment)
+        signature = create(:signature, document_number: "2345678", signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
       it "marks the vote as coming from a signature" do
         signature = create(:signature, document_number: "12345678Z")
 

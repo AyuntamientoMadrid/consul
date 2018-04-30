@@ -46,7 +46,7 @@ class Signature < ActiveRecord::Base
   end
 
   def user_exists?
-    User.where(document_number: document_number).any?
+    possible_user_matches.count.positive?
   end
 
   def create_user
@@ -89,12 +89,26 @@ class Signature < ActiveRecord::Base
   end
 
   def set_user
-    user = User.where(document_number: document_number).first
+    user = possible_user_matches.first
     update(user: user)
   end
 
   def user_can_sign?
-    [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user))
+    possible_user_matches.all? do |user_match|
+      [nil, :no_selecting_allowed].include?(signable.reason_for_not_being_selectable_by(user_match))
+    end
+  end
+
+  def possible_user_matches
+    document_number_alternatives.map do |document_number_alternative|
+      User.where(document_number: document_number_alternative).first
+    end.compact
+  end
+
+  def document_number_alternatives
+    [document_number,
+     document_number_without_letter,
+     format_spanish_id]
   end
 
   def mark_as_verified
