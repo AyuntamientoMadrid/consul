@@ -26,8 +26,15 @@ class Signature < ActiveRecord::Base
   end
 
   def exists?
-    Signature.where(signature_sheet: signature_sheet)
-             .where("document_number like ?", "#{document_number_without_letter}%").any?
+    document_number_alternatives.any? do |document_number_alternative|
+      document_number_already_signed?(document_number_alternative)
+    end
+  end
+
+  def document_number_already_signed?(signature_document_number)
+    Signature.verified
+             .where(signature_sheet: SignatureSheet.where(signable: signature_sheet.signable))
+             .where(document_number: signature_document_number).any?
   end
 
   def assign_vote_to_user

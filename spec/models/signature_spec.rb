@@ -52,24 +52,47 @@ describe Signature do
       expect(signature.exists?).to eq(false)
     end
 
-    it "returns true if signature exists for an exact document number" do
+    it "returns true if a verified signature exists for an exact document number" do
       investment = create(:budget_investment)
 
       signature_sheet = create(:signature_sheet, signable: investment)
-      existing_signature = create(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
 
       new_signature = build(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
 
       expect(new_signature.exists?).to eq(true)
     end
 
-    it "returns true if signature exists for same document number without letter" do
+    it "returns true if a verified signature exists for same document number without letter" do
       investment = create(:budget_investment)
 
       signature_sheet = create(:signature_sheet, signable: investment)
-      existing_signature = create(:signature, document_number: "12345678Z", signature_sheet: signature_sheet)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
 
       new_signature = build(:signature, document_number: "12345678", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified signature exists for same document number with its letter and leading zeros" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "02345678T", signature_sheet: signature_sheet)
+
+      new_signature = build(:signature, document_number: "2345678", signature_sheet: signature_sheet)
+
+      expect(new_signature.exists?).to eq(true)
+    end
+
+    it "returns true if a verified signature exists for same document number in another sheet for same investment" do
+      investment = create(:budget_investment)
+
+      signature_sheet = create(:signature_sheet, signable: investment)
+      existing_signature = create(:signature, :verified, document_number: "12345678Z", signature_sheet: signature_sheet)
+
+      second_signature_sheet = create(:signature_sheet, signable: investment)
+      new_signature = build(:signature, document_number: "12345678Z", signature_sheet: second_signature_sheet)
 
       expect(new_signature.exists?).to eq(true)
     end
