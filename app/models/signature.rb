@@ -115,7 +115,8 @@ class Signature < ActiveRecord::Base
   def document_number_alternatives
     [document_number,
      document_number_without_letter,
-     format_spanish_id]
+     format_spanish_id,
+     unformatted_spanish_id]
   end
 
   def mark_as_verified
@@ -143,5 +144,12 @@ class Signature < ActiveRecord::Base
 
     def calculate_spanish_id_letter(spanish_id_digits)
       'TRWAGMYFPDXBNJZSQVHLCKE'[spanish_id_digits.to_i % 23].chr
+    end
+
+    def unformatted_spanish_id
+      spanish_id_formatted = document_number.upcase.match(/\A[0-9]+([A-Z]{1})\z/)
+      return unless spanish_id_formatted
+      spanish_id_letter = spanish_id_formatted[1]
+      document_number.chomp(spanish_id_letter).to_i.to_s
     end
 end
