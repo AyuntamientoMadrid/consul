@@ -196,7 +196,7 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
-      it "does not assign vote to user if already voted on budget investment (same document number without letter)", :focus do
+      it "does not assign vote to user if already voted on budget investment (same document number without letter)" do
         investment = create(:budget_investment)
         user = create(:user, :level_two, document_number: "12345678")
         vote = create(:vote, votable: investment, voter: user)
@@ -211,7 +211,7 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
-      it "does not assign vote to user if already voted on budget investment (with no-letter document number alternative)", :focus do
+      it "does not assign vote to user if already voted on budget investment (with no-letter document number alternative)" do
         investment = create(:budget_investment)
         create(:user, :level_two, document_number: "12345678Z")
         user = create(:user, :level_two, document_number: "12345678")
@@ -227,7 +227,7 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
-      it "does not assign vote to user if already voted on budget investment (with lettered document number alternative)", :focus do
+      it "does not assign vote to user if already voted on budget investment (with lettered document number alternative)" do
         investment = create(:budget_investment)
         create(:user, :level_two, document_number: "12345678")
         user = create(:user, :level_two, document_number: "12345678Z")
@@ -243,7 +243,7 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
-      it "does not assign vote to user if already voted on budget investment (with spanish formatted document number alternative)", :focus do
+      it "does not assign vote to user if already voted on budget investment (with spanish formatted document number alternative)" do
         investment = create(:budget_investment)
         create(:user, :level_two, document_number: "2345678")
         user = create(:user, :level_two, document_number: "02345678T")
@@ -259,7 +259,7 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
-      it "does not assign vote to user if already voted on budget investment (with spanish unformatted document number alternative)", :focus do
+      it "does not assign vote to user if already voted on budget investment (with spanish unformatted document number alternative)" do
         investment = create(:budget_investment)
         create(:user, :level_two, document_number: "02345678T")
         user = create(:user, :level_two, document_number: "2345678")
