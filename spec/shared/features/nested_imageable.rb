@@ -97,7 +97,7 @@ shared_examples "nested imageable" do |imageable_factory_name, path, imageable_p
         Rails.root.join('spec/fixtures/files/clippy.jpg')
       )
 
-      expect(page).to have_selector ".loading-bar.complete"
+      expect(page).to have_content "Remove image"
     end
 
     scenario "Should update loading bar style after invalid file upload", :js do
@@ -110,7 +110,7 @@ shared_examples "nested imageable" do |imageable_factory_name, path, imageable_p
         false
       )
 
-      expect(page).to have_selector ".loading-bar.errors"
+      expect(page).not_to have_content "Remove image"
     end
 
     scenario "Should update image cached_attachment field after valid file upload", :js do
@@ -277,9 +277,9 @@ def imageable_attach_new_file(_imageable_factory_name, path, success = true)
     attach_file(image_input[:id], path, make_visible: true)
     within image do
       if success
-        expect(page).to have_css(".loading-bar.complete")
+        expect(page).to have_content "Remove image"
       else
-        expect(page).to have_css(".loading-bar.errors")
+        expect(page).not_to have_content "Remove image"
       end
     end
   end

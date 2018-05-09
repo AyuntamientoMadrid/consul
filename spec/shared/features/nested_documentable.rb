@@ -86,7 +86,7 @@ shared_examples "nested documentable" do |login_as_name, documentable_factory_na
         )
       end
 
-      expect(page).to have_css ".file-name", text: "empty.pdf"
+      expect(page).to have_content "Remove document"
     end
 
     scenario "Should update nested document file title with
@@ -125,7 +125,7 @@ shared_examples "nested documentable" do |login_as_name, documentable_factory_na
 
       documentable_attach_new_file(Rails.root.join('spec/fixtures/files/empty.pdf'))
 
-      expect(page).to have_css ".loading-bar.complete"
+      expect(page).to have_content "Remove document"
     end
 
     scenario "Should update loading bar style after unvalid file upload", :js do
@@ -137,7 +137,7 @@ shared_examples "nested documentable" do |login_as_name, documentable_factory_na
         false
       )
 
-      expect(page).to have_css ".loading-bar.errors"
+      expect(page).not_to have_content "Remove document"
     end
 
     scenario "Should update document cached_attachment field after valid file upload", :js do
@@ -326,12 +326,13 @@ def documentable_attach_new_file(path, success = true)
   # making https://github.com/teampoltergeist/poltergeist/blob/master/lib/capybara/poltergeist/client/browser.coffee#L186
   # always choose the previous used input.
   page.execute_script("$('##{document_input[:id]}').removeAttr('_poltergeist_selected')")
-
   within document do
     if success
-      expect(page).to have_css ".loading-bar.complete"
+      expect(page).to have_content "Remove document"
     else
-      expect(page).to have_css ".loading-bar.errors"
+      within '.small-9.column.action-add.attachment-errors.document-attachment' do
+        expect(page).to have_content "Choose document"
+      end
     end
   end
 end
