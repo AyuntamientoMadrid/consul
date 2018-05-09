@@ -111,14 +111,7 @@ feature 'Admin banners magement' do
                               post_started_at: (Time.current + 4.days),
                               post_ended_at:   (Time.current + 10.days))
 
-    visit admin_root_path
-
-    within('#side_menu') do
-      click_link "Banners"
-      click_link "Manage banners"
-    end
-
-    click_link "Edit banner"
+    visit edit_admin_banner_path(banner1.id)
 
     fill_in 'banner_title', with: 'Modified title'
     fill_in 'banner_description', with: 'Edited text'
