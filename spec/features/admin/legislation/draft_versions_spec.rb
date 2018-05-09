@@ -69,7 +69,6 @@ feature 'Admin legislation draft versions' do
   context 'Update' do
     scenario 'Valid legislation draft version', :js do
       process = create(:legislation_process, title: 'An example legislation process')
-      draft_version = create(:legislation_draft_version, title: 'Version 1', process: process)
 
       visit admin_root_path
 
@@ -82,6 +81,9 @@ feature 'Admin legislation draft versions' do
       expect(page).to have_content 'An example legislation process'
 
       click_link 'An example legislation process'
+
+      create(:legislation_draft_version, title: 'Version 1', process: process)
+
       click_link 'Text'
 
       click_link 'Version 1'
