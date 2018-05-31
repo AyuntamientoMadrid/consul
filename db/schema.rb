@@ -151,6 +151,13 @@ ActiveRecord::Schema.define(version: 20180517141120) do
 
   add_index "budget_groups", ["budget_id"], name: "index_budget_groups_on_budget_id", using: :btree
 
+  create_table "budget_heading_supports", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "budget_heading_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
   create_table "budget_headings", force: :cascade do |t|
     t.integer "group_id"
     t.string  "name",       limit: 50

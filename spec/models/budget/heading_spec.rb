@@ -56,4 +56,28 @@ describe Budget::Heading do
     end
   end
 
+  describe "already_supported_by_user?" do
+    let(:user) { create(:user) }
+    let(:budget) { create(:budget) }
+    let(:group) { create(:budget_group, budget: budget) }
+    let(:heading1) { create(:budget_heading, group: group) }
+    let(:heading2) { create(:budget_heading, group: group) }
+    let(:investment1) { create(:budget_investment, budget: budget, heading: heading1) }
+    let(:investment2) { create(:budget_investment, budget: budget, heading: heading2) }
+
+    it "returns true if user has already supported investments in this heading" do
+      create(:vote, votable: investment1, voter: user)
+      create(:budget_heading_support, user: user, budget_heading: heading1)
+
+      expect(heading1.already_supported_by_user?(user)).to be(true)
+    end
+
+    it "returns false if user hasn't supported investments in this heading" do
+      create(:vote, votable: investment2, voter: user)
+      create(:budget_heading_support, user: user, budget_heading: heading2)
+
+      expect(heading1.already_supported_by_user?(user)).to be(false)
+    end
+  end
+
 end

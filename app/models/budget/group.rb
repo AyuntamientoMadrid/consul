@@ -24,6 +24,11 @@ class Budget
       headings.count == 1
     end
 
+    def reached_max_supportable_headings?(user)
+      supported = user.budget_heading_supports.pluck(:budget_heading_id) & headings.pluck(:id)
+      supported.count >= max_supportable_headings
+    end
+
     private
 
     def generate_slug?

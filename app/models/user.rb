@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :direct_messages_received, class_name: 'DirectMessage', foreign_key: :receiver_id
   has_many :legislation_answers, class_name: 'Legislation::Answer', dependent: :destroy, inverse_of: :user
   has_many :follows
+  has_many :budget_heading_supports, class_name: "Budget::Heading::Support"
   belongs_to :geozone
   belongs_to :representative, class_name: "Forum"
 
