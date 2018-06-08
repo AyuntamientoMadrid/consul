@@ -126,6 +126,10 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.expect_with(:rspec) { |c| c.syntax = :expect }
+
+  config.after(:each) do
+    Timecop.return
+  end
 end
 
 # Parallel build helper configuration for travis
