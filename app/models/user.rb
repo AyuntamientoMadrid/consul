@@ -141,6 +141,16 @@ class User < ActiveRecord::Base
     votes.for_budget_investments(Budget::Investment.where(group: group)).exists?
   end
 
+  def headings_voted_within_group(group)
+    Budget::Heading.where(id:
+      votes.where(votable_type: Budget::Investment)
+           .joins(:budget_investment)
+           .where(budget_investments: {group_id: group.id})
+           .distinct
+           .select('budget_investments.heading_id')
+    )
+  end
+
   def administrator?
     administrator.present?
   end
