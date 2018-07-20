@@ -12,7 +12,7 @@
 
         <h2 class="inline-block">
           <span class="not-print"><%= t("proposals.index.select_order_long") %></span>
-          <span class="for-print-only"><%= t("management.print.proposals_title") %></span>
+          <span class="for-print-only"><%= g("management.print.proposals_title") %></span>
         </h2>
         <%= render 'shared/order_selector', i18n_namespace: "proposals.index" %>
       </div>
@@ -20,8 +20,8 @@
       <%= render @proposals %>
 
       <div class="for-print-only">
-        <p><strong><%= t("management.print.proposals_info") %></strong><br>
-        <%= t("management.print.proposals_note") %></p>
+        <p><strong><%= g("management.print.proposals_info") %></strong><br>
+        <%= g("management.print.proposals_note") %></p>
       </div>
     </div>
   </div>

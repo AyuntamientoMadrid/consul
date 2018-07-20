@@ -1,4 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include ApplicationHelper
+
   prepend_before_action :track_signup, only: :new
   prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy, :finish_signup, :do_finish_signup]
   before_filter :configure_permitted_parameters
@@ -30,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     current_user.erase(erase_params[:erase_reason])
     sign_out
     log_event("deregister", "degistered")
-    redirect_to root_url, notice: t("devise.registrations.destroyed")
+    redirect_to root_url, notice: g("devise.registrations.destroyed")
   end
 
   def success

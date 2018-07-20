@@ -1,8 +1,8 @@
+
 <% provide :title do %><%= t("budgets.index.title") %><% end %>
 <% content_for :canonical do %>
   <%= render "shared/canonical", href: budgets_url %>
 <% end %>
-
 <% if current_budget.present? %>
   <div id="budget_heading" class="expanded budget no-margin-top">
     <div class="row" data-equalizer data-equalizer-on="medium">
@@ -177,12 +177,12 @@
       <p class="lead">
         <strong><%= t("budgets.index.section_footer.title") %></strong>
       </p>
-      <p><%= t("budgets.index.section_footer.description") %></p>
-      <p><%= t("budgets.index.section_footer.help_text_1") %></p>
-      <p><%= t("budgets.index.section_footer.help_text_2") %></p>
-      <p><%= t("budgets.index.section_footer.help_text_3",
+      <p><%= g("budgets.index.section_footer.description") %></p>
+      <p><%= g("budgets.index.section_footer.help_text_1") %></p>
+      <p><%= g("budgets.index.section_footer.help_text_2") %></p>
+      <p><%= g("budgets.index.section_footer.help_text_3",
                 org: link_to(setting['org_name'], new_user_registration_path)).html_safe %></p>
-      <p><%= t("budgets.index.section_footer.help_text_4") %></p>
+      <p><%= g("budgets.index.section_footer.help_text_4") %></p>
     </div>
   </div>
 </div>

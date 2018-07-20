@@ -553,6 +553,15 @@ es:
         pages: Personalizar páginas
         images: Personalizar imágenes
         content_blocks: Personalizar bloques
+        information_texts: Personalizar textos de información
+        information_texts_menu:
+          debates: Debates
+          proposals: Propuestas
+          polls: Votaciones
+          participatory_budgets: Presupuestos participativos
+          more_information: Otra información
+          emails: Emails
+          management: Gestión
       title_moderated_content: Contenido moderado
       title_budgets: Presupuestos
       title_polls: Votaciones

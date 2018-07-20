@@ -90,7 +90,7 @@
     </div>
 
     <div class="actions small-12 column">
-      <%= f.submit(class: "button", value: t("proposals.#{action_name}.form.submit_button")) %>
+      <%= f.submit(class: "button", value: (action_name == 'new' ? g("proposals.#{action_name}.form.submit_button") : t("proposals.#{action_name}.form.submit_button"))) %>
     </div>
   </div>
 <% end %>

@@ -61,4 +61,14 @@ module ApplicationHelper
   def css_for_landing
     "landing-" + params[:landing] if params[:landing].present?
   end
+
+  def g(key, interpolations = {})
+    Globalize.with_locale(locale) do
+      string = I18nContent.where(key: key).first.value
+      interpolations.each do |key, value|
+        string.sub! "%{#{key}}", (value || "%{#{key}}")
+      end
+      string.html_safe
+    end
+  end
 end

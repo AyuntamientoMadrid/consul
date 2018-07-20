@@ -1,5 +1,5 @@
 class Admin::SystemEmailsController < Admin::BaseController
-
+  include ApplicationHelper
   before_action :load_system_email, only: [:view, :preview_pending, :moderate_pending]
 
   def index
@@ -12,7 +12,7 @@ class Admin::SystemEmailsController < Admin::BaseController
     case @system_email
     when "proposal_notification_digest"
       @notifications = Notification.where(notifiable_type: "ProposalNotification").limit(2)
-      @subject = t('mailers.proposal_notification_digest.title', org_name: Setting['org_name'])
+      @subject = g('mailers.proposal_notification_digest.title', org_name: Setting['org_name'])
     end
   end
 

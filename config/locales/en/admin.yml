@@ -553,6 +553,15 @@ en:
         pages: Custom Pages
         images: Custom Images
         content_blocks: Custom content blocks
+        information_texts: Custom information texts
+        information_texts_menu:
+          debates: Debates
+          proposals: Proposals
+          polls: Polls
+          participatory_budgets: Participatory budgets
+          more_information: More information
+          emails: Emails
+          management: Management
       title_moderated_content: Moderated content
       title_budgets: Budgets
       title_polls: Polls
