@@ -12,7 +12,7 @@ module Budgets
                          .joins(investments: :milestones)
                          .where(budget_investments: {winner: true})
                          .distinct
-                         .order(id: :asc)
+                         .order(name: :asc)
 
       if params[:status].present?
         @headings = @headings.where(filter_investment_by_latest_milestone, params[:status])
