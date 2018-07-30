@@ -243,4 +243,40 @@ feature 'Executions' do
       expect(page).to have_current_path(participatory_budget_results_path)
     end
   end
+
+  context 'Heading Order' do
+
+    def create_heading_with_investment_with_milestone(group:, name:)
+      heading    = create(:budget_heading, group: group, name: name)
+      investment = create(:budget_investment, :winner, heading: heading)
+      milestone  = create(:budget_investment_milestone, investment: investment)
+      heading
+    end
+
+    scenario 'City heading is displayed first' do
+      heading.destroy!
+      other_heading1 = create_heading_with_investment_with_milestone(group: group, name: 'Other 1')
+      city_heading   = create_heading_with_investment_with_milestone(group: group, name: 'Toda la ciudad')
+      other_heading2 = create_heading_with_investment_with_milestone(group: group, name: 'Other 2')
+
+      visit custom_budget_executions_path(budget)
+
+      expect(page).to have_css('.budget-execution', count: 3)
+      expect(city_heading.name).to appear_before(other_heading1.name)
+      expect(city_heading.name).to appear_before(other_heading2.name)
+    end
+
+    scenario 'Non-city headings are displayed in alphabetical order' do
+      heading.destroy!
+      z_heading = create_heading_with_investment_with_milestone(group: group, name: 'Zzz')
+      a_heading = create_heading_with_investment_with_milestone(group: group, name: 'Aaa')
+      m_heading = create_heading_with_investment_with_milestone(group: group, name: 'Mmm')
+
+      visit custom_budget_executions_path(budget)
+
+      expect(page).to have_css('.budget-execution', count: 3)
+      expect(a_heading.name).to appear_before(m_heading.name)
+      expect(m_heading.name).to appear_before(z_heading.name)
+    end
+  end
 end
