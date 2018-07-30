@@ -22,7 +22,7 @@ module Budgets
                                          .distinct.group_by(&:heading)
       end
 
-      @headings = reorder_alphabetically_with_city_heading_first(@headings)
+      reorder_alphabetically_with_city_heading_first
     end
 
     private
@@ -31,8 +31,8 @@ module Budgets
         @budget = Budget.find_by(slug: params[:id]) || Budget.find_by(id: params[:id])
       end
 
-      def reorder_alphabetically_with_city_heading_first(headings)
-        headings.sort do |a, b|
+      def reorder_alphabetically_with_city_heading_first
+        @investments_by_heading.keys.sort do |a, b|
           if a.name == 'Toda la ciudad'
             -1
           elsif b.name == 'Toda la ciudad'
