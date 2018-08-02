@@ -1,6 +1,8 @@
 class Budget
   class Ballot
     class Line < ActiveRecord::Base
+      self.table_name = 'budget_ballot_lines'
+
       belongs_to :ballot, counter_cache: :ballot_lines_count
       belongs_to :investment, counter_cache: :ballot_lines_count
       belongs_to :heading
@@ -14,6 +16,8 @@ class Budget
       validate :check_valid_heading
 
       scope :by_investment, ->(investment_id) { where(investment_id: investment_id) }
+      scope :by_ballot_id, ->(ids) { where(ballot_id: ids) }
+      scope :by_heading_id, ->(ids) { where(heading_id: ids) }
 
       before_validation :set_denormalized_ids
       after_save :store_user_heading

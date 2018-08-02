@@ -1,5 +1,7 @@
 class Budget
   class Ballot < ActiveRecord::Base
+    self.table_name = 'budget_ballots'
+
     belongs_to :user
     belongs_to :budget
     belongs_to :poll_ballot, class_name: "Poll::Ballot"
@@ -8,6 +10,10 @@ class Budget
     has_many :investments, through: :lines
     has_many :groups, -> { uniq }, through: :lines
     has_many :headings, -> { uniq }, through: :groups
+
+    scope :by_tag, ->(tag_name) { tagged_with(tag_name) }
+    scope :by_id, ->(ids) { where(id: ids) }
+    scope :by_budget_id, ->(ids) { where(budget_id: ids) }
 
     def add_investment(investment)
       lines.create(investment: investment).persisted?
@@ -73,6 +79,12 @@ class Budget
 
     def casted_offline?
       budget.poll&.voted_by?(user)
+    end
+
+    def self.users_list_ids(budget_id, city_heading_id)
+      self.joins(:lines).merge(
+        Budget::Ballot::Line.by_heading_id(city_heading_id)
+      ).by_id(self.by_budget_id(budget_id)).pluck(:id)
     end
 
   end

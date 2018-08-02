@@ -105,32 +105,40 @@ section "Geolocating Investments" do
 end
 
 section "Balloting Investments" do
+  # 200 for stats testing
   Budget.finished.first.investments.last(20).each do |investment|
     investment.update(selected: true, feasibility: "feasible")
   end
 end
 
 section "Voting Investments" do
-  not_org_users = User.where(['users.id NOT IN(?)', User.organizations.pluck(:id)])
+  not_org_users = User.where(['users.id NOT IN(?)', User.organizations.pluck(:id)]).level_two_or_three_verified
+  investments = Budget::Investment.all
+
   100.times do
-    voter = not_org_users.level_two_or_three_verified.reorder("RANDOM()").first
-    investment = Budget::Investment.reorder("RANDOM()").first
+    voter = not_org_users.sample
+    investment = investments.sample
     investment.vote_by(voter: voter, vote: true)
   end
 end
 
 section "Balloting Investments" do
+  budget = Budget.finished.first
+  investments = budget.investments
+  users = User.all
+  # 600000 for stats testing
   100.times do
-    budget = Budget.finished.reorder("RANDOM()").first
-    ballot = Budget::Ballot.create(user: User.reorder("RANDOM()").first, budget: budget)
-    ballot.add_investment(budget.investments.reorder("RANDOM()").first)
+    ballot = Budget::Ballot.create(user: users.sample,
+                                   budget: budget)
+    ballot.add_investment(investments.sample)
   end
 end
 
 section "Winner Investments" do
   budget = Budget.finished.first
+  headings = budget.headings.all
   50.times do
-    heading = budget.headings.all.sample
+    heading = headings.sample
     investment = Budget::Investment.create!(
       author: User.all.sample,
       heading: heading,
@@ -148,7 +156,7 @@ section "Winner Investments" do
     )
     add_image_to(investment) if Random.rand > 0.3
   end
-  budget.headings.each do |heading|
+  headings.each do |heading|
     Budget::Result.new(budget, heading).calculate_winners
   end
 end

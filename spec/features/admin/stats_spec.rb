@@ -291,7 +291,7 @@ feature 'Stats' do
       background do
         @budget = create(:budget, :balloting)
         @group = create(:budget_group, budget: @budget)
-        @heading = create(:budget_heading, group: @group)
+        @heading = create(:budget_heading, group: @group, name: "Toda la ciudad")
         @investment = create(:budget_investment, :feasible, :selected, heading: @heading)
 
         allow_any_instance_of(Admin::StatsController).
@@ -299,18 +299,25 @@ feature 'Stats' do
       end
 
       scenario "Number of votes in investment projects" do
-        ballot_1 = create(:budget_ballot, budget: @budget)
-        ballot_2 = create(:budget_ballot, budget: @budget)
-
         group_2 = create(:budget_group, budget: @budget)
-        heading_2 = create(:budget_heading, group: group_2)
+        heading_2 = create(:budget_heading, group: group_2, name: "heading 2")
         investment_2 = create(:budget_investment, :feasible, :selected, heading: heading_2)
 
+        ballot_1 = create(:budget_ballot, budget: @budget)
+        ballot_2 = create(:budget_ballot, budget: @budget)
+        ballot_3 = create(:budget_ballot, budget: @budget)
+        ballot_4 = create(:budget_ballot, budget: @budget)
+
+        group_3 = create(:budget_group, budget: @budget)
+        heading_3 = create(:budget_heading, group: group_3, name: "heading 3")
+        investment_3 = create(:budget_investment, :feasible, :selected, heading: heading_3)
+
         create(:budget_ballot_line, ballot: ballot_1, investment: @investment)
+        create(:budget_ballot_line, ballot: ballot_2, investment: @investment)
         create(:budget_ballot_line, ballot: ballot_1, investment: investment_2)
         create(:budget_ballot_line, ballot: ballot_2, investment: investment_2)
-
-        expect { Rake::Task['budgets:stats:balloting'].execute }.not_to raise_exception
+        create(:budget_ballot_line, ballot: ballot_4, investment: investment_3)
+        create(:budget_ballot_line, ballot: ballot_3, investment: investment_3)
 
         visit admin_stats_path
         click_link "Participatory Budgets"
@@ -318,7 +325,17 @@ feature 'Stats' do
           click_link "Final voting"
         end
 
-        expect(page).to have_content "Votes 3"
+        expect(page).to have_content "Votes 6"
+
+        expect(page).to have_content "Users who voted for city-wide proposals 2"
+        expect(page).to have_content "Users who voted for district-wide proposals 4"
+        expect(page).to have_content "Users who voted for BOTH 2"
+        expect(page).to have_content "Toda la ciudad 2"
+        expect(page).to have_content "heading 2 2"
+        expect(page).to have_content "heading 3 2"
+        expect(page).to have_content "heading 2 2"
+        expect(page).to have_content "heading 3 2"
+
       end
 
       scenario "Number of users that have voted a investment project" do
@@ -332,8 +349,6 @@ feature 'Stats' do
 
         create(:budget_ballot_line, ballot: ballot_1, investment: @investment)
         create(:budget_ballot_line, ballot: ballot_2, investment: @investment)
-
-        expect { Rake::Task['budgets:stats:balloting'].execute }.not_to raise_exception
 
         visit admin_stats_path
         click_link "Participatory Budgets"

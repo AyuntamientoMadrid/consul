@@ -85,15 +85,36 @@ class Admin::StatsController < Admin::BaseController
   def budget_balloting
     @budget = Budget.find(params[:budget_id])
 
-    budget_stats = Stat.hash("budget_#{@budget.id}_balloting_stats")
-    @user_count = budget_stats['stats']['user_count']
-    @vote_count = budget_stats['stats']['vote_count']
-    @user_count_in_city = budget_stats['stats']['user_count_in_city']
-    @user_count_in_district = budget_stats['stats']['user_count_in_district']
-    @user_count_in_city_and_district = budget_stats['stats']['user_count_in_city_and_district']
+    city_heading = @budget.headings.where(name: "Toda la ciudad").first
+    city_heading_id = city_heading.present? ? city_heading.id.to_s : 'null'
 
-    @vote_count_by_heading = budget_stats['vote_count_by_heading']
-    @user_count_by_district = budget_stats['user_count_by_district']
+    district_ids = @budget.heading_ids - [city_heading_id.to_i]
+
+    @user_count = Budget::Ballot::Line.by_ballot_id(
+                      Budget::Ballot.by_budget_id(params[:budget_id])
+                    ).group(:ballot_id).count.values.sum
+    @vote_count = Budget::Ballot::Line.by_ballot_id(
+                      Budget::Ballot.by_budget_id(params[:budget_id])
+                    ).count
+    users_in_city = Budget::Ballot.users_list_ids(params[:budget_id], city_heading_id)
+    users_in_district = Budget::Ballot.users_list_ids(params[:budget_id],
+                                                         district_ids)
+
+    @user_count_in_city = users_in_city.count
+    @user_count_in_district = users_in_district.count
+    @user_count_in_city_and_district = (users_in_city & users_in_district).count
+
+    @vote_count_by_heading = {}
+    @user_count_by_district = {}
+
+    @budget.headings.each do |heading|
+      @vote_count_by_heading[heading.name] = @budget.lines.where(heading_id: heading.id).count
+
+      @user_count_by_district[heading.name] = User.where.not(
+        balloted_heading_id: nil
+      ).where(balloted_heading_id: heading.id).count if heading.id != city_heading_id
+    end
+
   end
 
   def redeemable_codes
