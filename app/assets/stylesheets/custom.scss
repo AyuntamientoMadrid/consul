@@ -489,6 +489,10 @@ table {
   }
 }
 
+.disable-on-click[disabled]{
+  pointer-events: none;
+}
+
 @import 'motion-ui/motion-ui';
 @include foundation-orbit;
 @include motion-ui-transitions;

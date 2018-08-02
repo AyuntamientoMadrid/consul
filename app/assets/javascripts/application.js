@@ -133,7 +133,7 @@ var initialize_modules = function() {
   App.SendAdminNotificationAlert.initialize();
   App.Managers.initialize();
   App.Globalize.initialize();
-  App.SendAdminNotificationAlert.initialize();
+  App.Followable.initialize();
 };
 
 $(function(){

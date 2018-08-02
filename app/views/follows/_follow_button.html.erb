@@ -5,7 +5,7 @@
                   follow_path(follow),
                   method: :delete, remote: true,
                   title: unfollow_text(follow.followable),
-                  class: 'button expanded' %>
+                  class: 'button expanded disable-on-click' %>
 
     <% else %>
       <%= link_to follow_text(follow.followable),
@@ -13,7 +13,7 @@
                                followable_type: follow.followable.class.name),
                   method: :post, remote: true,
                   title: follow_text(follow.followable),
-                  class: 'button hollow expanded' %>
+                  class: 'button hollow expanded disable-on-click' %>
     <% end %>
   </span>
 </div>
