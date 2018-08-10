@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180727140800) do
+ActiveRecord::Schema.define(version: 20180807104331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -698,6 +698,7 @@ ActiveRecord::Schema.define(version: 20180727140800) do
     t.integer  "cached_votes_total",                default: 0
     t.integer  "cached_votes_down",                 default: 0
     t.string   "proposal_type"
+    t.boolean  "selected"
   end
 
   add_index "legislation_proposals", ["legislation_process_id"], name: "index_legislation_proposals_on_legislation_process_id", using: :btree
