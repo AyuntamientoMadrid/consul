@@ -25,6 +25,7 @@
 /coverage
 
 /config/beta-testers.txt
+/config/development_settings.rb
 .byebug_history
 
 # Mac finder artifacts
