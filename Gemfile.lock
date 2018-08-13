@@ -75,7 +75,6 @@ GEM
     bullet (5.7.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.10.0)
-    byebug (10.0.0)
     cancancan (2.1.2)
     capistrano (3.10.1)
       airbrussh (>= 1.0.0)
@@ -126,7 +125,6 @@ GEM
     daemons (1.2.6)
     dalli (2.7.6)
     database_cleaner (1.6.2)
-    debug_inspector (0.0.3)
     delayed_job (4.1.4)
       activesupport (>= 3.0, < 5.2)
     delayed_job_active_record (4.1.2)
@@ -487,10 +485,6 @@ GEM
     wasabi (3.5.0)
       httpi (~> 2.0)
       nokogiri (>= 1.4.2)
-    web-console (3.3.0)
-      activemodel (>= 4.2)
-      debug_inspector
-      railties (>= 4.2)
     whenever (0.10.0)
       chronic (>= 0.6.3)
     xpath (3.0.0)
@@ -508,7 +502,6 @@ DEPENDENCIES
   autoprefixer-rails (~> 8.2.0)
   browser (~> 2.5.2)
   bullet (~> 5.7.0)
-  byebug (~> 10.0.0)
   cancancan (~> 2.1.2)
   capistrano (~> 3.10.1)
   capistrano-bundler (~> 1.2)
@@ -582,7 +575,6 @@ DEPENDENCIES
   turnout (~> 2.4.0)
   uglifier (~> 4.1.2)
   unicorn (~> 5.4.0)
-  web-console (~> 3.3.0)
   whenever (~> 0.10.0)
 
 BUNDLED WITH
