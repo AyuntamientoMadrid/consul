@@ -12,15 +12,13 @@ module SiteCustomizationHelper
     i18n_content = I18nContent.where(key: content.key).first
 
     if i18n_content.present?
-      translation = I18nContentTranslation.where(
+      I18nContentTranslation.where(
         i18n_content_id: i18n_content.id,
         locale: locale
       ).first.try(:value)
     else
-      translation = false
+      false
     end
-
-    return translation
   end
 
 end
