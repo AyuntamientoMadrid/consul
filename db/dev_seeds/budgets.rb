@@ -93,17 +93,6 @@ section "Marking investments as visible to valuators" do
   end
 end
 
-section "Geolocating Investments" do
-  Budget.all.each do |budget|
-    budget.investments.each do |investment|
-      MapLocation.create(latitude: Setting['map_latitude'].to_f + rand(-10..10)/100.to_f,
-                         longitude: Setting['map_longitude'].to_f + rand(-10..10)/100.to_f,
-                         zoom: Setting['map_zoom'],
-                         investment_id: investment.id)
-    end
-  end
-end
-
 section "Balloting Investments" do
   Budget.finished.first.investments.last(20).each do |investment|
     investment.update(selected: true, feasibility: "feasible")
