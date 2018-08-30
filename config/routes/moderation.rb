@@ -1,7 +1,7 @@
-namespace :moderation do
+namespace :moderation, path: 'moderacion' do
   root to: "dashboard#index"
 
-  resources :users, only: :index do
+  resources :users, path: 'usuarios', only: :index do
     member do
       put :hide
       put :hide_in_moderation_screen
@@ -13,12 +13,12 @@ namespace :moderation do
     put :moderate, on: :collection
   end
 
-  resources :proposals, only: :index do
+  resources :proposals, path: 'propuestas', only: :index do
     put :hide, on: :member
     put :moderate, on: :collection
   end
 
-  resources :comments, only: :index do
+  resources :comments, path: 'comentarios', only: :index do
     put :hide, on: :member
     put :moderate, on: :collection
   end

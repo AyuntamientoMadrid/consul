@@ -334,13 +334,13 @@ feature 'Tracking' do
         expect(page.html).to have_content "weboConv(28);"
       end
 
-      scenario "proposals" do
-        visit "proposals"
+      scenario "propuestas" do
+        visit "propuestas"
         expect(page.html).to have_content "weboConv(29);"
       end
 
-      scenario "proposals/new" do
-        visit "proposals/new"
+      scenario "propuestas/new" do
+        visit "propuestas/new"
         expect(page.html).to have_content "weboConv(30);"
       end
 

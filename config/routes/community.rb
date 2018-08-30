@@ -1,3 +1,3 @@
-resources :communities, only: [:show] do
-  resources :topics
+resources :communities, path: 'comunidades', only: [:show] do
+  resources :topics, path: 'temas'
 end

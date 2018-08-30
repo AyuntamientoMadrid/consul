@@ -1,10 +1,10 @@
-resources :polls, only: [:show, :index] do
+resources :polls, path: 'votaciones', only: [:show, :index] do
   member do
-    get :stats
-    get :results
+    get :stats, path: 'estadisticas'
+    get :results, path: 'resultados'
   end
 
-  resources :questions, controller: 'polls/questions', shallow: true do
+  resources :questions, path: 'preguntas', controller: 'polls/questions', shallow: true do
     post :answer, on: :member
   end
 end

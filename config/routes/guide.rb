@@ -1,1 +1,1 @@
-resources :guides, only: :new
+resources :guides, path: 'guia', only: :new

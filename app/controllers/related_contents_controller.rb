@@ -55,6 +55,8 @@ class RelatedContentsController < ApplicationController
 
         if related_klass == 'Presupuesto::Proyecto'
           related_klass = 'Budget::Investment'
+        elsif related_klass == "Propuesta"
+          related_klass = 'Proposal'
         end
 
         @related = related_klass.singularize.camelize.constantize.find_by(id: related_id)

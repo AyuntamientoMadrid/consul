@@ -8,8 +8,8 @@ resources :debates do
   end
 
   collection do
-    get :map
-    get :suggest
+    get :map, path: 'mapa'
+    get :suggest, path: 'sugiere'
     put 'recommendations/disable', only: :index, controller: 'debates', action: :disable_recommendations
   end
 end

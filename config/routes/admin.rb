@@ -1,6 +1,6 @@
 namespace :admin do
   root to: "dashboard#index"
-  resources :organizations, only: :index do
+  resources :organizations, path: 'organizaciones', only: :index do
     get :search, on: :collection
     member do
       put :verify
@@ -8,28 +8,28 @@ namespace :admin do
     end
   end
 
-  resources :hidden_users, only: [:index, :show] do
+  resources :hidden_users, path: 'usuarios-bloqueados', only: [:index, :show] do
     member do
       put :restore
       put :confirm_hide
     end
   end
 
-  resources :hidden_budget_investments, only: :index do
+  resources :hidden_budget_investments, path: 'proyectos-bloqueados', only: :index do
     member do
       put :restore
       put :confirm_hide
     end
   end
 
-  resources :debates, only: :index do
+  resources :debates, path: 'debates', only: :index do
     member do
       put :restore
       put :confirm_hide
     end
   end
 
-  resources :proposals, only: :index do
+  resources :proposals, path: 'propuestas', only: :index do
     member do
       put :restore
       put :confirm_hide
@@ -58,76 +58,76 @@ namespace :admin do
   #  get :summary, on: :collection
   #end
 
-  resources :budgets do
+  resources :budgets, path: 'presupuestos' do
     member do
       put :calculate_winners
     end
 
-    resources :budget_groups do
+    resources :budget_groups, path: 'grupos' do
       resources :budget_headings
     end
 
-    resources :budget_investments, only: [:index, :show, :edit, :update] do
-      resources :budget_investment_milestones
+    resources :budget_investments, path: 'proyectos', only: [:index, :show, :edit, :update] do
+      resources :budget_investment_milestones, path: 'hitos'
       member { patch :toggle_selection }
     end
 
-    resources :budget_phases, only: [:edit, :update]
+    resources :budget_phases, path: 'fases-del-presupuesto', only: [:edit, :update]
   end
 
-  resources :budget_investment_statuses, only: [:index, :new, :create, :update, :edit, :destroy]
+  resources :budget_investment_statuses, path: 'estados-de-proyecto', only: [:index, :new, :create, :update, :edit, :destroy]
 
-  resources :signature_sheets, only: [:index, :new, :create, :show]
+  resources :signature_sheets, path: 'hojas-de-firmas', only: [:index, :new, :create, :show]
 
   resources :banners, only: [:index, :new, :create, :edit, :update, :destroy] do
     collection { get :search }
   end
 
-  resources :comments, only: :index do
+  resources :comments, path: 'comentarios', only: :index do
     member do
       put :restore
       put :confirm_hide
     end
   end
 
-  resources :tags, only: [:index, :create, :update, :destroy]
+  resources :tags, path: 'temas', only: [:index, :create, :update, :destroy]
 
-  resources :officials, only: [:index, :edit, :update, :destroy] do
+  resources :officials, path: 'cargos-publicos', only: [:index, :edit, :update, :destroy] do
     get :search, on: :collection
   end
 
-  resources :settings, only: [:index, :update]
+  resources :settings, path: 'configuracion', only: [:index, :update]
   put :update_map, to: "settings#update_map"
 
-  resources :moderators, only: [:index, :create, :destroy] do
+  resources :moderators, path: 'moderadores', only: [:index, :create, :destroy] do
     get :search, on: :collection
   end
 
-  resources :valuators, only: [:show, :index, :edit, :update, :create, :destroy] do
+  resources :valuators, path: 'evaluadores', only: [:show, :index, :edit, :update, :create, :destroy] do
     get :search, on: :collection
     get :summary, on: :collection
   end
 
-  resources :valuator_groups
+  resources :valuator_groups, path: 'grupos-de-evaluadores'
 
-  resources :managers, only: [:index, :create, :destroy] do
+  resources :managers, path: 'gestores', only: [:index, :create, :destroy] do
     get :search, on: :collection
   end
 
-  resources :administrators, only: [:index, :create, :destroy] do
+  resources :administrators, path: 'administradores', only: [:index, :create, :destroy] do
     get :search, on: :collection
   end
 
-  resources :users, only: [:index, :show]
+  resources :users, path: 'usuarios', only: [:index, :show]
 
   scope module: :poll do
-    resources :polls do
-      get :booth_assignments, on: :collection
+    resources :polls, path: 'votaciones' do
+      get :booth_assignments, on: :collection, path: 'asignacion-de-urnas'
       patch :add_question, on: :member
 
-      resources :booth_assignments, only: [:index, :show, :create, :destroy] do
-        get :search_booths, on: :collection
-        get :manage, on: :collection
+      resources :booth_assignments, path: 'asignacion-de-urnas', only: [:index, :show, :create, :destroy] do
+        get :search_booths, on: :collection, path: 'buscar-urnas'
+        get :manage, on: :collection, path: 'gestionar'
       end
 
       resources :officer_assignments, only: [:index, :create, :destroy] do
@@ -139,19 +139,19 @@ namespace :admin do
       resources :results, only: :index
     end
 
-    resources :officers do
+    resources :officers, path: 'presidentes-de-mesa' do
       get :search, on: :collection
     end
 
-    resources :booths do
-      get :available, on: :collection
+    resources :booths, path: 'urnas' do
+      get :available, on: :collection, path: 'asignar-turnos'
 
-      resources :shifts do
+      resources :shifts, path: 'turnos' do
         get :search_officers, on: :collection
       end
     end
 
-    resources :questions, shallow: true do
+    resources :questions, path: 'preguntas-ciudadanas', shallow: true do
       resources :answers, except: [:index, :destroy], controller: 'questions/answers' do
         resources :images, controller: 'questions/answers/images'
         resources :videos, controller: 'questions/answers/videos'
@@ -165,7 +165,7 @@ namespace :admin do
     get :search, on: :collection
   end
 
-  resource :activity, controller: :activity, only: :show
+  resource :activity, path: 'actividad', controller: :activity, only: :show
 
   resources :newsletters do
     member do
@@ -174,7 +174,7 @@ namespace :admin do
     get :users, on: :collection
   end
 
-  resources :admin_notifications do
+  resources :admin_notifications, path: 'notificaciones' do
     member do
       post :deliver
     end
@@ -187,21 +187,21 @@ namespace :admin do
     put :send_pending
   end
 
-  resources :emails_download, only: :index do
+  resources :emails_download, path: 'descarga-de-emails', only: :index do
     get :generate_csv, on: :collection
   end
 
-  resource :stats, only: :show do
-    get :proposal_notifications, on: :collection
-    get :direct_messages, on: :collection
-    get :polls, on: :collection
+  resource :stats, path: 'estadisticas', only: :show do
+    get :proposal_notifications, on: :collection, path: 'notificaciones-de-propuestas'
+    get :direct_messages, on: :collection, path: 'mensajes-directos'
+    get :polls, on: :collection, path: 'propuestas'
   end
 
-  namespace :legislation do
-    resources :processes do
-      resources :questions
-      resources :proposals
-      resources :draft_versions
+  namespace :legislation, path: 'legislacion' do
+    resources :processes, path: 'procesos' do
+      resources :questions, path: 'preguntas-ciudadanas'
+      resources :proposals, path: 'propuestas'
+      resources :draft_versions, path: 'borradores'
     end
   end
 
@@ -209,13 +209,13 @@ namespace :admin do
     resource :stats, only: :show
   end
 
-  resources :geozones, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :geozones, path: 'distritos', only: [:index, :new, :create, :edit, :update, :destroy]
 
-  namespace :site_customization do
-    resources :pages, except: [:show]
-    resources :images, only: [:index, :update, :destroy]
-    resources :content_blocks, except: [:show]
-    resources :information_texts, only: [:index] do
+  namespace :site_customization, path: 'personalizacion' do
+    resources :pages, except: [:show], path: 'paginas'
+    resources :images, only: [:index, :update, :destroy], path: 'imagenes'
+    resources :content_blocks, except: [:show], path: 'bloques'
+    resources :information_texts, only: [:index], path: 'textos-de-informacion' do
       post :update, on: :collection
     end
   end

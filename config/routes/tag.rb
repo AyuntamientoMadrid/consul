@@ -1,5 +1,5 @@
-resources :tags do
+resources :tags, path: 'etiquetas' do
   collection do
-    get :suggest
+    get :suggest, path: 'sugiere'
   end
 end

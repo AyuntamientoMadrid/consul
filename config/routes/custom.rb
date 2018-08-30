@@ -1,18 +1,18 @@
 ### Admin
 namespace :admin do
-  resources :probes, only: [:index, :show]
+  resources :probes, path: 'sondeos', only: [:index, :show]
 
-  resource :stats, only: :show do
+  resource :stats, path: 'estadisticas', only: :show do
     get :spending_proposals, on: :collection
-    get :budgets, on: :collection
-    get :budget_supporting, on: :member
-    get :budget_balloting, on: :member
-    get :graph, on: :member
-    get :proposal_notifications, on: :collection
-    get :direct_messages, on: :collection
-    get :redeemable_codes, on: :collection
-    get :user_invites, on: :collection
-    get :polls, on: :collection
+    get :budgets, on: :collection, path: 'presupuestos'
+    get :budget_supporting, on: :member, path: 'apoyo'
+    get :budget_balloting, on: :member, path: 'votacion'
+    get :graph, on: :member, path: 'grafico'
+    get :proposal_notifications, on: :collection, path: 'notificaciones'
+    get :direct_messages, on: :collection, path: 'mensajes-directos'
+    get :redeemable_codes, on: :collection, path: 'codigos'
+    get :user_invites, on: :collection, path: 'invitaciones'
+    get :polls, on: :collection, path: 'votaciones'
   end
 
   resources :spending_proposals, only: [:index, :show, :edit, :update] do
@@ -52,17 +52,17 @@ resources :budgets, only: [:show, :index], path: 'presupuestos' do
 
   resources :recommendations, controller: "budgets/recommendations", only: [:index, :new, :create, :destroy]
 
-  resource :results, only: :show, controller: "budgets/results"
-  resource :stats, only: :show, controller: "budgets/stats"
-  resource :executions, only: :show, controller: 'budgets/executions'
+  resource :results, path: 'resultados', only: :show, controller: 'budgets/results'
+  resource :stats, path: 'estadisticas', only: :show, controller: 'budgets/stats'
+  resource :executions, path: 'seguimiento', only: :show, controller: 'budgets/executions'
 end
 
 get "presupuestos/:budget_id/:id/:heading_id", to: "budgets/investments#index", as: 'custom_budget_investments'
 get "presupuestos/:budget_id/:id", to: "budgets/groups#show", as: 'custom_budget_group'
 get "participatory_budget/investment_projects/:id", to: "budgets/investments#redirect_to_new_url", as: 'spending_proposals_to_budget_investments'
 
-scope '/participatory_budget' do
-  resources :spending_proposals, only: [:index, :destroy], path: 'investment_projects', controller: "budgets/investments" do #[:new, :create] temporary disabled
+scope '/presupuestos-participativos' do
+  resources :spending_proposals, only: [:index, :destroy], path: 'proyectos', controller: "budgets/investments" do #[:new, :create] temporary disabled
     get :welcome, on: :collection
     get :stats, on: :collection
     post :vote, on: :member
@@ -78,25 +78,25 @@ scope '/participatory_budget' do
 end
 
 ### Delegation
-resources :forums, only: [:index, :create, :show]
-resources :representatives, only: [:create, :destroy]
+resources :forums, path: 'foros', only: [:index, :create, :show]
+resources :representatives, path: 'representantes', only: [:create, :destroy]
 
 ### Human Rights
-resources :human_rights, only: [:index, :show]
+# resources :human_rights, path: 'derechos-humanos', only: [:index, :show]
 
 ### Legislations
 resources :legacy_legislations, only: [:show], path: 'legislations'
 
-resources :annotations do
-  get :search, on: :collection
+resources :annotations, path: 'anotaciones' do
+  get :search, on: :collection, path: 'buscar'
 end
 
 ### Officing
-namespace :officing do
- resources :polls, only: [:index] do
+namespace :officing, path: 'presidentes-de-mesa'  do
+ resources :polls, path: 'votaciones', only: [:index] do
    get :final, on: :collection
 
-   resources :results, only: [:new, :create, :index]
+   resources :results, path: 'resultados', only: [:new, :create, :index]
 
    resources :nvotes, only: :new do
      get :thanks, on: :collection
@@ -105,13 +105,13 @@ namespace :officing do
    resources :ballot_sheets, only: [:new, :create, :show, :index]
  end
 
- resource :booth, controller: "booth", only: [:new, :create]
- resource :residence, controller: "residence", only: [:new, :create]
- resources :letters, only: [:new, :create, :show] do
-   get :verify_name, on: :member
+ resource :booth, path: 'urna', controller: "booth", only: [:new, :create]
+ resource :residence, path: 'residencia', controller: "residence", only: [:new, :create]
+ resources :letters, path: 'cartas', only: [:new, :create, :show] do
+   get :verify_name, on: :member, path: 'verificar-nombre'
  end
- resources :voters, only: [:new, :create] do
-   get :vote_with_tablet, on: :member
+ resources :voters, path: 'votantes', only: [:new, :create] do
+   get :vote_with_tablet, on: :member, path: 'votar-desde-tablet'
  end
 
  resource :session, only: [:new, :create]
@@ -119,15 +119,15 @@ namespace :officing do
 end
 
 ### Open Plenary
-resources :open_plenaries, only: [] do
-  get :results, on: :collection
+resources :open_plenaries, path: 'plenos-abiertos', only: [] do
+  get :results, on: :collection, path: 'resultados'
 end
 
 ### Probes
-resources :probes, only: [:show] do
+resources :probes, path: 'sondeos', only: [:show] do
   post :selection,  on: :collection
 
-  resources :probe_options, only: :show do
+  resources :probe_options, path: 'opciones-de-sondeos', only: :show do
     post :discard, on: :member
     post :restore_discarded, on: :collection
   end
@@ -139,12 +139,12 @@ get 'procesos',  to: 'legislation/processes#index', as: 'processes'
 get "vota/stats_2018", to: "polls#stats_2018", as: 'poll_stats_2018'
 get "vota/results_2018", to: "polls#results_2018", as: 'poll_results_2018'
 
-resources :answers, only: [:index, :new, :create]
+resources :answers, path: 'respuestas', only: [:index, :new, :create]
 
 resources :polls, only: [:show, :index], path: 'vota' do
   member do
-    get :stats
-    get :results
+    get :stats, path: 'estadisticas'
+    get :results, path: 'resultados'
   end
   resources :questions, controller: 'polls/questions', shallow: true do
     post :answer, on: :member
@@ -160,7 +160,7 @@ post "/polls/nvotes/success" => "polls/nvotes#success", as: :polls_nvotes_succes
 get "/verifica", to: "verification/letter#edit"
 
 ### Volunteers
-resource :volunteer_poll, only: [:new, :create] do
+resource :volunteer_poll, path: 'colaboradores-voluntarios', only: [:new, :create] do
   get :thanks, on: :collection
 end
 

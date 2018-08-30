@@ -1441,7 +1441,7 @@ feature 'Admin budget investments' do
 
   context "Spending Proposals migrated to Budget Investments should keep the original IDs on lists & urls" do
     let(:spending_proposal) { create(:spending_proposal, id: 9999, title: 'Le Spending Proposal') }
-    let(:spending_proposal_migrated_to_budget_investment_path) { "/admin/budgets/#{budget.id}/budget_investments/#{spending_proposal.id}" }
+    let(:spending_proposal_migrated_to_budget_investment_path) { "/admin/presupuestos/#{budget.id}/proyectos/#{spending_proposal.id}" }
     let!(:associated_budget_investment) do
       create(:budget_investment, id: 8888, budget: budget, title: 'Budget Investment child',
                                  original_spending_proposal_id: spending_proposal.id)
