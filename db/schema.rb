@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180727140800) do
+ActiveRecord::Schema.define(version: 20180730120800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1544,6 +1544,20 @@ ActiveRecord::Schema.define(version: 20180727140800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "widget_card_translations", force: :cascade do |t|
+    t.integer  "widget_card_id", null: false
+    t.string   "locale",         null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "label"
+    t.string   "title"
+    t.text     "description"
+    t.string   "link_text"
+  end
+
+  add_index "widget_card_translations", ["locale"], name: "index_widget_card_translations_on_locale", using: :btree
+  add_index "widget_card_translations", ["widget_card_id"], name: "index_widget_card_translations_on_widget_card_id", using: :btree
 
   create_table "widget_cards", force: :cascade do |t|
     t.string   "title"
