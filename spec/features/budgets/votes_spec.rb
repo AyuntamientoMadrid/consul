@@ -104,73 +104,221 @@ feature 'Votes' do
       end
     end
 
-    context "Voting in multiple headings of a single group" do
+    context "Supporting in multiple headings of a single group" do
+      let(:heading1) { create(:budget_heading, group: group) }
+      let(:heading2) { create(:budget_heading, group: group) }
+      let(:heading3) { create(:budget_heading, group: group) }
+      let(:heading4) { create(:budget_heading, group: group) }
 
-      let(:new_york) { heading }
-      let(:san_francisco) { create(:budget_heading, group: group) }
-      let(:third_heading) { create(:budget_heading, group: group) }
+      let!(:heading1_investment1) { create(:budget_investment, heading: heading1) }
+      let!(:heading1_investment2) { create(:budget_investment, heading: heading1) }
+      let!(:heading2_investment) { create(:budget_investment, heading: heading2) }
+      let!(:heading3_investment) { create(:budget_investment, heading: heading3) }
+      let!(:heading4_investment) { create(:budget_investment, heading: heading4) }
 
-      let!(:new_york_investment) { create(:budget_investment, heading: new_york) }
-      let!(:san_francisco_investment) { create(:budget_investment, heading: san_francisco) }
-      let!(:third_heading_investment) { create(:budget_investment, heading: third_heading) }
+      context "With only 1 supportable headings" do
+        background do
+          group.update(max_supportable_headings: 1)
+        end
 
-      background do
-        group.update(max_votable_headings: 2)
-      end
+        scenario "From Index", :js do
+          visit budget_investments_path(budget, heading_id: heading1.id)
 
-      scenario "From Index", :js do
-        visit budget_investments_path(budget, heading_id: new_york.id)
+          within("#budget_investment_#{heading1_investment1.id}") do
+            accept_confirm { find('.in-favor a').click }
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
 
-        within("#budget_investment_#{new_york_investment.id}") do
+          within("#budget_investment_#{heading1_investment2.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
+
+          visit budget_investments_path(budget, heading_id: heading2.id)
+
+          within("#budget_investment_#{heading2_investment.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "You have reached the maximum supportable investments "\
+                                         "in this group (1)"
+          end
+
+          visit budget_investments_path(budget, heading_id: heading3.id)
+
+          within("#budget_investment_#{heading3_investment.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "You have reached the maximum supportable investments "\
+                                         "in this group (1)"
+          end
+        end
+
+        scenario "From show", :js do
+          visit budget_investment_path(budget, heading1_investment1)
+
           accept_confirm { find('.in-favor a').click }
-
           expect(page).to have_content "1 support"
-          expect(page).to have_content "You have already supported this investment project. Share it!"
-        end
+          expect(page).to have_content "You have already supported this investment project."
 
-        visit budget_investments_path(budget, heading_id: san_francisco.id)
+          visit budget_investment_path(budget, heading1_investment2)
 
-        within("#budget_investment_#{san_francisco_investment.id}") do
           find('.in-favor a').click
-
           expect(page).to have_content "1 support"
-          expect(page).to have_content "You have already supported this investment project. Share it!"
-        end
+          expect(page).to have_content "You have already supported this investment project."
 
-        visit budget_investments_path(budget, heading_id: third_heading.id)
+          visit budget_investment_path(budget, heading2_investment)
 
-        within("#budget_investment_#{third_heading_investment.id}") do
           find('.in-favor a').click
+          expect(page).to have_content "You have reached the maximum supportable investments "\
+                                       "in this group (1)"
 
-          expect(page).to have_content "You can only support investment projects in 2 districts"
+          visit budget_investment_path(budget, heading3_investment)
 
-          expect(page).not_to have_content "1 support"
-          expect(page).not_to have_content "You have already supported this investment project. Share it!"
+          find('.in-favor a').click
+          expect(page).to have_content "You have reached the maximum supportable investments "\
+                                       "in this group (1)"
         end
       end
 
-      scenario "From show", :js do
-        visit budget_investment_path(budget, new_york_investment)
+      context "With more than 1 supportable headings" do
+        background do
+          group.update(max_supportable_headings: 3)
+        end
 
-        accept_confirm { find('.in-favor a').click }
-        expect(page).to have_content "1 support"
-        expect(page).to have_content "You have already supported this investment project. Share it!"
+        scenario "From Index", :js do
+          visit budget_investments_path(budget, heading_id: heading1.id)
 
-        visit budget_investment_path(budget, san_francisco_investment)
+          within("#budget_investment_#{heading1_investment1.id}") do
+            accept_confirm { find('.in-favor a').click }
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
 
+          within("#budget_investment_#{heading1_investment2.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
+
+          visit budget_investments_path(budget, heading_id: heading2.id)
+
+          within("#budget_investment_#{heading2_investment.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
+
+          visit budget_investments_path(budget, heading_id: heading3.id)
+
+          within("#budget_investment_#{heading3_investment.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "1 support"
+            expect(page).to have_content "You have already supported this investment project."
+          end
+
+          visit budget_investments_path(budget, heading_id: heading4.id)
+
+          within("#budget_investment_#{heading4_investment.id}") do
+            find('.in-favor a').click
+            expect(page).to have_content "You have reached the maximum supportable investments "\
+                                         "in this group (3)"
+          end
+        end
+
+        scenario "From show", :js do
+          visit budget_investment_path(budget, heading1_investment1)
+
+          accept_confirm { find('.in-favor a').click }
+          expect(page).to have_content "1 support"
+          expect(page).to have_content "You have already supported this investment project."
+
+          visit budget_investment_path(budget, heading1_investment2)
+
+          find('.in-favor a').click
+          expect(page).to have_content "1 support"
+          expect(page).to have_content "You have already supported this investment project."
+
+          visit budget_investment_path(budget, heading2_investment)
+
+          find('.in-favor a').click
+          expect(page).to have_content "1 support"
+          expect(page).to have_content "You have already supported this investment project."
+
+          visit budget_investment_path(budget, heading3_investment)
+
+          find('.in-favor a').click
+          expect(page).to have_content "1 support"
+          expect(page).to have_content "You have already supported this investment project."
+
+          visit budget_investment_path(budget, heading4_investment)
+
+          find('.in-favor a').click
+          expect(page).to have_content "You have reached the maximum supportable investments "\
+                                       "in this group (3)"
+        end
+      end
+    end
+
+    context "User supports in a group heading" do
+      scenario "should record the heading support the first time" do
+        login_as(@manuela)
+        budget.update(phase: "selecting")
+        investment = create(:budget_investment, budget: budget, heading: heading)
+
+        visit budget_investment_path(budget, investment)
         find('.in-favor a').click
-        expect(page).to have_content "1 support"
-        expect(page).to have_content "You have already supported this investment project. Share it!"
 
-        visit budget_investment_path(budget, third_heading_investment)
-
-        find('.in-favor a').click
-        expect(page).to have_content "You can only support investment projects in 2 districts"
-
-        expect(page).not_to have_content "1 support"
-        expect(page).not_to have_content "You have already supported this investment project. Share it!"
+        expect(Budget::Heading::Support.all.count).to be(1)
       end
 
+      scenario "should not record the heading support again if it was supported before" do
+        login_as(@manuela)
+        budget.update(phase: "selecting")
+        investment1 = create(:budget_investment, budget: budget, heading: heading)
+        investment2 = create(:budget_investment, budget: budget, heading: heading)
+        create(:vote, votable: investment2, voter: @manuela)
+
+        visit budget_investment_path(budget, investment1)
+        find('.in-favor a').click
+
+        expect(Budget::Heading::Support.all.count).to be(1)
+      end
+    end
+
+    context "Reclassification" do
+      context "Investment is reclassified from heading A to heading B" do
+        let(:heading_A) { create(:budget_heading, group: group) }
+        let(:heading_B) { create(:budget_heading, group: group) }
+        let(:investment1) { create(:budget_investment, budget: budget, heading: heading_A) }
+        let(:investment2) { create(:budget_investment, budget: budget, heading: heading_A) }
+        let(:investment3) { create(:budget_investment, budget: budget, heading: heading_B) }
+
+        background do
+          group.update(max_supportable_headings: 1)
+
+          login_as(@manuela)
+
+          create(:vote, votable: investment1, voter: @manuela)
+          create(:budget_heading_support, user_id: @manuela.id, budget_heading_id: heading_A.id)
+          investment1.update(heading_id: heading_B.id)
+        end
+
+        scenario "user who supported investment in heading A can't support in heading B", :js do
+          visit budget_investment_path(budget, investment3)
+
+          find('.in-favor a').click
+
+          expect(page).to have_content "You have reached the maximum supportable investments "\
+                                       "in this group (1)"
+        end
+
+        scenario "user who supported in heading A can still support investments there", :js do
+          visit budget_investment_path(budget, investment2)
+
+          find('.in-favor a').click
+          expect(page).to have_content "1 support"
+        end
+      end
     end
   end
 end

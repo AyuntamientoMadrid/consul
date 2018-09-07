@@ -147,6 +147,28 @@ describe Signature do
         expect(Vote.count).to eq(1)
       end
 
+      it "does not assign vote to user if user cannot vote in that heading" do
+        budget = create(:budget, phase: "selecting")
+        group = create(:budget_group, budget: budget, max_supportable_headings: 1)
+        heading1 = create(:budget_heading, group: group)
+        heading2 = create(:budget_heading, group: group)
+
+        investment1 = create(:budget_investment, heading: heading1)
+        investment2 = create(:budget_investment, heading: heading2)
+
+        user = create(:user, :level_two, document_number: "123A")
+        vote = create(:vote, votable: investment1, voter: user)
+
+        signature_sheet = create(:signature_sheet, signable: investment2)
+        signature = create(:signature, document_number: user.document_number, signature_sheet: signature_sheet)
+
+        expect(Vote.count).to eq(1)
+
+        signature.verify
+
+        expect(Vote.count).to eq(1)
+      end
+
       it "marks the vote as coming from a signature" do
         signature = create(:signature, document_number: "12345678Z")
 

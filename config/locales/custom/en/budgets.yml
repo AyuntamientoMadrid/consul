@@ -51,6 +51,4 @@ en:
       heading_disclaimer: "*** Data about headings refer to the heading where each user voted, not necessarily the one that person is registered on."
   votes:
     budget_investments:
-      different_heading_assigned:
-        one: "You can only support investment projects in %{count} district"
-        other: "You can only support investment projects in %{count} districts"
+      max_supportable_headings_reached: "You have reached the maximum supportable investments in this group (%{count})"

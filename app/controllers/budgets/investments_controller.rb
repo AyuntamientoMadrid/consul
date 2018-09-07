@@ -204,6 +204,5 @@ module Budgets
                       .send("sort_by_#{@current_order}")
         end
       end
-
   end
 end

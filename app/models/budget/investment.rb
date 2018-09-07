@@ -228,7 +228,7 @@ class Budget
 
     def reason_for_not_being_selectable_by(user)
       return permission_problem(user) if permission_problem?(user)
-      return :different_heading_assigned unless valid_heading?(user)
+      return :max_supportable_headings_reached if not_supportable_heading?(user)
 
       return :no_selecting_allowed unless budget.selecting?
     end
@@ -253,35 +253,16 @@ class Budget
       permission_problem(user).present?
     end
 
+    def not_supportable_heading?(user)
+      group.reached_max_supportable_headings?(user) && !heading.already_supported_by_user?(user)
+    end
+
     def selectable_by?(user)
       reason_for_not_being_selectable_by(user).blank?
     end
 
-    def valid_heading?(user)
-      reclassification?(user) ||
-      voted_in?(heading, user) ||
-      can_vote_in_another_heading?(user)
-    end
-
-    def can_vote_in_another_heading?(user)
-      headings_voted_by_user(user).count < group.max_votable_headings
-    end
-
-    def reclassification?(user)
-      headings_voted_by_user(user).count > 1 &&
-      headings_voted_by_user(user).include?(heading_id)
-    end
-
-    def can_vote_in_another_heading?(user)
-      headings_voted_by_user(user).count < group.max_votable_headings
-    end
-
     def headings_voted_by_user(user)
       user.votes.for_budget_investments(budget.investments.where(group: group)).votables.map(&:heading_id).uniq
-    end
-
-    def voted_in?(heading, user)
-      headings_voted_by_user(user).include?(heading.id)
     end
 
     def ballotable_by?(user)
@@ -295,6 +276,12 @@ class Budget
 
     def register_selection(user)
       vote_by(voter: user, vote: 'yes') if selectable_by?(user)
+    end
+
+    def record_heading_support(user)
+      unless heading.already_supported_by_user?(user.id)
+        Budget::Heading::Support.create(user: user, budget_heading: heading)
+      end
     end
 
     def calculate_confidence_score

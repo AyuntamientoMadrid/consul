@@ -708,10 +708,12 @@ describe Budget::Investment do
   describe 'Permissions' do
     let(:budget)      { create(:budget) }
     let(:group)       { create(:budget_group, budget: budget) }
-    let(:heading)     { create(:budget_heading, group: group) }
+    let(:heading1)     { create(:budget_heading, group: group) }
+    let(:heading2)     { create(:budget_heading, group: group) }
+    let(:heading3)     { create(:budget_heading, group: group) }
     let(:user)        { create(:user, :level_two) }
     let(:luser)       { create(:user) }
-    let(:district_sp) { create(:budget_investment, budget: budget, group: group, heading: heading) }
+    let(:district_sp) { create(:budget_investment, budget: budget, group: group, heading: heading1) }
 
     describe '#reason_for_not_being_selectable_by' do
       it "rejects not logged in users" do
@@ -737,207 +739,19 @@ describe Budget::Investment do
         expect(district_sp.reason_for_not_being_selectable_by(user)).to be_nil
       end
 
-      it "rejects votes in two headings of the same group" do
-        carabanchel = create(:budget_heading, group: group)
-        salamanca   = create(:budget_heading, group: group)
+      it "rejects if heading investments can't be supported" do
+        budget.phase = "selecting"
+        group.update(max_supportable_headings: 2)
 
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
+        create(:vote, votable: create(:budget_investment, heading: heading2), voter: user)
+        create(:budget_heading_support, user: user, budget_heading: heading2)
+        create(:vote, votable: create(:budget_investment, heading: heading3), voter: user)
+        create(:budget_heading_support, user: user, budget_heading: heading3)
 
-        create(:vote, votable: carabanchel_investment, voter: user)
-
-        expect(salamanca_investment.valid_heading?(user)).to eq(false)
+        expect(
+          district_sp.reason_for_not_being_selectable_by(user)
+        ).to eq(:max_supportable_headings_reached)
       end
-
-      it "accepts votes in multiple headings of the same group" do
-        group.update(max_votable_headings: 2)
-
-        carabanchel = create(:budget_heading, group: group)
-        salamanca   = create(:budget_heading, group: group)
-
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
-
-        create(:vote, votable: carabanchel_investment, voter: user)
-
-        expect(salamanca_investment.valid_heading?(user)).to eq(true)
-      end
-
-      it "accepts votes in any heading previously voted in" do
-        group.update(max_votable_headings: 2)
-
-        carabanchel = create(:budget_heading, group: group)
-        salamanca   = create(:budget_heading, group: group)
-
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
-
-        create(:vote, votable: carabanchel_investment, voter: user)
-        create(:vote, votable: salamanca_investment, voter: user)
-
-        expect(carabanchel_investment.valid_heading?(user)).to eq(true)
-        expect(salamanca_investment.valid_heading?(user)).to eq(true)
-      end
-
-      it "allows votes in a group with a single heading" do
-        all_city_investment = create(:budget_investment, heading: heading)
-        expect(all_city_investment.valid_heading?(user)).to eq(true)
-      end
-
-      it "allows votes in a group with a single heading after voting in that heading" do
-        all_city_investment1 = create(:budget_investment, heading: heading)
-        all_city_investment2 = create(:budget_investment, heading: heading)
-
-        create(:vote, votable: all_city_investment1, voter: user)
-
-        expect(all_city_investment2.valid_heading?(user)).to eq(true)
-      end
-
-      it "allows votes in a group with a single heading after voting in another group" do
-        districts = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-
-        all_city_investment    = create(:budget_investment, heading: heading)
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-
-        create(:vote, votable: carabanchel_investment, voter: user)
-
-        expect(all_city_investment.valid_heading?(user)).to eq(true)
-      end
-
-      it "allows votes in a group with multiple headings after voting in group with a single heading" do
-        districts = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-        salamanca   = create(:budget_heading, group: districts)
-
-        all_city_investment    = create(:budget_investment, heading: heading)
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-
-        create(:vote, votable: all_city_investment, voter: user)
-
-        expect(carabanchel_investment.valid_heading?(user)).to eq(true)
-      end
-
-      it "allows voting in investments of headings where I have already voted due to a reclassification" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-        salamanca   = create(:budget_heading, group: districts)
-        latina      = create(:budget_heading, group: districts)
-
-        all_city_investment    = create(:budget_investment, heading: heading)
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
-        latina_investment      = create(:budget_investment, heading: latina)
-
-        create(:vote, votable: all_city_investment, voter: user)
-        create(:vote, votable: carabanchel_investment, voter: user)
-
-        all_city_investment.group_id = districts.id
-        all_city_investment.heading_id = salamanca.id
-        all_city_investment.save
-
-        expect(all_city_investment.valid_heading?(user)).to eq(true)
-        expect(carabanchel_investment.valid_heading?(user)).to eq(true)
-        expect(salamanca_investment.valid_heading?(user)).to eq(true)
-        expect(latina_investment.valid_heading?(user)).to eq(false)
-      end
-
-      describe "#can_vote_in_another_heading?" do
-
-        let(:districts)   { create(:budget_group, budget: budget) }
-        let(:carabanchel) { create(:budget_heading, group: districts) }
-        let(:salamanca)   { create(:budget_heading, group: districts) }
-        let(:latina)      { create(:budget_heading, group: districts) }
-
-        let(:carabanchel_investment) { create(:budget_investment, heading: carabanchel) }
-        let(:salamanca_investment)   { create(:budget_investment, heading: salamanca) }
-        let(:latina_investment)      { create(:budget_investment, heading: latina) }
-
-        it "returns true if the user has voted in less headings than the maximum" do
-          districts.update(max_votable_headings: 2)
-
-          create(:vote, votable: carabanchel_investment, voter: user)
-
-          expect(salamanca_investment.can_vote_in_another_heading?(user)).to eq(true)
-        end
-
-        it "returns false if the user has already voted in the maximum number of headings" do
-          districts.update(max_votable_headings: 2)
-
-          create(:vote, votable: carabanchel_investment, voter: user)
-          create(:vote, votable: salamanca_investment, voter: user)
-
-          expect(latina_investment.can_vote_in_another_heading?(user)).to eq(false)
-        end
-      end
-    end
-
-    describe "reclassification" do
-
-      it "returns false if I have not voted" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-
-        investment = create(:budget_investment, heading: carabanchel)
-
-        expect(investment.reclassification?(user)).to eq(false)
-      end
-
-      it "returns false if I have voted once in a single heading of a group" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-
-        investment = create(:budget_investment, heading: carabanchel)
-
-        create(:vote, votable: investment, voter: user)
-
-        expect(investment.reclassification?(user)).to eq(false)
-      end
-
-      it "returns false if I have voted twice in a single heading of a group" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-
-        investment1 = create(:budget_investment, heading: carabanchel)
-        investment2 = create(:budget_investment, heading: carabanchel)
-
-        create(:vote, votable: investment1, voter: user)
-        create(:vote, votable: investment2, voter: user)
-
-        expect(investment1.reclassification?(user)).to eq(false)
-      end
-
-      it "returns false if I have voted in two headings of the same group but I am voting in a different heading" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-        salamanca = create(:budget_heading, group: districts)
-        latina      = create(:budget_heading, group: districts)
-
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
-        latina_investment   = create(:budget_investment, heading: latina)
-
-        create(:vote, votable: carabanchel_investment, voter: user)
-        create(:vote, votable: salamanca_investment, voter: user)
-
-        expect(latina_investment.reclassification?(user)).to eq(false)
-      end
-
-      it "returns true if I have voted in two headings of the same group and I am voting in one of those headings" do
-        districts   = create(:budget_group, budget: budget)
-        carabanchel = create(:budget_heading, group: districts)
-        salamanca = create(:budget_heading, group: districts)
-
-        carabanchel_investment = create(:budget_investment, heading: carabanchel)
-        salamanca_investment   = create(:budget_investment, heading: salamanca)
-        salamanca_investment2  = create(:budget_investment, heading: salamanca)
-
-        create(:vote, votable: carabanchel_investment, voter: user)
-        create(:vote, votable: salamanca_investment, voter: user)
-
-        expect(salamanca_investment2.reclassification?(user)).to eq(true)
-      end
-
     end
   end
 
@@ -968,23 +782,6 @@ describe Budget::Investment do
       expect(another_investment.headings_voted_by_user(user2)).to_not include(san_franciso.id)
       expect(another_investment.headings_voted_by_user(user2)).to_not include(another_heading.id)
     end
-  end
-
-  describe "#voted_in?" do
-
-    let(:user) { create(:user) }
-    let(:investment) { create(:budget_investment) }
-
-    it "returns true if the user has voted in this heading" do
-      create(:vote, votable: investment, voter: user)
-
-      expect(investment.voted_in?(investment.heading, user)).to eq(true)
-    end
-
-    it "returns false if the user has not voted in this heading" do
-      expect(investment.voted_in?(investment.heading, user)).to eq(false)
-    end
-
   end
 
   describe "Order" do

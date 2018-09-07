@@ -326,6 +326,11 @@ FactoryBot.define do
     end
   end
 
+  factory :budget_heading_support, class: "Budget::Heading::Support" do
+    association :user, factory: :user
+    association :budget_heading, factory: :budget_heading
+  end
+
   factory :budget_investment, class: 'Budget::Investment' do
     sequence(:title) { |n| "Budget Investment #{n} title" }
     association :heading, factory: :budget_heading

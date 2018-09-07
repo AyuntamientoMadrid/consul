@@ -4,6 +4,8 @@ ActsAsVotable::Vote.class_eval do
   belongs_to :signature
   belongs_to :budget_investment, foreign_key: 'votable_id', class_name: 'Budget::Investment'
 
+  after_create :record_heading_support
+
   scope :public_for_api, -> do
     where(%{(votes.votable_type = 'Debate' and votes.votable_id in (?)) or
             (votes.votable_type = 'Proposal' and votes.votable_id in (?)) or
@@ -63,6 +65,11 @@ ActsAsVotable::Vote.class_eval do
 
   def value
     vote_flag
+  end
+
+  def record_heading_support
+    return unless votable.class == Budget::Investment
+    votable.record_heading_support(voter)
   end
 
 end
