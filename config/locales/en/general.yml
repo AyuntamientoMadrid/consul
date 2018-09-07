@@ -274,7 +274,9 @@ en:
     title: "Districts"
     proposal_for_district: "Start a proposal for your district"
     select_district: Scope of operation
-    start_proposal: Create a proposal
+    start:
+      proposal: Create a proposal
+      debate: Create a debate
   omniauth:
     facebook:
       sign_in: Sign in with Facebook

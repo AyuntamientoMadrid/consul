@@ -46,7 +46,7 @@
         <%= link_to t("proposals.index.start_proposal"), new_proposal_path, class: 'button expanded' %>
         <%= render "shared/tag_cloud", taggable: 'proposal' %>
         <%= render 'categories' %>
-        <%= render 'geozones' %>
+        <%= render 'shared/geozones', geozonable: 'proposal' %>
       </aside>
     </div>
   </div>

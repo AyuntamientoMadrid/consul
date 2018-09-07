@@ -17,4 +17,34 @@ module GeozonesHelper
     @all_geozones[g_id] || t("geozones.none")
   end
 
+  def geozonables_path(geozonable_type, geozonable_name)
+    case geozonable_type
+    when 'debate'
+      debates_path(search: geozonable_name)
+    when 'proposal'
+      proposals_path(search: geozonable_name)
+    else
+      '#'
+    end
+  end
+
+  def map_geozonable_path(geozonable)
+    case geozonable
+    when 'debate'
+      map_debates_path
+    when 'proposal'
+      map_proposals_path
+    else
+      '#'
+    end
+  end
+
+  def show_map(geozonable)
+    feature?("geozones.#{geozonable.pluralize}.maps")
+  end
+
+  def show_links(geozonable)
+    feature?("geozones.#{geozonable.pluralize}.links")
+  end
+
 end

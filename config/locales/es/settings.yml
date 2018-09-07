@@ -131,4 +131,11 @@ es:
       public_stats_description: "Muestra las estadísticas públicas en el panel de Administración"
       probe:
         plaza: "Sondeo Plaza España"
-        voting_allowed: Votaciones sobre propuestas de inversión
+        voting_allowed: "Votaciones sobre propuestas de inversión"
+      geozones:
+        proposals:
+          maps: "Ver mapa de geozonas en la barra lateral de las propuestas"
+          links: "Ver links de geozonas en la barra lateral de las propuestas"
+        debates:
+          maps: "Ver mapa de geozonas en la barra lateral de los debates"
+          links: "Ver links de geozonas en la barra lateral de los debates"

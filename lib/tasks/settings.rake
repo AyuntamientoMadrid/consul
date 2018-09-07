@@ -20,4 +20,12 @@ namespace :settings do
     Setting['feature.user.recommendations_on_proposals'] = true
   end
 
+  desc "Create new settings for geozones maps and links in proposals and debates sidebar"
+  task create_geozones_maps_links: :environment do
+    Setting['feature.geozones.proposals.maps'] = true
+    Setting['feature.geozones.proposals.links'] = true
+    Setting['feature.geozones.debates.maps'] = true
+    Setting['feature.geozones.debates.links'] = true
+  end
+
 end

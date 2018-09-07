@@ -99,6 +99,12 @@ Setting['feature.spending_proposal_features.final_voting_allowed'] = true
 Setting['feature.spending_proposal_features.open_results_page'] = nil
 Setting['feature.spending_proposal_features.valuation_allowed'] = nil
 
+# Geozones links and maps on debates and proposals
+Setting['feature.geozones.proposals.maps'] = true
+Setting['feature.geozones.proposals.links'] = true
+Setting['feature.geozones.debates.maps'] = true
+Setting['feature.geozones.debates.links'] = true
+
 # Banner styles
 Setting['banner-style.banner-style-one']   = "Banner style 1"
 Setting['banner-style.banner-style-two']   = "Banner style 2"

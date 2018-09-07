@@ -7,6 +7,7 @@ class HumanRightsController < ApplicationController
   before_action :parse_search_terms,          only: :index
   before_action :parse_advanced_search_terms, only: :index
   before_action :set_search_order,            only: :index
+  before_action :load_geozones,               only: :index
 
   has_orders %w{random confidence_score},     only: :index
   has_orders %w{most_voted newest oldest},    only: :show

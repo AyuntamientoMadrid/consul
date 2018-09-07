@@ -131,4 +131,11 @@ en:
       public_stats_description: "Display public stats in the Administration panel"
       probe:
         plaza: "Plaza España Probe"
-        voting_allowed: Voting on investment projects
+        voting_allowed: "Voting on investment projects"
+      geozones:
+        proposals:
+          maps: "Show map of geozones on proposals index sidebar"
+          links: "Show links of geozones on proposals index sidebar"
+        debates:
+          maps: "Show map of geozones on debates index sidebar"
+          links: "Show links of geozones on debates index sidebar"

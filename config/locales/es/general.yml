@@ -271,7 +271,9 @@ es:
     title: "Distritos"
     proposal_for_district: "Crea una propuesta para tu distrito"
     select_district: Ámbito de actuación
-    start_proposal: Crea una propuesta
+    start:
+      proposal: Crea una propuesta
+      debate: Crea un debate
   omniauth:
     facebook:
       sign_in: Entra con Facebook

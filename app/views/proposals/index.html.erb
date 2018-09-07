@@ -116,7 +116,7 @@
         <% if params[:retired].blank? %>
           <%= render 'categories' %>
           <%= render "shared/tag_cloud", taggable: 'proposal' %>
-          <%= render 'geozones' %>
+          <%= render 'shared/geozones', geozonable: 'proposal' %>
           <%= render 'popular' %>
         <% end %>
         <%= render 'retired' %>

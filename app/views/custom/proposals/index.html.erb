@@ -146,7 +146,7 @@
           <% if request.path != human_rights_proposals_path %>
             <%= render "shared/tag_cloud", taggable: 'proposal' %>
           <% end %>
-          <%= render 'geozones' %>
+          <%= render 'shared/geozones', geozonable: 'proposal' %>
           <%= render 'popular' %>
         <% end %>
         <%= render 'retired' %>

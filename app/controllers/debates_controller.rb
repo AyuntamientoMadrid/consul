@@ -7,6 +7,7 @@ class DebatesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :map]
   before_action :set_view, only: :index
   before_action :debates_recommendations, only: :index, if: :current_user
+  before_action :load_geozones, only: [:map, :index]
 
   feature_flag :debates
 

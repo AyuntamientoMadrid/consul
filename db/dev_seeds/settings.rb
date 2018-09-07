@@ -57,6 +57,11 @@ section "Creating Settings" do
   Setting.create(key: 'feature.guides', value: true)
   Setting.create(key: 'feature.user.skip_verification', value: "true")
 
+  Setting.create(key: 'feature.geozones.proposals.maps', value: true)
+  Setting.create(key: 'feature.geozones.proposals.links', value: true)
+  Setting.create(key: 'feature.geozones.debates.maps', value: true)
+  Setting.create(key: 'feature.geozones.debates.links', value: true)
+
   Setting.create(key: 'per_page_code_head', value: "")
   Setting.create(key: 'per_page_code_body', value: "")
   Setting.create(key: 'comments_body_max_length', value: '1000')

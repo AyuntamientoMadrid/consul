@@ -29,6 +29,47 @@ feature 'Debates' do
     end
   end
 
+  context "Map and links of geozones" do
+
+    after do
+      Setting['feature.geozones.debates.maps'] = true
+      Setting['feature.geozones.debates.links'] = true
+    end
+
+    scenario "Both are shown" do
+      visit debates_path
+
+      expect(page).to have_selector('a#map')
+      expect(page).to have_selector('ul#geozones')
+    end
+
+    scenario "Map is shown" do
+      Setting['feature.geozones.debates.links'] = nil
+      visit debates_path
+
+      expect(page).to have_selector('a#map')
+      expect(page).not_to have_selector('ul#geozones')
+    end
+
+    scenario "Links are shown" do
+      Setting['feature.geozones.debates.maps'] = nil
+      visit debates_path
+
+      expect(page).not_to have_selector('a#map')
+      expect(page).to have_selector('ul#geozones')
+    end
+
+    scenario "Neither map nor links are shown" do
+      Setting['feature.geozones.debates.maps'] = nil
+      Setting['feature.geozones.debates.links'] = nil
+      visit debates_path
+
+      expect(page).not_to have_selector('a#map')
+      expect(page).not_to have_selector('ul#geozones')
+    end
+
+  end
+
   scenario 'Paginated Index' do
     per_page = Kaminari.config.default_per_page
     (per_page + 2).times { create(:debate) }
@@ -59,7 +100,7 @@ feature 'Debates' do
     debates.each do |debate|
       within('#debates') do
         expect(page).to     have_link debate.title
-        expect(page).to_not have_content debate.description
+        expect(page).not_to have_content debate.description
       end
     end
 
@@ -1072,7 +1113,7 @@ feature 'Debates' do
         @debate3 = create(:debate, geozone: @new_york)
       end
 
-      pending "From map" do
+      scenario "From map" do
         visit debates_path
 
         click_link "map"
@@ -1089,7 +1130,7 @@ feature 'Debates' do
         end
       end
 
-      pending "From geozone list" do
+      scenario "From geozone list" do
         visit debates_path
 
         click_link "map"

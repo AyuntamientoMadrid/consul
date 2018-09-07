@@ -112,6 +112,47 @@ feature 'Proposals' do
       end
       Setting['feature.allow_images'] = nil
     end
+
+    context "Map and links of geozones" do
+
+      after do
+        Setting['feature.geozones.proposals.maps'] = true
+        Setting['feature.geozones.proposals.links'] = true
+      end
+
+      scenario "Both are shown" do
+        visit proposals_path
+
+        expect(page).to have_selector('a#map')
+        expect(page).to have_selector('ul#geozones')
+      end
+
+      scenario "Map is shown" do
+        Setting['feature.geozones.proposals.links'] = nil
+        visit proposals_path
+
+        expect(page).to have_selector('a#map')
+        expect(page).not_to have_selector('ul#geozones')
+      end
+
+      scenario "Links are shown" do
+        Setting['feature.geozones.proposals.maps'] = nil
+        visit proposals_path
+
+        expect(page).not_to have_selector('a#map')
+        expect(page).to have_selector('ul#geozones')
+      end
+
+      scenario "Neither map nor links are shown" do
+        Setting['feature.geozones.proposals.maps'] = nil
+        Setting['feature.geozones.proposals.links'] = nil
+        visit proposals_path
+
+        expect(page).not_to have_selector('a#map')
+        expect(page).not_to have_selector('ul#geozones')
+      end
+
+    end
   end
 
   scenario 'Show' do
