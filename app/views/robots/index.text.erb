@@ -60,3 +60,8 @@ Allow: /*?*search=Villaverde
 
 Allow: /users/sign_in?landing=*
 Allow: /users/sign_up?landing=*
+
+<% unless Setting['feature.prevent_bing_from_index_consul'] %>
+User-Agent: bingbot
+Disallow: /
+<% end %>

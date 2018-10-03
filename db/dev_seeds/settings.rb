@@ -56,6 +56,7 @@ section "Creating Settings" do
   Setting.create(key: 'feature.public_stats', value: "true")
   Setting.create(key: 'feature.guides', value: true)
   Setting.create(key: 'feature.user.skip_verification', value: "true")
+  Setting.create(key: 'feature.prevent_bing_from_index_consul', value: "true")
 
   Setting.create(key: 'per_page_code_head', value: "")
   Setting.create(key: 'per_page_code_body', value: "")
@@ -100,5 +101,4 @@ section "Creating Settings" do
   Setting['feature.homepage.widgets.feeds.proposals'] = true
   Setting['feature.homepage.widgets.feeds.debates'] = true
   Setting['feature.homepage.widgets.feeds.processes'] = true
-
 end

@@ -132,3 +132,4 @@ es:
       probe:
         plaza: "Sondeo Plaza España"
         voting_allowed: Votaciones sobre propuestas de inversión
+      prevent_bing_from_index_consul: Rechazar indexado de Bing (bingbot)
