@@ -25,4 +25,8 @@ namespace :settings do
     Setting['feature.help_page'] = true
   end
 
+  desc "Consider future sign ins as 100% safe"
+  task set_safe_sign_in_from: :environment do
+    Setting["security.safe_sign_in_from"] = Time.current
+  end
 end

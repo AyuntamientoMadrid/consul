@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include HasOrders
   include Analytics
 
+  before_action :double_check_secure_sign_in
   before_action :authenticate_http_basic, if: :http_basic_auth_site?
 
   before_action :ensure_signup_complete
@@ -93,6 +94,25 @@ class ApplicationController < ActionController::Base
 
     def set_comment_flags(comments)
       @comment_flags = current_user ? current_user.comment_flags(comments) : {}
+    end
+
+    def double_check_secure_sign_in
+      if current_user && !current_user_is_completely_safe?
+        sign_out(current_user)
+      end
+    end
+
+    def current_user_is_completely_safe?
+      return true unless Setting["security.safe_sign_in_from"]
+
+      !current_user.current_sign_in_at.between?(
+        first_newsletter_with_token_sent_at,
+        Setting["security.safe_sign_in_from"]
+      )
+    end
+
+    def first_newsletter_with_token_sent_at
+      Time.utc(2018, 10, 23, 11, 30, 00)
     end
 
     def ensure_signup_complete
