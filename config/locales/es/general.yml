@@ -316,6 +316,8 @@ es:
     form:
       geozone: Ámbito de actuación
       proposal_external_url: Enlace a documentación adicional
+      proposal_question: Pregunta de la propuesta
+      proposal_question_example_html: "Debe ser resumida en una pregunta cuya respuesta sea Sí o No"
       proposal_responsible_name: Nombre y apellidos de la persona que hace esta propuesta
       proposal_responsible_name_note: "(individualmente o como representante de un colectivo; no se mostrará públicamente)"
       proposal_summary: Resumen de la propuesta
@@ -352,6 +354,7 @@ es:
           success: "Las recomendaciones de propuestas han sido desactivadas"
           error: "Ha ocurrido un error. Por favor dirígete al apartado 'Mi cuenta' para desactivar las recomendaciones manualmente"
       retired_proposals: Propuestas retiradas
+      retired_proposals: Propuestas retiradas
       retired_proposals_link: "Propuestas retiradas por sus autores"
       retired_links:
         all: Todas
@@ -370,7 +373,7 @@ es:
       select_order: Ordenar por
       select_order_long: 'Estas viendo las propuestas'
       start_proposal: Crea una propuesta
-      title: Propuestas
+      title: Propuestas ciudadanas
       top: Top semanal
       top_link_proposals: Propuestas más apoyadas por categoría
       section_header:
@@ -463,7 +466,7 @@ es:
       participate_button_expired: "Votación terminada"
       no_geozone_restricted: "Toda la ciudad"
       geozone_restricted: "Distritos"
-      geozone_info: 'Pueden participar las personas empadronadas en: '
+      geozone_info: "Pueden participar las personas empadronadas en: "
       already_answer: "Ya has participado en esta votación"
       not_logged_in: "Necesitas iniciar sesión o registrarte para participar"
       unverified: "Por favor verifica tu cuenta para participar"
@@ -512,7 +515,7 @@ es:
         null_votes: "Nulos"
       results:
         title: "Preguntas"
-        most_voted_answer: 'Respuesta más votada: '
+        most_voted_answer: "Respuesta más votada: "
   poll_questions:
     create_question: "Crear pregunta"
     show:
@@ -647,7 +650,7 @@ es:
     index:
       title: Presupuestos participativos
       unfeasible: Propuestas de inversión no viables
-      by_geozone: 'Propuestas de inversión con ámbito: %{geozone}'
+      by_geozone: "Propuestas de inversión con ámbito: %{geozone}"
       search_form:
         button: Buscar
         placeholder: Propuestas de inversión...
@@ -840,3 +843,4 @@ es:
       text_sign_in: iniciar sesión
       text_sign_up: registrarte
       title: "¿Cómo puedo comentar este documento?"
+

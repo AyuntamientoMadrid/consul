@@ -4,7 +4,7 @@ es:
     general_terms: Términos y Condiciones
     help:
       title: "%{org} es una plataforma de participación ciudadana"
-      guide: 'Esta guía explica para qué sirven y cómo funcionan cada una de las secciones de %{org}.'
+      guide: "Esta guía explica para qué sirven y cómo funcionan cada una de las secciones de %{org}."
       menu:
         debates: "Debates"
         proposals: "Propuestas"
@@ -25,7 +25,6 @@ es:
         description: "En la sección de %{link} puedes plantear propuestas para que el Ayuntamiento las lleve a cabo. Las propuestas recaban apoyos, y si alcanzan los apoyos suficientes se someten a votación ciudadana. Las propuestas aprobadas en estas votaciones ciudadanas son asumidas por el Ayuntamiento y se llevan a cabo."
         link: "propuestas ciudadanas"
         image_alt: "Botón para apoyar una propuesta"
-        figcaption_html: 'Botón para "Apoyar" una propuesta.'
       budgets:
         title: "Presupuestos participativos"
         description: "La sección de %{link} sirve para que la gente decida de manera directa a qué se destina una parte del presupuesto municipal."
@@ -59,13 +58,12 @@ es:
       how_to_use:
         text: |-
           Utilízalo en tu municipio libremente o ayúdanos a mejorarlo, es software libre.
-
+          
           Este Portal de Gobierno Abierto usa la [aplicación CONSUL](https://github.com/consul/consul 'github consul') que es software libre, con [licencia AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html 'AGPLv3 gnu' ), esto significa en palabras sencillas, que cualquiera puede libremente usar el código, copiarlo, verlo en detalle, modificarlo, y redistribuirlo al mundo con las modificaciones que quiera (manteniendo el que otros puedan a su vez hacer lo mismo). Porque creemos que la cultura es mejor y más rica cuando se libera.
-
+          
           Si eres programador, puedes ver el código y ayudarnos a mejorarlo en [aplicación CONSUL](https://github.com/consul/consul 'github consul').
       titles:
         how_to_use: Utilízalo en tu municipio
-    privacy: Política de privacidad
     titles:
       accessibility: Accesibilidad
       conditions: Condiciones de uso
