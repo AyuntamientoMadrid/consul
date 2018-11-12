@@ -523,84 +523,86 @@ feature 'Polls' do
   end
 
   context "Results and stats" do
-    scenario "Show poll results and stats if enabled and poll expired" do
-      poll = create(:poll, :expired, results_enabled: true, stats_enabled: true)
-      question1 = create(:poll_question, poll: poll)
+
+    before do
+      @poll = create(:poll, :expired, results_enabled: true, stats_enabled: true)
+      question1 = create(:poll_question, poll: @poll)
       create(:poll_question_answer, question: question1, title: 'Han Solo')
       create(:poll_question_answer, question: question1, title: 'Chewbacca')
-      question2 = create(:poll_question, poll: poll)
+      question2 = create(:poll_question, poll: @poll)
       create(:poll_question_answer, question: question2, title: 'Leia')
       create(:poll_question_answer, question: question2, title: 'Luke')
+    end
+
+    scenario "Show poll results and stats if enabled and poll expired" do
       user = create(:user)
 
       login_as user
-      visit poll_path(poll)
+      visit poll_path(@poll)
 
       expect(page).to have_content("Poll results")
       expect(page).to have_content("Participation statistics")
 
-      visit results_poll_path(poll)
+      click_link "Poll results"
       expect(page).to have_content("Questions")
 
-      visit stats_poll_path(poll)
+      click_link "Participation statistics"
       expect(page).to have_content("Participation data")
     end
 
     scenario "Don't show poll results and stats if not enabled" do
-      poll = create(:poll, :expired, results_enabled: false, stats_enabled: false)
       user = create(:user)
 
+      @poll.update(results_enabled: false, stats_enabled: false)
+
       login_as user
-      visit poll_path(poll)
+      visit poll_path(@poll)
 
-      expect(page).not_to have_content("Poll results")
-      expect(page).not_to have_content("Participation statistics")
+      expect(page).to have_link("Poll results")
+      expect(page).to have_link("Participation statistics")
 
-      visit results_poll_path(poll)
-      expect(page).to have_content("You do not have permission to carry out the action 'results' on poll.")
+      click_link "Poll results"
+      expect(page).to have_content("The results of this poll are not published yet.")
 
-      visit stats_poll_path(poll)
-      expect(page).to have_content("You do not have permission to carry out the action 'stats' on poll.")
+      click_link "Participation statistics"
+      expect(page).to have_content("The participation statistics of this poll are not published yet.")
     end
 
     scenario "Don't show poll results and stats if is not expired" do
-      poll = create(:poll, :current, results_enabled: true, stats_enabled: true)
       user = create(:user)
 
+      @poll.update(starts_at: 2.days.ago, ends_at: 2.days.from_now)
+
       login_as user
-      visit poll_path(poll)
+      visit poll_path(@poll)
 
       expect(page).not_to have_content("Poll results")
       expect(page).not_to have_content("Participation statistics")
 
-      visit results_poll_path(poll)
+      visit results_poll_path(@poll)
       expect(page).to have_content("You do not have permission to carry out the action 'results' on poll.")
 
-      visit stats_poll_path(poll)
+      visit stats_poll_path(@poll)
       expect(page).to have_content("You do not have permission to carry out the action 'stats' on poll.")
     end
 
     scenario "Show poll results and stats if user is administrator" do
-      poll = create(:poll, :current, results_enabled: false, stats_enabled: false)
-      question1 = create(:poll_question, poll: poll)
-      create(:poll_question_answer, question: question1, title: 'Han Solo')
-      create(:poll_question_answer, question: question1, title: 'Chewbacca')
-      question2 = create(:poll_question, poll: poll)
-      create(:poll_question_answer, question: question2, title: 'Leia')
-      create(:poll_question_answer, question: question2, title: 'Luke')
+      @poll.update(results_enabled: false, stats_enabled: false, starts_at: 2.days.ago, ends_at: 2.days.from_now)
       user = create(:administrator).user
 
       login_as user
-      visit poll_path(poll)
+      visit poll_path(@poll)
 
       expect(page).to have_content("Poll results")
       expect(page).to have_content("Participation statistics")
 
-      visit results_poll_path(poll)
+      click_link "Poll results"
       expect(page).to have_content("Questions")
+      expect(page).to have_content("The results of this poll are not published yet.")
 
-      visit stats_poll_path(poll)
+      click_link "Participation statistics"
       expect(page).to have_content("Participation data")
+      expect(page).to have_content("The participation statistics of this poll are not published yet.")
     end
   end
 end

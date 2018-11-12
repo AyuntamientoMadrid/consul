@@ -10,10 +10,10 @@ module Abilities
       can :results_2018, Poll
       can :stats_2018, Poll
       can :results, Poll do |poll|
-        poll.expired? && poll.results_enabled?
+        poll.expired?
       end
       can :stats, Poll do |poll|
-        poll.expired? && poll.stats_enabled?
+        poll.expired?
       end
       can :read, Poll::Question
       can [:read, :welcome], Budget

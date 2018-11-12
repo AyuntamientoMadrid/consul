@@ -510,9 +510,11 @@ es:
         valid: "Válidos"
         white: "En blanco"
         null_votes: "Nulos"
+        not_published: 'Las estadísticas de participación para esta votación no se han publicado aún.'
       results:
         title: "Preguntas"
         most_voted_answer: 'Respuesta más votada: '
+        not_published: 'Los resultados de esta votación no se han publicado aún.'
   poll_questions:
     create_question: "Crear pregunta"
     show:

@@ -513,9 +513,11 @@ en:
         valid: "Valid"
         white: "White votes"
         null_votes: "Invalid"
+        not_published: 'The participation statistics of this poll are not published yet.'
       results:
         title: "Questions"
         most_voted_answer: "Most voted answer: "
+        not_published: 'The results of this poll are not published yet.'
   poll_questions:
     create_question: "Create question"
     show:
