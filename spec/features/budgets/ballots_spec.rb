@@ -271,14 +271,20 @@ feature 'Ballots' do
       ballot = create(:budget_ballot, user: user, budget: budget)
       ballot.investments << investment1
 
-      visit budget_investments_path(budget, heading_id: california.id)
+      visit budget_path(budget)
+
+      click_link "States"
+
+      expect(page).not_to have_css("#budget_heading_#{new_york.id}.is-active")
+      expect(page).to have_css("#budget_heading_#{california.id}.is-active")
+
+      click_link "California"
 
       within("#budget_investment_#{investment1.id}") do
         find('.remove a').click
       end
 
       visit budget_investments_path(budget, heading_id: new_york.id)
-
       add_to_ballot(investment2)
 
       visit budget_path(budget)
@@ -427,7 +433,9 @@ feature 'Ballots' do
     visit budget_investments_path(budget, heading_id: new_york.id)
     add_to_ballot(investment)
 
-    click_link "Check my ballot"
+    within("#check-ballot-div") do
+      click_link "Check my ballot"
+    end
 
     expect(page).to have_content("You have voted one investment")
 

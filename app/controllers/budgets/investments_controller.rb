@@ -3,10 +3,12 @@ module Budgets
     include FeatureFlags
     include CommentableActions
     include FlagActions
+    include BudgetHeadingsHelper
 
     before_action :authenticate_user!, except: [:index, :show, :redirect_to_new_url, :json_data]
     before_action :load_budget, except: [:redirect_to_new_url, :json_data]
     before_action :load_investment, only: [:show]
+    before_action :load_geozones, only: [:index]
 
     load_and_authorize_resource :budget, except: [:redirect_to_new_url, :json_data]
     load_and_authorize_resource :investment, through: :budget, class: "Budget::Investment", except: [:redirect_to_new_url, :json_data]
@@ -42,6 +44,7 @@ module Budgets
 
       @investment_ids = @investments.pluck(:id)
       load_investment_votes(@investments)
+      @investments_map_coordinates = current_heading_map_locations(investments)
     end
 
     def new

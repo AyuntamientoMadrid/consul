@@ -24,11 +24,11 @@ module MapLocationsHelper
     "remove-marker-link-#{dom_id(map_location)}"
   end
 
-  def render_map(map_location, parent_class, editable, remove_marker_label, investments_coordinates=nil)
+  def render_map(map_location, parent_class, editable, remove_marker_label, investments_coordinates=nil, custom_css_class=nil)
     map_location = MapLocation.new if map_location.nil?
     map = content_tag_for :div,
                           map_location,
-                          class: "map",
+                          class: "map #{custom_css_class}",
                           data: prepare_map_settings(map_location, editable, parent_class, investments_coordinates)
     map += map_location_remove_marker(map_location, remove_marker_label) if editable
     map

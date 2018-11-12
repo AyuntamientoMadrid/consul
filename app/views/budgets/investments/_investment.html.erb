@@ -59,7 +59,6 @@
       </div>
 
       <% unless investment.unfeasible? %>
-
         <% if investment.should_show_votes? %>
           <div id="<%= dom_id(investment) %>_votes"
                class="small-12 medium-3 column text-center"

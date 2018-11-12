@@ -8,6 +8,8 @@ App.FixedBar =
         if $(window).scrollTop() > fixedBarTopPosition
           $this.addClass('is-fixed')
           $("#check-ballot").css({ 'display': "inline-block" })
+          $(".header-map").hide()
         else
           $this.removeClass('is-fixed')
           $("#check-ballot").hide()
+          $(".header-map").show()

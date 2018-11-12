@@ -2,7 +2,7 @@
   <section class="no-margin-top margin-bottom">
     <div class="expanded jumbo-budget budget-heading padding">
 
-      <div class="row">
+      <div id="check-ballot-div" class="row">
         <div class="small-12 column">
           <%= back_link_to budgets_path %>
 
@@ -15,7 +15,7 @@
       </div>
 
       <div class="row progress-votes">
-        <div class="small-12 column">
+        <div class="small-12 medium-6 column">
           <% if can? :show, @ballot %>
             <div id="check-ballot" style="display: none;">
               <%= link_to t("budgets.investments.header.check_ballot"),
@@ -57,8 +57,14 @@
             </h3>
           <% end %>
         </div>
+
+        <div class="small-12 medium-6 column">
+          <%= render_map(nil, "budgets", false, nil, @investments_map_coordinates, 'header-map') %>
+        </div>
+
       </div>
     </div>
+
   </section>
 <% else %>
   <div class="expanded jumbo-budget padding no-margin-top margin-bottom">

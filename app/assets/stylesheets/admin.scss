@@ -1129,6 +1129,10 @@ $sidebar-active: #f4fcd0;
   height: 0;
 }
 
+.header-map {
+  max-height: $line-height * 10;
+}
+
 // 10. Budgets
 // -----------------
 

@@ -72,6 +72,29 @@ feature 'Budget Investments' do
     end
   end
 
+  context 'Header map' do
+
+    scenario 'Shows map markers', :js do
+      investment1 = create(:budget_investment, :feasible, heading: heading)
+      investment2 = create(:budget_investment, :undecided, heading: heading)
+      investment3 = create(:budget_investment, :unfeasible, heading: heading)
+
+      investment1.create_map_location(longitude: 40.1234, latitude: 3.1234, zoom: 10)
+      investment2.create_map_location(longitude: 40.1235, latitude: 3.1235, zoom: 10)
+      investment3.create_map_location(longitude: 40.1236, latitude: 3.1236, zoom: 10)
+
+      visit budget_investments_path(budget_id: investment1.budget.id, heading_id: investment1.heading.id)
+
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content '40.1234'
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content '40.1235'
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content '3.1234'
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content '3.1235'
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content investment1.title
+      expect(find(".map_location")['data-marker-investments-coordinates']).to have_content investment2.title
+      expect(find(".map_location")['data-marker-investments-coordinates']).not_to have_content investment3.title
+    end
+  end
+
   scenario 'Index should show investment descriptive image only when is defined' do
     Setting['feature.allow_images'] = true
 

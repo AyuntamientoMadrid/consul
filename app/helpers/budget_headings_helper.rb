@@ -12,4 +12,17 @@ module BudgetHeadingsHelper
     link_to(assigned_heading.name, heading_path)
   end
 
+  def current_heading_map_locations(investments)
+    investments.map do |investment|
+      next unless investment.map_location.present?
+      {
+        lat: investment.map_location.latitude,
+        long: investment.map_location.longitude,
+        investment_title: investment.title,
+        investment_id: investment.id,
+        budget_id: investment.budget.id
+      }
+    end.flatten.compact
+  end
+
 end
