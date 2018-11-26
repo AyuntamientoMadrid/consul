@@ -7,15 +7,16 @@ module Verifications
     select year,  from: "#{selector}_1i"
   end
 
-  def verify_residence
+  def verify_residence(success_text: "Residence verified")
     select 'DNI', from: 'residence_document_type'
     fill_in 'residence_document_number', with: "12345678Z"
-    select_date '31-December-1980', from: 'residence_date_of_birth'
+    select_date "31-#{I18n.l(Date.current.at_end_of_year, format: "%B")}-1980",
+                from: 'residence_date_of_birth'
     fill_in 'residence_postal_code', with: '28013'
     check 'residence_terms_of_service'
 
-    click_button 'Verify residence'
-    expect(page).to have_content 'Residence verified'
+    click_button class: "success"
+    expect(page).to have_content success_text
   end
 
   def officing_verify_residence
