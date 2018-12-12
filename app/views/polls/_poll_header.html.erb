@@ -3,7 +3,7 @@
     <div class="small-12 medium-9 column padding">
       <%= back_link_to polls_path, t("polls.show.back") %>
 
-      <h2><%= @poll.name %></h2>
+      <h1><%= @poll.name %></h1>
 
       <%= safe_html_with_links simple_format(@poll.summary) %>
 
