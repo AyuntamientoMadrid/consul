@@ -47,7 +47,6 @@
     }
   }
 
-  h3,
   .reports {
     background: $campaign-yellow;
     color: #000;
@@ -57,24 +56,6 @@
     line-height: $line-height * 2;
     margin-bottom: 0;
     text-transform: uppercase;
-  }
-
-  .sidebar {
-    border-right: 1px solid $border;
-
-    p {
-      font-family: "Franklin Gothic" !important;
-      font-size: rem-calc(30);
-      text-transform: uppercase;
-    }
-
-    .menu {
-      padding: 0;
-
-      li a {
-        color: $link;
-      }
-    }
   }
 }
 
