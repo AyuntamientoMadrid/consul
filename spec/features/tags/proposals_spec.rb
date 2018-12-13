@@ -160,6 +160,22 @@ feature 'Tags' do
     expect(page.html).not_to include 'user_id=1, &a=3, <script>alert("hey");</script>'
   end
 
+  scenario 'Create with errors' do
+    create(:tag, :category, name: 'Economía')
+    create(:tag, :category, name: 'Medio Ambiente')
+
+    user = create(:user)
+    login_as(user)
+
+    visit new_proposal_path
+    click_button 'Create proposal'
+
+    within("#category_tags") do
+      expect(page).to have_content("Economía")
+      expect(page).to have_content("Medio Ambiente")
+    end
+  end
+
   scenario 'Update' do
     proposal = create(:proposal, tag_list: 'Economía')
 
@@ -175,6 +191,24 @@ feature 'Tags' do
     within('.tags') do
       expect(page).to have_css('a', text: 'Economía')
       expect(page).to have_css('a', text: 'Hacienda')
+    end
+  end
+
+  scenario 'Update with errors' do
+    create(:tag, :category, name: 'Economía')
+    create(:tag, :category, name: 'Medio Ambiente')
+
+    proposal = create(:proposal, tag_list: 'Economía')
+
+    login_as(proposal.author)
+    visit edit_proposal_path(proposal)
+
+    fill_in 'proposal_title', with: ''
+    click_button 'Save changes'
+
+    within("#category_tags") do
+      expect(page).to have_content("Economía")
+      expect(page).to have_content("Medio Ambiente")
     end
   end
 

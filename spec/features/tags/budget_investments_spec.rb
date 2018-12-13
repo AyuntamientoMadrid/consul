@@ -189,6 +189,18 @@ feature 'Tags' do
     expect(page.html).not_to include 'user_id=1, &a=3, <script>alert("hey");</script>'
   end
 
+  scenario 'Create with errors' do
+    login_as(author)
+
+    visit new_budget_investment_path(budget_id: budget.id)
+    click_button 'Create Investment'
+
+    within("#category_tags") do
+      expect(page).to have_content('Economía')
+      expect(page).to have_content('Medio Ambiente')
+    end
+  end
+
   context "Filter" do
 
     scenario "From index" do
