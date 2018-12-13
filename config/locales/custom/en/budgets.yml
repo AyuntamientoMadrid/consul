@@ -21,10 +21,8 @@ en:
         message: "I supported the investment project %{title} in %{org} of participatory budget 2019. Support you too and #PonChuloMadrid"
         message_mobile: "I supported the investment project %{title} in %{handle} of participatory budget 2019. Support you too and #PonChuloMadrid"
     stats:
-      title: Participation stats
       link: Stats
       page_title: "%{budget} - Participation stats"
-      total_participants: Total Participants
       total_budget_investments: Total Proposed Investments
       total_selected_investments: Proposals on final phase
       total_unfeasible_investments: Unfeasible proposals
