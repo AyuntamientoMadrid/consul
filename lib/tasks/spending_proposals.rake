@@ -33,4 +33,10 @@ namespace :spending_proposals do
     Budget::Investment.where(original_spending_proposal_id: winner_spending_proposals)
                       .update_all(winner: true, selected: true)
   end
+
+  desc "Migrates delegated votes to represented user votes"
+  task migrate_delegated_votes: :environment do
+    require "migrations/spending_proposal/vote"
+    Migrations::SpendingProposal::Vote.new.migrate_delegated_votes
+  end
 end
