@@ -84,11 +84,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each, :with_frozen_time) do
-    travel_to Time.now # TODO: use `freeze_time` after migrating to Rails 5.
+    Timecop.freeze(Time.current)
   end
 
   config.after(:each, :with_frozen_time) do
-    travel_back
+    Timecop.return
   end
 
   config.before(:each, :with_different_time_zone) do
