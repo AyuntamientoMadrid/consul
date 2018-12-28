@@ -28,7 +28,7 @@
 //= require app
 //= require check_all_none
 //= require comments
-//= require dropdown
+//= require foundation_extras
 //= require ie_alert
 //= require location_changer
 //= require moderator_comment
@@ -92,7 +92,7 @@ var initialize_modules = function() {
   App.Votes.initialize();
   App.AllowParticipation.initialize();
   App.Tags.initialize();
-  App.Dropdown.initialize();
+  App.FoundationExtras.initialize();
   App.LocationChanger.initialize();
   App.CheckAllNone.initialize();
   App.PreventDoubleSubmission.initialize();
