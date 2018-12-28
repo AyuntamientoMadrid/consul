@@ -18,10 +18,8 @@ en:
         faq: "What can you propose?"
         faq_link: "See all information of participatory budgets"
     stats:
-      title: Participation stats
       link: Stats
       page_title: "%{budget} - Participation stats"
-      total_participants: Total Participants
       total_budget_investments: Total Proposed Investments
       total_selected_investments: Proposals on final phase
       total_unfeasible_investments: Unfeasible proposals
@@ -30,14 +28,10 @@ en:
       total_participants_booths: Vote phase booth participants
       participants: Participants
       supports: Supports
-      by_gender: "Participants by gender"
       total_male_participants: Mens
       total_female_participants: Women
-      by_age: "Participants by age groups"
       age: Age
       total: Total
-      more_than: More than
-      years: years
       by_heading: "Participants by heading"
       heading: Heading
       investments_sent_html: "Investment proposals sent"

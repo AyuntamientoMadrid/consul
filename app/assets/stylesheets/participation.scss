@@ -2110,7 +2110,7 @@
       border-right: 1px solid $border;
     }
 
-    .menu {
+    .menu:not(.vertical) {
       padding: 0;
 
       li a {
@@ -2143,11 +2143,5 @@
         font-weight: bold;
       }
     }
-  }
-
-  .number {
-    font-size: rem-calc(60);
-    font-weight: bold;
-    line-height: rem-calc(60);
   }
 }

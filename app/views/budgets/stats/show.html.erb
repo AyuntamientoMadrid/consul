@@ -11,13 +11,13 @@
 <% end %>
 
 <% cache [@stats] do %>
-  <div class="budgets-stats">
+  <div class="participation-stats budgets-stats">
     <div class="expanded no-margin-top padding header">
       <div class="row">
         <div class="small-12 column">
           <%= back_link_to budgets_path %>
           <h2 class="margin-top">
-            <%= t("budgets.stats.title") %><br>
+            <%= t("stats.title") %><br>
             <span><%= @budget.name %></span>
           </h2>
         </div>
@@ -44,7 +44,7 @@
     <div class="row">
       <div class="small-12 medium-6 column">
         <div class="callout">
-          <span class="uppercase"><%= t("budgets.stats.total_participants") %></span>
+          <span class="uppercase"><%= t("stats.total_participants") %></span>
           <p id="total_participants" class="big-number-stat budget">
             <%= @stats[:total_participants] %>
           </p>
@@ -98,7 +98,7 @@
 
     <div class="row margin">
       <div class="small-12 column">
-        <h2 class="margin-bottom"><%= t("budgets.stats.by_gender") %></h2>
+        <h2 class="margin-bottom"><%= t("stats.by_gender") %></h2>
       </div>
 
       <div class="small-12 medium-6 column text-center">
@@ -110,9 +110,7 @@
           <p id="female_percentage">
             <span class="label" style="background: #FF9E01"></span>
             &nbsp;<%= t("budgets.stats.total_female_participants").upcase %>
-            (<%= number_to_percentage(@stats[:female_percentage],
-                                      strip_insignificant_zeros: true,
-                                      precision: 2) %>)
+            (<%= number_to_stats_percentage(@stats[:female_percentage]) %>)
           </p>
           <p id="total_female_participants" class="big-number-stat">
             <%= @stats[:total_female_participants] %>
@@ -123,9 +121,7 @@
           <p id="male_percentage" >
             <span class="label" style="background: #FF6600"></span>
             &nbsp;<%= t("budgets.stats.total_male_participants").upcase %>
-            (<%= number_to_percentage(@stats[:male_percentage],
-                                      strip_insignificant_zeros: true,
-                                      precision: 2) %>)
+            (<%= number_to_stats_percentage(@stats[:male_percentage]) %>)
           </p>
           <p id="total_male_participants" class="big-number-stat">
             <%= @stats[:total_male_participants] %>
@@ -136,37 +132,26 @@
 
     <div class="row margin">
       <div class="small-12 column">
-        <h2 class="margin-bottom"><%= t("budgets.stats.by_age") %></h2>
+        <h2 class="margin-bottom"><%= t("stats.by_age") %></h2>
 
         <table>
           <thead>
             <tr>
-              <th scope="col" class="table-width border-right"><%= t("budgets.stats.age").upcase %></th>
-              <th scope="col" class="border-left"><%= t("budgets.stats.total").upcase %></th>
+              <th scope="col" class="small-4"><%= t("budgets.stats.age").upcase %></th>
+              <th scope="col"><%= t("budgets.stats.total").upcase %></th>
             </tr>
           </thead>
           <tbody>
-            <% all_ages_count = @stats[:age_groups].values.sum.to_f %>
-            <% @stats[:age_groups].each do |age_group, count| %>
-              <tr id="age_group_<%= age_group.gsub(' - ', '_to_').gsub('+ ', 'up_to_') %>">
-                <td class="border-right">
-                  <%= age_group.gsub("+", t("budgets.stats.more_than")) + ' ' + t("budgets.stats.years") %>
-                </td>
-                <td class="border-left">
+            <% @stats[:age_groups].values.each do |group| %>
+              <tr>
+                <td><%= group[:range] %></td>
+                <td>
                   <strong>
-                    <%
-                      percentage_age_count = all_ages_count == 0 ? 0 : (count / all_ages_count * 100)
-                      formatted_percentage_age_count = number_to_percentage(percentage_age_count,
-                                                                             strip_insignificant_zeros: true,
-                                                                             precision: 2)
-                    %>
-                    <%= count %>
-                   (<%= formatted_percentage_age_count %>)
+                    <%= "#{group[:count]} (#{number_to_stats_percentage(group[:percentage])})" %>
                   </strong>
-                  <div class="progress" role="progressbar" tabindex="0" aria-valuenow="20" aria-valuemin="0" aria-valuetext="<%= percentage_age_count %>" aria-valuemax="100">
-                    <span class="progress-meter" style="width: <%= number_to_percentage(percentage_age_count*5,
-                                                                             strip_insignificant_zeros: true,
-                                                                             precision: 2, locale: :en) %>;"></span>
+                  <div class="progress" tabindex="0">
+                    <span class="progress-meter" style="width: <%= group[:percentage] %>%">
+                    </span>
                   </div>
                 </td>
               </tr>
@@ -219,15 +204,11 @@
                   </td>
                   <td id="percentage_participants_<%= phase %>_phase_heading_<%= heading.id %>"
                       class="border-left border-right text-center">
-                    <%= number_to_percentage(@stats[:headings][heading.id]["percentage_participants_#{phase}_phase".to_sym],
-                      strip_insignificant_zeros: true,
-                      precision: 2) %>
+                    <%= number_to_stats_percentage(@stats[:headings][heading.id]["percentage_participants_#{phase}_phase".to_sym]) %>
                   </td>
                   <td id="percentage_district_population_<%= phase %>_phase_heading_<%= heading.id %>"
                       class="text-center border-right">
-                    <%= number_to_percentage(@stats[:headings][heading.id]["percentage_district_population_#{phase}_phase".to_sym],
-                      strip_insignificant_zeros: true,
-                      precision: 2)%>
+                    <%= number_to_stats_percentage(@stats[:headings][heading.id]["percentage_district_population_#{phase}_phase".to_sym]) %>
                   </td>
                 <% end %>
               </tr>
@@ -251,9 +232,7 @@
                   </td>
                   <td id="percentage_participants_<%= phase %>_phase_heading_total"
                       class="text-center success">
-                    <strong><%= number_to_percentage(@stats[:headings][:total]["percentage_participants_#{phase}_phase".to_sym],
-                      strip_insignificant_zeros: true,
-                      precision: 2) %></strong>
+                    <strong><%= number_to_stats_percentage(@stats[:headings][:total]["percentage_participants_#{phase}_phase".to_sym]) %></strong>
                   </td>
                   <td class="text-center success <%= phase == 'all' ? 'border-right-success ' : '' %>"></td>
                 <% end %>

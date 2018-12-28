@@ -32,10 +32,8 @@ es:
       header:
         different_heading_assigned_html: "Ya has votado proyectos de otro distrito: %{heading_link}"
     stats:
-      title: Estadísticas de participación
       link: Estadísticas
       page_title: "%{budget} - Estadísticas de participación"
-      total_participants: Total participantes
       total_budget_investments: Total propuestas enviadas
       total_selected_investments: Propuestas en la fase final
       total_unfeasible_investments: Propuestas inviables
@@ -45,13 +43,9 @@ es:
       participants: Participantes
       supports: Apoyos
       total: Total
-      by_gender: "Participación por género"
       total_male_participants: Hombres
       total_female_participants: Mujeres
-      by_age: "Participación por grupos de edad"
       age: Edad
-      more_than: Más de
-      years: años
       by_heading: "Participación por distritos"
       heading: Distrito
       investments_sent_html: "Propuestas<br>enviadas"
