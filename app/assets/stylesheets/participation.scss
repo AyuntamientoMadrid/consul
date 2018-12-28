@@ -1994,7 +1994,7 @@
       border-right: 1px solid $border;
     }
 
-    .menu {
+    .menu:not(.vertical) {
       padding: 0;
 
       li a {
