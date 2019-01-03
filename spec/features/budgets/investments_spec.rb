@@ -1682,7 +1682,7 @@ feature 'Budget Investments' do
     it 'Trying to visit an investment with a wrong budget slug' do
       wrong_url = budget_investment_path(budget_id: budget.slug, id: investment.id).gsub(budget.slug, 'wrong_budget_slug')
 
-      expect { visit wrong_url }.to raise_error(ActionController::RoutingError)
+      expect { visit wrong_url }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
