@@ -95,7 +95,9 @@ FactoryBot.define do
     token SecureRandom.hex(32)
 
     trait :from_booth do
+      origin "booth"
       association :booth_assignment, factory: :poll_booth_assignment
+      association :officer_assignment, factory: :poll_officer_assignment
     end
 
     trait :valid_document do
