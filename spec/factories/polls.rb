@@ -94,6 +94,10 @@ FactoryBot.define do
     origin "web"
     token SecureRandom.hex(32)
 
+    trait :from_web do
+      origin "web"
+    end
+
     trait :from_booth do
       origin "booth"
 
@@ -133,6 +137,16 @@ FactoryBot.define do
   factory :poll_recount, class: 'Poll::Recount' do
     association :author, factory: :user
     origin 'web'
+
+    trait :from_booth do
+      origin "booth"
+
+      transient { poll nil }
+
+      booth_assignment do
+        association :poll_booth_assignment, poll: poll
+      end
+    end
   end
 
   factory :officing_residence, class: 'Officing::Residence' do
