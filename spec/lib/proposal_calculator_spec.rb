@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe ProposalCalculator do
 
@@ -41,7 +41,7 @@ describe ProposalCalculator do
 
   describe "#minimum_votes?" do
     it "returns minimum required number of votes for a district" do
-      carabanchel = create(:geozone, name: 'Carabanchel')
+      carabanchel = create(:geozone, name: "Carabanchel")
       spending_proposal = create(:spending_proposal, geozone: carabanchel)
       calculator = ProposalCalculator.new(spending_proposal)
 
@@ -58,7 +58,7 @@ describe ProposalCalculator do
 
   describe "#insufficient_votes?" do
     it "returns true if below required number of votes" do
-      carabanchel = create(:geozone, name: 'Carabanchel')
+      carabanchel = create(:geozone, name: "Carabanchel")
       spending_proposal = create(:spending_proposal, geozone: carabanchel, cached_votes_up: 36)
       calculator = ProposalCalculator.new(spending_proposal)
 
@@ -66,7 +66,7 @@ describe ProposalCalculator do
     end
 
     it "returns false if above required number of votes" do
-      carabanchel = create(:geozone, name: 'Carabanchel')
+      carabanchel = create(:geozone, name: "Carabanchel")
       spending_proposal = create(:spending_proposal, geozone: carabanchel, cached_votes_up: 37)
       calculator = ProposalCalculator.new(spending_proposal)
 

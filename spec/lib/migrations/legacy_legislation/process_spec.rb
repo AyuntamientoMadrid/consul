@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'migrations/legacy_legislation/process'
+require "rails_helper"
+require "migrations/legacy_legislation/process"
 
 describe Migrations::LegacyLegislation::Process do
 

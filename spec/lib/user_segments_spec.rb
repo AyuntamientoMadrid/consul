@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe UserSegments do
   let(:user1) { create(:user) }
@@ -174,12 +174,12 @@ describe UserSegments do
   end
 
   describe "#not_supported_on_current_budget" do
-    it "only returns users that haven't supported investments on current budget" do
+    it "only returns users that have not supported investments on current budget" do
       investment1 = create(:budget_investment)
       investment2 = create(:budget_investment)
       budget = create(:budget)
-      investment1.vote_by(voter: user1, vote: 'yes')
-      investment2.vote_by(voter: user2, vote: 'yes')
+      investment1.vote_by(voter: user1, vote: "yes")
+      investment2.vote_by(voter: user2, vote: "yes")
       investment1.update(budget: budget)
       investment2.update(budget: budget)
 
@@ -206,7 +206,7 @@ describe UserSegments do
 
     it "returns users sorted by `created_at` attribute" do
       users   = described_class.beta_testers.pluck(:email)
-      testers = User.order('created_at ASC').pluck(:email).last(3)
+      testers = User.order("created_at ASC").pluck(:email).last(3)
       expect(users).to eq(testers)
     end
   end
@@ -223,7 +223,7 @@ describe UserSegments do
     let(:user4) { create(:user, geozone: mars) }
 
     before do
-      load 'lib/user_segments.rb'
+      load "lib/user_segments.rb"
     end
 
     it "dynamically generates user segments for all geozones" do

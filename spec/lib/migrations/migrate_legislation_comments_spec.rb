@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'migrations/legislation_comments_migration'
+require "rails_helper"
+require "migrations/legislation_comments_migration"
 
 describe LegislationCommentsMigration do
 

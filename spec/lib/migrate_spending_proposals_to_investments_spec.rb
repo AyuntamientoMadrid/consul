@@ -1,12 +1,12 @@
-require 'rails_helper'
+require "rails_helper"
 
 describe MigrateSpendingProposalsToInvestments do
 
   let(:importer) { described_class.new }
 
-  describe '#import' do
+  describe "#import" do
 
-    it "Creates the budget if it doesn't exist" do
+    it "Creates the budget if it does not exist" do
       sp = create(:spending_proposal)
       expect { importer.import(sp) }.to change{ Budget.count }.from(0).to(1)
       importer.import(create(:spending_proposal))
@@ -61,9 +61,9 @@ describe MigrateSpendingProposalsToInvestments do
       feasible   = create(:spending_proposal, feasible: true)
       unfeasible = create(:spending_proposal, feasible: false)
 
-      expect(importer.import(sp).feasibility).to eq('undecided')
-      expect(importer.import(feasible).feasibility).to eq('feasible')
-      expect(importer.import(unfeasible).feasibility).to eq('unfeasible')
+      expect(importer.import(sp).feasibility).to eq("undecided")
+      expect(importer.import(feasible).feasibility).to eq("feasible")
+      expect(importer.import(unfeasible).feasibility).to eq("unfeasible")
     end
 
     it "Imports valuation assignments" do
@@ -96,8 +96,8 @@ describe MigrateSpendingProposalsToInvestments do
 
     it "Imports comments" do
       sp = create(:spending_proposal)
-      comment = create(:comment, commentable: sp, subject: 'Wadus stuff')
-      comment = create(:comment, commentable: sp, subject: 'More wadus')
+      comment = create(:comment, commentable: sp, subject: "Wadus stuff")
+      comment = create(:comment, commentable: sp, subject: "More wadus")
       inv = importer.import(sp)
 
       expect(inv.comments_count).to eq(2)
