@@ -13,25 +13,25 @@ module CommonActions
   include Verifications
   include Votes
 
-  def sign_up_as_organization(email="organization@consul.dev", password='thepeoples')
+  def sign_up_as_organization(email="organization@consul.dev", password="thepeoples")
     visit new_organization_registration_path
 
-    fill_in 'user_organization_attributes_name',  with: 'Greenpeace'
-    fill_in 'user_organization_attributes_responsible_name', with: 'Dorothy Stowe'
-    fill_in 'user_email',                         with: 'green@peace.com'
-    fill_in 'user_password',                      with: 'greenpeace'
-    fill_in 'user_password_confirmation',         with: 'greenpeace'
-    check 'user_terms_of_service'
+    fill_in "user_organization_attributes_name",  with: "Greenpeace"
+    fill_in "user_organization_attributes_responsible_name", with: "Dorothy Stowe"
+    fill_in "user_email",                         with: "green@peace.com"
+    fill_in "user_password",                      with: "greenpeace"
+    fill_in "user_password_confirmation",         with: "greenpeace"
+    check "user_terms_of_service"
 
-    click_button 'Register'
+    click_button "Register"
   end
 
-  def fill_in_signup_form(email = 'manuela@consul.dev', password = 'judgementday')
-    fill_in 'user_username',              with: "Manuela Carmena #{rand(99999)}"
-    fill_in 'user_email',                 with: email
-    fill_in 'user_password',              with: password
-    fill_in 'user_password_confirmation', with: password
-    check 'user_terms_of_service'
+  def fill_in_signup_form(email = "manuela@consul.dev", password = "judgementday")
+    fill_in "user_username",              with: "Manuela Carmena #{rand(99999)}"
+    fill_in "user_email",                 with: email
+    fill_in "user_password",              with: password
+    fill_in "user_password_confirmation", with: password
+    check "user_terms_of_service"
   end
 
   def login_as_authenticated_manager
@@ -42,19 +42,19 @@ module CommonActions
   end
 
   def fill_in_proposal
-    fill_in 'proposal_title', with: 'Help refugees'
-    fill_in 'proposal_summary', with: 'In summary what we want is...'
-    fill_in 'proposal_description', with: 'This is very important because...'
-    fill_in 'proposal_external_url', with: 'http://rescue.org/refugees'
-    fill_in 'proposal_video_url', with: 'https://www.youtube.com/watch?v=yPQfcG-eimk'
-    fill_in 'proposal_responsible_name', with: 'Isabel Garcia'
-    check 'proposal_terms_of_service'
+    fill_in "proposal_title", with: "Help refugees"
+    fill_in "proposal_summary", with: "In summary what we want is..."
+    fill_in "proposal_description", with: "This is very important because..."
+    fill_in "proposal_external_url", with: "http://rescue.org/refugees"
+    fill_in "proposal_video_url", with: "https://www.youtube.com/watch?v=yPQfcG-eimk"
+    fill_in "proposal_responsible_name", with: "Isabel Garcia"
+    check "proposal_terms_of_service"
   end
 
   def fill_in_debate
-    fill_in 'debate_title', with: 'A title for a debate'
-    fill_in 'debate_description', with: 'This is very important because...'
-    check 'debate_terms_of_service'
+    fill_in "debate_title", with: "A title for a debate"
+    fill_in "debate_description", with: "This is very important because..."
+    check "debate_terms_of_service"
   end
 
   def validate_officer
@@ -100,8 +100,8 @@ module CommonActions
 
     authorization_hash = "khmac:///sha-256;#{signature}/#{message}"
 
-    page.driver.header 'Authorization', authorization_hash
-    page.driver.header 'ACCEPT', "application/json"
+    page.driver.header "Authorization", authorization_hash
+    page.driver.header "ACCEPT", "application/json"
     page.driver.post polls_nvotes_success_path
   end
 
@@ -116,9 +116,9 @@ module CommonActions
   end
 
   def expect_message_already_voted_in_another_geozone(geozone)
-    expect(page).to have_content 'You have already supported other district proposals.'
+    expect(page).to have_content "You have already supported other district proposals."
     expect(page).to have_link(geozone.name, href: spending_proposals_path(geozone: geozone))
-    expect(page).to have_selector('.in-favor a', visible: false)
+    expect(page).to have_selector(".in-favor a", visible: false)
   end
 
   def expect_message_insufficient_funds
@@ -126,8 +126,8 @@ module CommonActions
   end
 
   def expect_message_selecting_not_allowed
-    expect(page).to have_content 'No Selecting Allowed'
-    expect(page).not_to have_selector('.in-favor a')
+    expect(page).to have_content "No Selecting Allowed"
+    expect(page).not_to have_selector(".in-favor a")
   end
 
   def create_spending_proposal_for(*users)
@@ -176,7 +176,7 @@ module CommonActions
 
   def add_spending_proposal_to_ballot(spending_proposal)
     within("#spending_proposal_#{spending_proposal.id}") do
-      find('.add a').click
+      find(".add a").click
       expect(page).to have_content "Remove"
     end
   end
