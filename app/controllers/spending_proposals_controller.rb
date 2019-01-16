@@ -197,7 +197,7 @@ class SpendingProposalsController < ApplicationController
 
     def total_supports
       stats_cache('total_supports') do
-        ActsAsVotable::Vote.where(votable_type: 'SpendingProposal').count
+        spending_proposal_supports.count
       end
     end
 
@@ -212,12 +212,15 @@ class SpendingProposalsController < ApplicationController
     end
 
     def voters
-      stats_cache('voters') { ActsAsVotable::Vote.where(votable_type: 'SpendingProposal').pluck(:voter_id) }
+      stats_cache("voters") { spending_proposal_supports.pluck(:voter_id) }
     end
 
     def voters_by_geozone(geozone_id)
       stats_cache("voters_geozone_#{geozone_id}") do
-        ActsAsVotable::Vote.where(votable_type: 'SpendingProposal', votable_id: SpendingProposal.by_geozone(geozone_id)).pluck(:voter_id)
+        heading = heading_for_geozone(geozone_id)
+        ActsAsVotable::Vote.where(votable_type: "Budget::Investment",
+                                  votable_id: budget_2016.investments.by_heading(heading.id))
+                                  .pluck(:voter_id)
       end
     end
 
@@ -350,6 +353,19 @@ class SpendingProposalsController < ApplicationController
       stats_cache('total_unknown_gender_or_age') do
         participants.where("gender IS NULL OR date_of_birth is NULL").uniq.count
       end
+    end
+
+    def budget_2016
+      Budget.where(slug: "2016").first
+    end
+
+    def spending_proposal_supports
+      ActsAsVotable::Vote.where(votable: budget_2016.investments)
+    end
+
+    def heading_for_geozone(geozone_id)
+      geozone = Geozone.find(geozone_id)
+      budget_2016.headings.where(name: geozone.name).first
     end
 
     def stats_cache(key, &block)
