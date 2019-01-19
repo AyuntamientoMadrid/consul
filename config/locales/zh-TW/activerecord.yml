@@ -2,74 +2,109 @@ zh-TW:
   activerecord:
     models:
       activity:
+        one: "活動"
         other: "活動"
       budget:
+        one: "預算"
         other: "預算"
       budget/investment:
+        one: "投資"
         other: "投資"
       milestone:
+        one: "里程碑"
         other: "里程碑"
       milestone/status:
+        one: "投資狀態"
         other: "投資狀態"
       comment:
+        one: "評論"
         other: "評論"
       debate:
+        one: "辯論"
         other: "辯論"
       tag:
+        one: "標籤"
         other: "標籤"
       user:
+        one: "用戶"
         other: "用戶"
       moderator:
+        one: "版主"
         other: "版主"
       administrator:
+        one: "管理員"
         other: "管理員"
       valuator:
+        one: "評估員"
         other: "評估員"
       valuator_group:
+        one: "評估小組"
         other: "評估小組"
       manager:
+        one: "經理"
         other: "經理"
       newsletter:
+        one: "通訊"
         other: "通訊"
       vote:
+        one: "票"
         other: "票"
       organization:
+        one: "組織"
         other: "組織"
       poll/booth:
+        one: "投票亭"
         other: "投票亭"
       poll/officer:
+        one: "職員"
         other: "職員"
       proposal:
+        one: "公民提議"
         other: "公民提議"
       spending_proposal:
+        one: "投資項目"
         other: "投資項目"
       site_customization/page:
+        one: 自定義頁面
         other: 自定義頁面
       site_customization/image:
+        one: 自定義圖像
         other: 自定義圖像
       site_customization/content_block:
+        one: 自定義內容塊
         other: 自定義內容塊
       legislation/process:
+        one: "過程"
         other: "過程"
       legislation/draft_versions:
+        one: "草稿版本"
         other: "草稿版本"
       legislation/draft_texts:
+        one: "草稿"
         other: "草稿"
       legislation/questions:
+        one: "問題"
         other: "問題"
       legislation/question_options:
+        one: "問題選項"
         other: "問題選項"
       legislation/answers:
+        one: "答案"
         other: "答案"
       documents:
+        one: "文件"
         other: "文件"
       images:
+        one: "圖像"
         other: "圖像"
       topic:
+        one: "主題"
         other: "主題"
       poll:
+        one: "投票"
         other: "投票"
       proposal_notification:
+        one: "提議通知"
         other: "提議通知"
     attributes:
       budget:

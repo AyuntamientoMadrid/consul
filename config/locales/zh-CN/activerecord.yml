@@ -2,74 +2,109 @@ zh-CN:
   activerecord:
     models:
       activity:
+        one: "活动"
         other: "活动"
       budget:
+        one: "预算"
         other: "预算"
       budget/investment:
+        one: "投资"
         other: "投资"
       milestone:
+        one: "里程碑"
         other: "里程碑"
       milestone/status:
+        one: "投资状态"
         other: "投资状态"
       comment:
+        one: "意见"
         other: "意见"
       debate:
+        one: "讨论"
         other: "讨论"
       tag:
+        one: "标签"
         other: "标签"
       user:
+        one: "用户"
         other: "用户"
       moderator:
+        one: "版主"
         other: "版主"
       administrator:
+        one: "管理员"
         other: "管理员"
       valuator:
+        one: "评价者"
         other: "评价者"
       valuator_group:
+        one: "评价小组"
         other: "评价小组"
       manager:
+        one: "经理"
         other: "经理"
       newsletter:
+        one: "时事通讯"
         other: "时事通讯"
       vote:
+        one: "投票"
         other: "投票"
       organization:
+        one: "组织"
         other: "组织"
       poll/booth:
+        one: "摊位"
         other: "摊位"
       poll/officer:
+        one: "官员"
         other: "官员"
       proposal:
+        one: "公民提议"
         other: "公民提议"
       spending_proposal:
+        one: "投资项目"
         other: "投资项目"
       site_customization/page:
+        one: 自定义页面
         other: 自定义页面
       site_customization/image:
+        one: 自定义图片
         other: 自定义图片
       site_customization/content_block:
+        one: 自定义内容模块
         other: 自定义内容模块
       legislation/process:
+        one: "进程"
         other: "进程"
       legislation/draft_versions:
+        one: "草稿版本"
         other: "草稿版本"
       legislation/draft_texts:
+        one: "草稿"
         other: "草稿"
       legislation/questions:
+        one: "问题"
         other: "问题"
       legislation/question_options:
+        one: "问题选项"
         other: "问题选项"
       legislation/answers:
+        one: "答案"
         other: "答案"
       documents:
+        one: "文件"
         other: "文件"
       images:
+        one: "图片"
         other: "图片"
       topic:
+        one: "主题"
         other: "主题"
       poll:
+        one: "民意调查"
         other: "民意调查"
       proposal_notification:
+        one: "建议通知"
         other: "建议通知"
     attributes:
       budget:
