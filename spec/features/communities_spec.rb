@@ -147,11 +147,10 @@ feature 'Communities' do
 
     scenario "Accesing a community without associated communitable" do
       proposal = create(:proposal)
-      community = proposal.community
+      community_id = proposal.community_id
       proposal.really_destroy!
-      community.reload
 
-      expect { visit community_path(community) }.to raise_error(ActionController::RoutingError)
+      expect { visit community_path(community_id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 

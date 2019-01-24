@@ -26,4 +26,26 @@ RSpec.describe Community, type: :model do
       expect(community.participants).to include(proposal.author)
     end
   end
+
+  it "is destroyed when the communitable object dissapears (hard delete)" do
+    proposal = create(:proposal)
+
+    expect(proposal.community).to be_valid
+    community = proposal.community
+
+    proposal.really_destroy!
+
+    expect(Community.where(id: community.id)).to be_empty
+  end
+
+  it "is not destroyed when communitable objects is soft deleted" do
+    proposal = create(:proposal)
+
+    expect(proposal.community).to be_valid
+    community = proposal.community
+
+    proposal.destroy
+
+    expect(Community.where(id: community.id)).not_to be_empty
+  end
 end
