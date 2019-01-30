@@ -39,4 +39,13 @@ namespace :spending_proposals do
     require "migrations/spending_proposal/vote"
     Migrations::SpendingProposal::Vote.new.migrate_delegated_votes
   end
+
+  desc "Migrates spending proposals attributes to corresponding budget investments attributes"
+  task migrate_attributes_to_budget_investments: :environment do
+    require "migrations/spending_proposal/budget_investments"
+
+    puts "Starting to migration attributes from spending proposals to budget investments"
+    Migrations::SpendingProposal::BudgetInvestments.new.update_all
+    puts "Finished"
+  end
 end
