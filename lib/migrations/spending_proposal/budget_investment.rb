@@ -7,7 +7,7 @@ class Migrations::SpendingProposal::BudgetInvestment
   end
 
   def update
-    if budget_investment.update(budget_investment_attributes)
+    if budget_investment && budget_investment.update(budget_investment_attributes)
       print "."
     else
       puts "Error updating budget investment from spending proposal: #{spending_proposal.id}"
