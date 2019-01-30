@@ -15,7 +15,7 @@ class Migrations::SpendingProposal::BudgetInvestments
   private
 
     def load_spending_proposals
-      SpendingProposal.all
+      ::SpendingProposal.all
     end
 
 end
