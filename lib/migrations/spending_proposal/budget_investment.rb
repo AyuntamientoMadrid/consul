@@ -10,7 +10,7 @@ class Migrations::SpendingProposal::BudgetInvestment
     if budget_investment && budget_investment.update(budget_investment_attributes)
       print "."
     else
-      puts "Error updating budget investment from spending proposal: #{spending_proposal.id}"
+      puts "Error updating budget investment from spending proposal: #{spending_proposal.id}\n"
     end
   end
 
@@ -25,7 +25,17 @@ class Migrations::SpendingProposal::BudgetInvestment
     end
 
     def budget_investment_attributes
-      { unfeasibility_explanation: spending_proposal.feasible_explanation }
+      { unfeasibility_explanation: field_with_unfeasibility_explanation }
+    end
+
+    def field_with_unfeasibility_explanation
+      if spending_proposal.unfeasible?
+        spending_proposal.feasible_explanation.presence ||
+        spending_proposal.price_explanation.presence ||
+        spending_proposal.internal_comments
+      else
+        spending_proposal.feasible_explanation
+      end
     end
 
 end

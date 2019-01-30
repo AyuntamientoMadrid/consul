@@ -36,6 +36,52 @@ describe Migrations::SpendingProposal::BudgetInvestment do
       expect(budget_investment.unfeasibility_explanation).to eq(explanation)
     end
 
+    it "uses the price explanation attribute if unfeasibility explanation is not present" do
+      spending_proposal.feasible_explanation = ""
+      spending_proposal.price_explanation = "price explanation saying it is too expensive"
+
+      spending_proposal.feasible = false
+      spending_proposal.valuation_finished = true
+
+      spending_proposal.save(validate: false)
+
+      migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal)
+      migration.update
+
+      budget_investment.reload
+      expect(budget_investment.unfeasibility_explanation).to eq("price explanation saying it is too expensive")
+    end
+
+    it "uses the internal comments if unfeasibility explanation is not present" do
+      spending_proposal.feasible_explanation = ""
+      spending_proposal.internal_comments = "Internal comment with explanation"
+
+      spending_proposal.feasible = false
+      spending_proposal.valuation_finished = true
+
+      spending_proposal.save(validate: false)
+
+      migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal)
+      migration.update
+
+      budget_investment.reload
+      expect(budget_investment.unfeasibility_explanation).to eq("Internal comment with explanation")
+    end
+
+    it "does not use other attributes if investment is feasible" do
+      spending_proposal.feasible_explanation = ""
+      spending_proposal.price_explanation = "price explanation saying it is too expensive"
+
+      spending_proposal.feasible = true
+      spending_proposal.save(validate: false)
+
+      migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal)
+      migration.update
+
+      budget_investment.reload
+      expect(budget_investment.unfeasibility_explanation).to eq("")
+    end
+
   end
 
 end
