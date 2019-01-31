@@ -173,4 +173,29 @@ feature 'Votes' do
 
     end
   end
+
+
+  feature 'Approval Voting' do
+    let(:budget)  { create(:budget, :balloting) }
+    let(:group)   { create(:budget_group, :approval, budget: budget) }
+    let(:heading) { create(:budget_heading, group: group) }
+
+    background { login_as(@manuela) }
+
+    feature 'Index' do
+      scenario 'Progress bar', :js do
+        investment1 = create(:budget_investment, heading: heading)
+        investment2 = create(:budget_investment, heading: heading)
+        investment3 = create(:budget_investment, heading: heading)
+
+        create(:vote, voter: @manuela, votable: investment1, vote_flag: true)
+        
+        visit budget_investments_path(budget, heading_id: heading.id)
+
+        within(".progress-bar-nav") do
+          expect(page).to have_content("You have selected 1 of 1 projects")
+        end
+      end
+    end
+  end
 end

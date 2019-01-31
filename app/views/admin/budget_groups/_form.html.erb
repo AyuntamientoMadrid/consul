@@ -7,10 +7,26 @@
                       placeholder: t("admin.budget_groups.form.name") %>
 
     <% if @group.persisted? %>
+        <%= f.select :voting_style,
+                     budget_voting_style_select_options,
+                     { label: t("admin.budget_groups.form.voting_style") },
+                     {
+                       class: 'js-toggle-select',
+                       data: { "toggle-selector": "#number_votes_per_heading_wrapper", "hide-on": "knapsack" }
+                     }
+        %>
+
         <%= f.select :max_votable_headings,
                      (1..@group.headings.count),
                      label: t("admin.budget_groups.max_votable_headings"),
                      placeholder: t("admin.budget_groups.max_votable_headings") %>
+        
+        <div id="number_votes_per_heading_wrapper" class="<%= 'hide' unless @group.approval_voting? %>">
+            <%= f.number_field :number_votes_per_heading,
+                        label: t("admin.budget_groups.form.number_votes_per_heading"),
+                        placeholder: t("admin.budget_groups.form.number_votes_per_heading")
+            %>
+        </div>
     <% end %>
 
     <%= f.submit t("admin.budget_groups.form.#{action}"), class: "button success" %>

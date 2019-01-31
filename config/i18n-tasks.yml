@@ -204,6 +204,7 @@ ignore_unused:
   - '*.form.map_skip_checkbox'
   - 'votes.budget_investments.different_heading_assigned*'
   - '*.form.map_skip_checkbox'
+  - 'budgets.ballots.show.remaining.*'
 # - '{devise,kaminari,will_paginate}.*'
 # - 'simple_form.{yes,no}'
 # - 'simple_form.{placeholders,hints,labels}.*'

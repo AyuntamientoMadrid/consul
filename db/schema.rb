@@ -190,6 +190,8 @@ ActiveRecord::Schema.define(version: 20190103132925) do
     t.string  "slug"
     t.integer "max_votable_headings",                default: 1
     t.integer "max_supportable_headings",            default: 1
+    t.string  "voting_style",                        default: "knapsack"
+    t.integer "number_votes_per_heading",            default: 1
   end
 
   add_index "budget_groups", ["budget_id"], name: "index_budget_groups_on_budget_id", using: :btree
@@ -1728,6 +1730,14 @@ ActiveRecord::Schema.define(version: 20190103132925) do
     t.boolean "sunday_19_afternoon"
     t.boolean "monday_20_morning"
   end
+
+  create_table "volunteers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "volunteers", ["user_id"], name: "index_volunteers_on_user_id", using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id"

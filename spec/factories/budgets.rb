@@ -87,6 +87,14 @@ FactoryBot.define do
     trait :drafting_budget do
       association :budget, factory: [:budget, :drafting]
     end
+
+    trait :knapsack do
+      voting_style 'knapsack'
+    end
+
+    trait :approval do
+      voting_style 'approval'
+    end
   end
 
   factory :budget_heading, class: 'Budget::Heading' do
