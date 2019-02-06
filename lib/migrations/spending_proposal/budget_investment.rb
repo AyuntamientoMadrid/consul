@@ -3,7 +3,7 @@ class Migrations::SpendingProposal::BudgetInvestment
 
   def initialize(spending_proposal)
     @spending_proposal = spending_proposal
-    @budget_investment = find_or_initialize_budget_investment
+    @budget_investment = find_budget_investment
   end
 
   def update
@@ -20,7 +20,7 @@ class Migrations::SpendingProposal::BudgetInvestment
       Budget.where(slug: "2016").first
     end
 
-    def find_or_initialize_budget_investment
+    def find_budget_investment
       budget.investments.where(original_spending_proposal_id: spending_proposal.id).first
     end
 

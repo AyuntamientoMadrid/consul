@@ -82,6 +82,14 @@ describe Migrations::SpendingProposal::BudgetInvestment do
       expect(budget_investment.unfeasibility_explanation).to eq("")
     end
 
+    it "gracefully handles missing corresponding budget investment" do
+      budget_investment.destroy
+
+      expect{ migration = Migrations::SpendingProposal::BudgetInvestment.new(spending_proposal);
+              migration.update }
+      .not_to raise_error
+    end
+
   end
 
 end
