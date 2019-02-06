@@ -369,7 +369,7 @@ class SpendingProposalsController < ApplicationController
     end
 
     def stats_cache(key, &block)
-      Rails.cache.fetch("spending_proposals_stats/20181227211842/#{key}", &block)
+      Rails.cache.fetch("spending_proposals_stats/20190206172205/#{key}", &block)
     end
 
 end
