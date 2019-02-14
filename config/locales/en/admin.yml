@@ -468,7 +468,7 @@ en:
           delete: Delete
           title: Legislation processes
           filters:
-            open: Open
+            active: Active
             all: All
         new:
           back: Back
