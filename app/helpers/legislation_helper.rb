@@ -46,6 +46,14 @@ module LegislationHelper
     @process.background_color.present? && @process.font_color.present?
   end
 
+  def default_bg_color
+    @process.background_color.present? ? @process.background_color : "#e7f2fc"
+  end
+
+  def default_font_color
+    @process.font_color.present? ? @process.font_color : "#222222"
+  end
+
   def css_for_process_header
     if banner_color?
       "background:" + @process.background_color + ";color:" + @process.font_color + ";"

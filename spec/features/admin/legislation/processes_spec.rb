@@ -187,6 +187,14 @@ feature 'Admin legislation processes' do
       expect(page).not_to have_content "Summary of the process"
       expect(page).to have_css("img[alt='#{Legislation::Process.last.title}']")
     end
+
+    scenario "Default colors are present" do
+      visit new_admin_legislation_process_path
+
+      expect(find("#legislation_process_background_color").value).to eq "#e7f2fc"
+      expect(find("#legislation_process_font_color").value).to eq "#222222"
+    end
+
   end
 
   context 'Update' do
