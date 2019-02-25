@@ -241,6 +241,8 @@ feature 'Executions' do
     let!(:budget) { create(:budget, :finished, slug: '2016') }
 
     scenario 'can navigate from spending proposal Results page to Executions page' do
+      skip "Deprecated"
+
       create(:milestone, milestoneable: investment1)
 
       visit participatory_budget_results_path
@@ -255,6 +257,8 @@ feature 'Executions' do
     end
 
     scenario 'renders spending proposal navigation when accessing 2016 budget' do
+      skip "Deprecated"
+
       create(:milestone, milestoneable: investment1)
 
       visit participatory_budget_executions_path
