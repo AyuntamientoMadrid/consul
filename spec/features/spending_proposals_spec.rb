@@ -463,6 +463,8 @@ feature 'Spending proposals' do
       end
 
       scenario "Spending proposals with no geozone" do
+        skip "Deprecated"
+
         visit participatory_budget_results_path
 
         within("#results-container") do
@@ -488,6 +490,8 @@ feature 'Spending proposals' do
       end
 
       scenario "Geozoned spending proposals", :js do
+        skip "Deprecated"
+
         visit participatory_budget_results_path(geozone_id: @california.id)
         click_link "Show all"
 
@@ -508,6 +512,8 @@ feature 'Spending proposals' do
       context "Compatible spending proposals" do
 
         scenario "Include compatible spending proposals in results" do
+          skip "Deprecated"
+
           compatible_proposal1 = create(:spending_proposal, :finished, :feasible, price: 10, compatible: true)
           compatible_proposal2 = create(:spending_proposal, :finished, :feasible, price: 10, compatible: true)
 
@@ -524,6 +530,8 @@ feature 'Spending proposals' do
         end
 
         scenario "Display incompatible spending proposals after results", :js do
+          skip "Deprecated"
+
           incompatible_proposal1 = create(:spending_proposal, :finished, :feasible, price: 10, compatible: false)
           incompatible_proposal2 = create(:spending_proposal, :finished, :feasible, price: 10, compatible: false)
 
@@ -541,6 +549,8 @@ feature 'Spending proposals' do
         end
 
         scenario "Incompatible and not winners are hidden by default", :js do
+          skip "Deprecated"
+
           centro = create(:geozone, name: "Centro") #budget: 1353966
           proposal1 = create(:spending_proposal, :finished, :feasible, price: 1000000, ballot_lines_count: 999, geozone: centro)
           proposal2 = create(:spending_proposal, :finished, :feasible, price:  900000, ballot_lines_count: 888, geozone: centro)
@@ -567,6 +577,8 @@ feature 'Spending proposals' do
       end
 
       scenario "Delegated votes affecting the result" do
+        skip "Deprecated"
+
         forum = create(:forum)
         create_list(:user, 30, :level_two, representative: forum)
         forum.ballot.spending_proposals << @proposal3
@@ -587,6 +599,8 @@ feature 'Spending proposals' do
     end
 
     scenario "Displays only finished feasible spending proposals", :js do
+      skip "Deprecated"
+
       california = create(:geozone)
 
       proposal1 = create(:spending_proposal, :finished, :feasible, price: 10, ballot_lines_count: 20, geozone: california)
@@ -606,6 +620,8 @@ feature 'Spending proposals' do
     end
 
     scenario "Highlights winner candidates (within budget), if tied most expensive first", :js do
+      skip "Deprecated"
+
       centro = create(:geozone, name: "Centro") #budget: 1353966
 
       proposal1 = create(:spending_proposal, :finished, :feasible, price: 1000000, ballot_lines_count: 999, geozone: centro)
