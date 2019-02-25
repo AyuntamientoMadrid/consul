@@ -45,15 +45,21 @@ namespace :spending_proposals do
   desc "Migrates delegated votes to represented user votes"
   task migrate_delegated_votes: :environment do
     require "migrations/spending_proposal/vote"
+
+    puts "Starting to migrate delegated votes"
     Migrations::SpendingProposal::Vote.new.migrate_delegated_votes
+    puts "Finished"
+
+    puts "Starting to migrate votes"
     Migrations::SpendingProposal::Vote.new.create_budget_investment_votes
+    puts "Finished"
   end
 
   desc "Migrates spending proposals attributes to corresponding budget investments attributes"
-  task migrate_attributes_to_budget_investments: :environment do
+  task migrate_attributes: :environment do
     require "migrations/spending_proposal/budget_investments"
 
-    puts "Starting to migration attributes from spending proposals to budget investments"
+    puts "Starting to migrate attributes"
     Migrations::SpendingProposal::BudgetInvestments.new.update_all
     puts "Finished"
   end
@@ -62,7 +68,7 @@ namespace :spending_proposals do
   task migrate_ballots: :environment do
     require "migrations/spending_proposal/ballots"
 
-    puts "Starting to migrate spending proposal ballots"
+    puts "Starting to migrate ballots"
     Migrations::SpendingProposal::Ballots.new.migrate_all
     puts "Finished"
   end
@@ -72,7 +78,7 @@ namespace :spending_proposals do
   task migrate_delegated_ballots: :environment do
     require "migrations/spending_proposal/delegated_ballots"
 
-    puts "Starting to migrate spending proposals delegated ballots"
+    puts "Starting to migrate delegated ballots"
     Migrations::SpendingProposal::DelegatedBallots.new.migrate_all
     puts "Finished"
   end

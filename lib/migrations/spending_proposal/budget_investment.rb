@@ -59,6 +59,7 @@ class Migrations::SpendingProposal::BudgetInvestment
       comment = new_valuation_comment
       if comment.save
         log(".")
+        return true
       else
         log("Error creating comment for budget investment: #{budget_investment.id}\n")
         log(comment.errors.messages)

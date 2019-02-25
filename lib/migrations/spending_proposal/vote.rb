@@ -1,4 +1,5 @@
 class Migrations::SpendingProposal::Vote
+  include Migrations::Log
 
   def migrate_delegated_votes
     delegated_votes.each do |delegated_vote|
@@ -13,6 +14,7 @@ class Migrations::SpendingProposal::Vote
       delegated: true
     }
     Vote.create!(vote_attributes)
+    log(".")
   end
 
   def delegated_votes
@@ -44,6 +46,7 @@ class Migrations::SpendingProposal::Vote
   def create_budget_investment_votes
     spending_proposal_votes.each do |vote|
       create_budget_invesment_vote(vote)
+      log(".")
     end
   end
 
