@@ -34,6 +34,14 @@ namespace :spending_proposals do
                       .update_all(winner: true, selected: true)
   end
 
+  desc "Migrates all necessary data from spending proposals to budget investments"
+  task migrate: [
+    "spending_proposals:migrate_attributes",
+    "spending_proposals:migrate_delegated_votes",
+    "spending_proposals:migrate_ballots",
+    "spending_proposals:migrate_delegated_ballots",
+  ]
+
   desc "Migrates delegated votes to represented user votes"
   task migrate_delegated_votes: :environment do
     require "migrations/spending_proposal/vote"
