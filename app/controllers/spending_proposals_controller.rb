@@ -94,11 +94,9 @@ class SpendingProposalsController < ApplicationController
   def results
     @geozone = daily_cache("geozone_geozone_#{params[:geozone_id]}") { params[:geozone_id].blank? || params[:geozone_id] == 'all' ? nil : Geozone.find(params[:geozone_id]) }
     @delegated_ballots = daily_cache("delegated_geozone_#{params[:geozone_id]}") { Forum.delegated_ballots }
-    @spending_proposals = daily_cache("sps_geozone_#{params[:geozone_id]}") { SpendingProposal.feasible.compatible.valuation_finished.by_geozone(params[:geozone_id]) }
-    @spending_proposals = daily_cache("sorted_sps_geozone_#{params[:geozone_id]}") { SpendingProposal.sort_by_delegated_ballots_and_price(@spending_proposals, @delegated_ballots) }
-
-    @initial_budget = daily_cache("initial_budget_geozone_#{params[:geozone_id]}") { Ballot.initial_budget(@geozone) }
-    @incompatibles = daily_cache("incompatibles_geozone_#{params[:geozone_id]}") { SpendingProposal.incompatible.by_geozone(params[:geozone_id]) }
+    @spending_proposals = daily_cache("sorted_sps_geozone_#{params[:geozone_id]}") { Budget::Result.new(budget_2016, heading_for_geozone(params[:geozone_id])).investments }
+    @initial_budget = daily_cache("initial_budget_geozone_#{params[:geozone_id]}") { heading_for_geozone(params[:geozone_id]).price }
+    @incompatibles = daily_cache("incompatibles_geozone_#{params[:geozone_id]}") { budget_2016.investments.incompatible.by_heading(heading_for_geozone(params[:geozone_id])) }
   end
 
   private
@@ -197,22 +195,22 @@ class SpendingProposalsController < ApplicationController
 
     def total_supports
       stats_cache('total_supports') do
-        spending_proposal_supports.count
+        budget_investment_supports.count
       end
     end
 
     def total_votes
       stats_cache('total_votes') do
-        BallotLine.count
+        budget_2016.lines.count
       end
     end
 
     def authors
-      stats_cache('authors') { SpendingProposal.pluck(:author_id) }
+      stats_cache('authors') { budget_2016.investments.pluck(:author_id) }
     end
 
     def voters
-      stats_cache("voters") { spending_proposal_supports.pluck(:voter_id) }
+      stats_cache("voters") { budget_investment_supports.pluck(:voter_id) }
     end
 
     def voters_by_geozone(geozone_id)
@@ -226,18 +224,18 @@ class SpendingProposalsController < ApplicationController
 
     def balloters
       stats_cache('balloters') do
-        Ballot.where('ballot_lines_count > ?', 0).pluck(:user_id)
+        budget_2016.ballots.where("ballot_lines_count > ?", 0).pluck(:user_id)
       end
     end
 
     def balloters_by_geozone(geozone_id)
       stats_cache("balloters_geozone_#{geozone_id}") do
-        Ballot.where('ballot_lines_count > ? AND geozone_id = ?', 0, geozone_id).pluck(:user_id)
+        budget_2016.lines.where(heading_id: heading_for_geozone(geozone_id).id).pluck(:user_id).uniq
       end
     end
 
     def total_spending_proposals
-      stats_cache('total_spending_proposals') { SpendingProposal.count }
+      stats_cache('total_spending_proposals') { budget_2016.investments.count }
     end
 
     def paper_spending_proposals
@@ -245,11 +243,11 @@ class SpendingProposalsController < ApplicationController
     end
 
     def total_feasible_spending_proposals
-      stats_cache('total_feasible_spending_proposals') { SpendingProposal.feasible.count }
+      stats_cache('total_feasible_spending_proposals') { budget_2016.investments.feasible.count }
     end
 
     def total_unfeasible_spending_proposals
-      stats_cache('total_unfeasible_spending_proposals') { SpendingProposal.unfeasible.count }
+      stats_cache('total_unfeasible_spending_proposals') { budget_2016.investments.unfeasible.count }
     end
 
     def total_male_participants
@@ -359,17 +357,21 @@ class SpendingProposalsController < ApplicationController
       Budget.where(slug: "2016").first
     end
 
-    def spending_proposal_supports
+    def budget_investment_supports
       ActsAsVotable::Vote.where(votable: budget_2016.investments)
     end
 
     def heading_for_geozone(geozone_id)
-      geozone = Geozone.find(geozone_id)
-      budget_2016.headings.where(name: geozone.name).first
+      if geozone_id == nil
+        budget_2016.headings.where(name: "Toda la ciudad").first
+      else
+        geozone = Geozone.find(geozone_id)
+        budget_2016.headings.where(name: geozone.name).first
+      end
     end
 
     def stats_cache(key, &block)
-      Rails.cache.fetch("spending_proposals_stats/20190206172205/#{key}", &block)
+      Rails.cache.fetch("spending_proposals_stats/20190206172211/#{key}", &block)
     end
 
 end
