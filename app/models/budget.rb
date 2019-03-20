@@ -118,7 +118,7 @@ class Budget < ActiveRecord::Base
   end
 
   def publishing_prices_or_later?
-    publishing_prices? || balloting_or_later?
+    current_phase&.publishing_prices_or_later?
   end
 
   def balloting_process?
@@ -126,7 +126,7 @@ class Budget < ActiveRecord::Base
   end
 
   def balloting_or_later?
-    balloting_process? || finished?
+    current_phase&.balloting_or_later?
   end
 
   def heading_price(heading)
