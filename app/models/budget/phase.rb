@@ -46,6 +46,10 @@ class Budget
       end
     end
 
+    def valuating_or_later?
+      in_phase_or_later?("valuating")
+    end
+
     def publishing_prices_or_later?
       in_phase_or_later?("publishing_prices")
     end
