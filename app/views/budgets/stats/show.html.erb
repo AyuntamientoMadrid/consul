@@ -140,31 +140,6 @@
                   <% end %>
                 </tr>
               <% end %>
-
-              <%# THIS TOTALS ROW IS JUST FOR INTERNAL DEBUGGING %>
-              <% if false %>
-                <tr id="headings_totals">
-                  <td class="border-left-success success">
-                    <strong><%= t("stats.budgets.total").upcase %></strong>
-                  </td>
-                  <td id="total_spending_proposals_heading_total"
-                      class="text-center success">
-                    <strong><%= @stats.headings[:total][:total_investments_count] %></strong>
-                  </td>
-
-                  <% ["support", "vote", "all"].each do |phase| %>
-                    <td id="total_participants_<%= phase %>_phase_heading_total"
-                        class="text-center success">
-                      <strong><%= @stats.headings[:total]["total_participants_#{phase}_phase".to_sym] %></strong>
-                    </td>
-                    <td id="percentage_participants_<%= phase %>_phase_heading_total"
-                        class="text-center success">
-                      <strong><%= number_to_stats_percentage(@stats.headings[:total]["percentage_participants_#{phase}_phase".to_sym]) %></strong>
-                    </td>
-                    <td class="text-center success <%= phase == 'all' ? 'border-right-success ' : '' %>"></td>
-                  <% end %>
-                </tr>
-              <% end %>
             </tbody>
           </table>
         </div>
