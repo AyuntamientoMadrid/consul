@@ -30,7 +30,7 @@ Development started on [2015 July 15th](https://github.com/consul/consul/commit/
 
 **NOTE**: For more detailed instructions check the [docs](https://consul_docs.gitbooks.io/docs/)
 
-Prerequisites: install git, Ruby 2.3.2, `bundler` gem, Node.js and PostgreSQL (>=9.4).
+Prerequisites: install git, Ruby 2.4.5, `bundler` gem, Node.js and PostgreSQL (>=9.4).
 
 ```bash
 git clone https://github.com/ayuntamientomadrid/consul.git
