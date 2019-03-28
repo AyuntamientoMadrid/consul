@@ -27,7 +27,7 @@
   </div>
 
   <% if reason.present? && !user_voted_for %>
-    <div class="participation-not-allowed" style='display:none' aria-hidden="false">
+    <div class="participation-not-allowed" style="display:none" aria-hidden="false">
       <p>
           <%= t("votes.spending_proposals.#{reason}",
                 verify_account: link_to(t("votes.verify_account"), verification_path),
@@ -38,8 +38,8 @@
     </div>
   <% end %>
 
-  <% if user_voted_for && setting['twitter_handle'] %>
-    <%= render partial: 'shared/social_share', locals: {
+  <% if user_voted_for && setting["twitter_handle"] %>
+    <%= render partial: "shared/social_share", locals: {
       title: spending_proposal.title,
       url: spending_proposal_url(spending_proposal),
       description: spending_proposal.title

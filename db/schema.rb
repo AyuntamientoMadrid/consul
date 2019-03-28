@@ -185,6 +185,14 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "budget_content_blocks", force: :cascade do |t|
+    t.integer  "heading_id"
+    t.text     "body"
+    t.string   "locale"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_index "budget_content_blocks", ["heading_id"], name: "index_budget_content_blocks_on_heading_id", using: :btree
 
   create_table "budget_group_translations", force: :cascade do |t|
@@ -473,6 +481,46 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "dashboard_actions", force: :cascade do |t|
+    t.string   "title",                     limit: 80
+    t.text     "description"
+    t.string   "link"
+    t.boolean  "request_to_administrators",            default: false
+    t.integer  "day_offset",                           default: 0
+    t.integer  "required_supports",                    default: 0
+    t.integer  "order",                                default: 0
+    t.boolean  "active",                               default: true
+    t.datetime "hidden_at"
+    t.integer  "action_type",                          default: 0,     null: false
+    t.string   "short_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "published_proposal",                   default: false
+  end
+
+  create_table "dashboard_administrator_tasks", force: :cascade do |t|
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.integer  "user_id"
+    t.datetime "executed_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "dashboard_administrator_tasks", ["source_type", "source_id"], name: "index_dashboard_administrator_tasks_on_source", using: :btree
+  add_index "dashboard_administrator_tasks", ["user_id"], name: "index_dashboard_administrator_tasks_on_user_id", using: :btree
+
+  create_table "dashboard_executed_actions", force: :cascade do |t|
+    t.integer  "proposal_id"
+    t.integer  "action_id"
+    t.datetime "executed_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "dashboard_executed_actions", ["action_id"], name: "index_proposal_action", using: :btree
+  add_index "dashboard_executed_actions", ["proposal_id"], name: "index_dashboard_executed_actions_on_proposal_id", using: :btree
 
   create_table "debates", force: :cascade do |t|
     t.string   "title",                        limit: 80
@@ -871,6 +919,18 @@ ActiveRecord::Schema.define(version: 20190307165337) do
 
   add_index "legislation_questions", ["hidden_at"], name: "index_legislation_questions_on_hidden_at", using: :btree
   add_index "legislation_questions", ["legislation_process_id"], name: "index_legislation_questions_on_legislation_process_id", using: :btree
+
+  create_table "links", force: :cascade do |t|
+    t.string   "label"
+    t.string   "url"
+    t.boolean  "open_in_new_tab"
+    t.integer  "linkable_id"
+    t.string   "linkable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "links", ["linkable_type", "linkable_id"], name: "index_links_on_linkable_type_and_linkable_id", using: :btree
 
   create_table "local_census_records", force: :cascade do |t|
     t.string   "document_number", null: false
@@ -1356,6 +1416,7 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.string   "proceeding"
     t.string   "sub_proceeding"
     t.integer  "community_id"
+    t.datetime "published_at"
   end
 
   add_index "proposals", ["author_id", "hidden_at"], name: "index_proposals_on_author_id_and_hidden_at", using: :btree
@@ -1832,6 +1893,9 @@ ActiveRecord::Schema.define(version: 20190307165337) do
   add_foreign_key "administrators", "users"
   add_foreign_key "budget_investments", "communities"
   add_foreign_key "budget_recommendations", "users"
+  add_foreign_key "dashboard_administrator_tasks", "users"
+  add_foreign_key "dashboard_executed_actions", "dashboard_actions", column: "action_id"
+  add_foreign_key "dashboard_executed_actions", "proposals"
   add_foreign_key "documents", "users"
   add_foreign_key "failed_census_calls", "poll_officers"
   add_foreign_key "failed_census_calls", "users"

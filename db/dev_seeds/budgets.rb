@@ -192,7 +192,7 @@ section "Winner Investments" do
       group: heading.group,
       budget: heading.group.budget,
       title: Faker::Lorem.sentence(3).truncate(60),
-      description: "<p>#{Faker::Lorem.paragraphs.join('</p><p>')}</p>",
+      description: "<p>#{Faker::Lorem.paragraphs.join("</p><p>")}</p>",
       created_at: rand((Time.current - 1.week)..Time.current),
       feasibility: "feasible",
       valuation_finished: true,

@@ -21,6 +21,7 @@ feature "Admin feature flags" do
     budget = create(:budget)
 
     visit admin_settings_path
+    within("#settings-tabs") { click_link "Participation processes" }
 
     within("#edit_setting_#{setting.id}") do
       expect(page).to have_button "Disable"
@@ -49,6 +50,7 @@ feature "Admin feature flags" do
     end
 
     visit admin_settings_path
+    within("#settings-tabs") { click_link "Participation processes" }
 
     within("#edit_setting_#{setting.id}") do
       expect(page).to have_button "Enable"

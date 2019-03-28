@@ -8,7 +8,7 @@ class SpendingProposal < ActiveRecord::Base
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
 
-  belongs_to :author, -> { with_hidden }, class_name: 'User', foreign_key: 'author_id'
+  belongs_to :author, -> { with_hidden }, class_name: "User", foreign_key: "author_id"
   belongs_to :geozone
   belongs_to :administrator
   has_many :valuation_assignments, dependent: :destroy
@@ -39,7 +39,7 @@ class SpendingProposal < ActiveRecord::Base
   scope :compatible,             -> { where(compatible: true) }
   scope :incompatible,           -> { where(compatible: false) }
   scope :not_unfeasible,         -> { where("feasible IS ? OR feasible = ?", nil, true) }
-  scope :with_supports,          -> { where('cached_votes_up > 0') }
+  scope :with_supports,          -> { where("cached_votes_up > 0") }
   scope :by_forum,               -> { where(forum: true) }
   scope :by_admin,    ->(admin)     { where(administrator_id: admin.presence) }
   scope :by_tag,      ->(tag_name)  { tagged_with(tag_name) }
@@ -104,10 +104,10 @@ class SpendingProposal < ActiveRecord::Base
   end
 
   def searchable_values
-    { title              => 'A',
-      author.username    => 'B',
-      geozone.try(:name) => 'B',
-      description        => 'C'
+    { title              => "A",
+      author.username    => "B",
+      geozone.try(:name) => "B",
+      description        => "C"
     }
   end
 
@@ -116,7 +116,7 @@ class SpendingProposal < ActiveRecord::Base
   end
 
   def self.by_geozone(geozone)
-    if geozone == 'all'
+    if geozone == "all"
       where(geozone_id: nil)
     else
       where(geozone_id: geozone.presence)

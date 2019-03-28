@@ -46,7 +46,7 @@ class SpendingProposalsController < ApplicationController
 
     if @spending_proposal.save
       activity = "<a href='#{user_path(current_user, filter: :spending_proposals)}'>#{t('layouts.header.my_activity_link')}</a>"
-      notice = t('flash.actions.create.spending_proposal', activity: activity)
+      notice = t("flash.actions.create.spending_proposal", activity: activity)
       redirect_to @spending_proposal, notice: notice, flash: { html_safe: true }
     else
       render :new
@@ -56,11 +56,11 @@ class SpendingProposalsController < ApplicationController
   def destroy
     spending_proposal = SpendingProposal.find(params[:id])
     spending_proposal.destroy
-    redirect_to user_path(current_user, filter: 'spending_proposals'), notice: t('flash.actions.destroy.spending_proposal')
+    redirect_to user_path(current_user, filter: "spending_proposals"), notice: t("flash.actions.destroy.spending_proposal")
   end
 
   def vote
-    @spending_proposal.register_vote(current_user, 'yes')
+    @spending_proposal.register_vote(current_user, "yes")
     set_spending_proposal_votes(@spending_proposal)
     if current_user.pending_delegation_alert?
       current_user.update(accepted_delegation_alert: true, representative: nil)
@@ -110,8 +110,8 @@ class SpendingProposalsController < ApplicationController
     end
 
     def set_filter_geozone
-      if params[:geozone] == 'all'
-        @filter_geozone_name = t('geozones.none')
+      if params[:geozone] == "all"
+        @filter_geozone_name = t("geozones.none")
       else
         @filter_geozone = Geozone.find(params[:geozone])
         @filter_geozone_name = @filter_geozone.name

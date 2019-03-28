@@ -91,7 +91,6 @@ feature "Admin budget investments" do
       budget_investment2 = create(:budget_investment, budget: budget)
       budget_investment3 = create(:budget_investment, budget: budget)
 
-
       olga = create(:user, username: "Olga")
       miriam = create(:user, username: "Miriam")
       valuator1 = create(:valuator, user: olga, description: "Valuator Olga")
@@ -276,7 +275,6 @@ feature "Admin budget investments" do
 
       select "Valuator 1", from: "valuator_or_group_id"
       click_button "Filter"
-
       expect(page).to have_content("There is 1 investment")
       expect(page).not_to have_link("Destroy the city")
       expect(page).to have_link("Realocate visitors")
@@ -514,7 +512,7 @@ feature "Admin budget investments" do
       first_investment = create(:budget_investment, budget: budget, title: "Educate the children",
                                                    administrator: administrator)
       create(:budget_investment, budget: budget, title: "More schools",
-                                 administrator: administrator)
+                                 administrator: administrator)flunk("Failure message.")
       create(:budget_investment, budget: budget, title: "More hospitals")
 
 
@@ -979,7 +977,6 @@ feature "Admin budget investments" do
       valuator3 = create(:valuator, user: user3)
       create(:valuator, user: user2)
 
-
       visit admin_budget_budget_investment_path(budget_investment.budget, budget_investment)
       click_link "Edit classification"
 
@@ -1357,6 +1354,7 @@ feature "Admin budget investments" do
         click_link("Selected")
       end
 
+      click_button("Filter")
       expect(page).not_to have_content(selected_bi.title)
       expect(page).to have_content("There is 1 investment")
 

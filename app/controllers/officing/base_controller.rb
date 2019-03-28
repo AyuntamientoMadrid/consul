@@ -1,5 +1,5 @@
 class Officing::BaseController < ApplicationController
-  layout 'admin'
+  layout "admin"
   helper_method :current_booth
 
   before_action :authenticate_user!

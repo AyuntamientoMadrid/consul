@@ -35,8 +35,10 @@ class Budget
       end
     end
 
-    def name_scoped_by_group
-      group.single_heading_group? ? name : "#{group.name}: #{name}"
+    def self.sort_by_name
+      all.sort do |heading, other_heading|
+        [other_heading.group.name, heading.name] <=> [heading.group.name, other_heading.name]
+      end
     end
 
     def to_param

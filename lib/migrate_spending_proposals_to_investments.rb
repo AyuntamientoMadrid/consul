@@ -19,11 +19,11 @@ class MigrateSpendingProposalsToInvestments
 
     feasibility = case sp.feasible
                   when FalseClass
-                    'unfeasible'
+                    "unfeasible"
                   when TrueClass
-                    'feasible'
+                    "feasible"
                   else
-                    'undecided'
+                    "undecided"
                   end
 
     investment = Budget::Investment.create!(

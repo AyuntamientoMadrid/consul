@@ -115,7 +115,6 @@ feature "Valuation budget investments" do
       visit valuation_budget_budget_investments_path(budget)
 
       expect(page).to have_css(".budget_investment", count: per_page)
-
       within("ul.pagination") do
         expect(page).to have_content("1")
         expect(page).to have_content("2")

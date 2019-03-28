@@ -29,7 +29,7 @@ gl:
       user_permission_proposal: Crear novas propostas
       user_permission_support_proposal: Apoiar propostas*
       user_permission_title: Participación
-      user_permission_verify: Para poder realizar todas as accións verifica a túa conta.
+      user_permission_verify: Para poder realizar todas as accións, verifica a túa conta.
       user_permission_verify_info: "* Só para persoas empadroadas."
       user_permission_votes: Participar nas votacións finais*
       username_label: Nome de usuario/a
@@ -116,7 +116,7 @@ gl:
         disable: "As recomendacións dos debates deixarán de amosarse se as desactiva. Pode volver a activalas desde a páxina «A miña conta»"
         actions:
           success: "As recomendacións para debates foron deshabilitadas para esta conta"
-          error: "Produciuse un erro. Por favor, vaia a «A miña conta» e deshabilite as recomendacións para debates"
+          error: "Produciuse un erro. Por favor, accede á páxina 'A miña conta' para deshabilitar de xeito manual as recomendacións para os debates"
       search_form:
         button: Buscar
         placeholder: Buscar debates...
@@ -205,7 +205,7 @@ gl:
       conditions: Condicións de uso
       consul: aplicación CONSUL
       consul_url: https://github.com/consul/consul
-      contact_us: Para asistencia técnica entra en
+      contact_us: Se precisas asistencia técnica
       copyright: CONSUL, %{year}
       description: Este portal usa a %{consul} que é %{open_source}. De Madrid, para o mundo enteiro.
       open_source: software libre
@@ -306,7 +306,7 @@ gl:
       retired_explanation_placeholder: Explica brevemente por que consideras que esta proposta non debe recoller máis apoios
       submit_button: Eliminar proposta
     retire_options:
-      duplicated: Duplicada
+      duplicated: Duplicadas
       started: En execución
       unfeasible: Non viables
       done: Realizadas
@@ -437,7 +437,7 @@ gl:
       retired: Proposta retirada polo autor
       share: Compartir
       send_notification: Enviar notificación
-      no_notifications: "Esta proposta non ten ningunha notificación."
+      no_notifications: "A proposta non ten notificacións."
       embed_video_title: "Vídeo en %{proposal}"
       title_external_url: "Documentación adicional"
       title_video_url: "Vídeo externo"
@@ -522,7 +522,7 @@ gl:
       title_label: "Título"
       body_label: "Mensaxe"
       submit_button: "Enviar mensaxe"
-      info_about_receivers_html: "Esta mensaxe enviaráselles a <strong>%{count} persoas</strong> e publicarase en %{proposal_page}.<br> A mensaxe non se envía inmediatamente, pois os usuarios recibirán periodicamente un correo electrónico con todas as notificacións de propostas."
+      info_about_receivers_html: "Esta mensaxe será enviada a <strong>%{count} persoas</strong> e será visíbel en %{proposal_page}.<br> As mensaxes non serán enviadas de xeito inmediato, os usuarios recibirán periodicamente unha mensaxe de correo con todas as notificacións das propostas."
       proposal_page: "a páxina da proposta"
     show:
       back: "Volver á miña actividade"
@@ -623,10 +623,10 @@ gl:
       see_more: Ver máis recomendacións
       hide: Agochar as recomendacións
   social:
-    blog: "Blog"
-    facebook: "Facebook"
-    twitter: "Twitter"
-    youtube: "YouTube"
+    blog: "%{org} Blog"
+    facebook: "%{org} Facebook"
+    twitter: "%{org} Twitter"
+    youtube: "%{org} YouTube"
     whatsapp: WhatsApp
     telegram: "Telegram de %{org}"
     instagram: "Instagram de %{org}"

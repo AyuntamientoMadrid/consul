@@ -134,5 +134,15 @@ Setting["homepage.widgets.feeds.processes"] = true
 # Votes hot_score configuration
 Setting["hot_score_period_in_days"] = 31
 
+# Proposals
+Setting["proposals.successful_proposal_id"] = nil
+Setting["proposals.poll_short_title"] = nil
+Setting["proposals.poll_description"] = nil
+Setting["proposals.poll_link"] = nil
+Setting["proposals.email_short_title"] = nil
+Setting["proposals.email_description"] = nil
+Setting["proposals.poster_short_title"] = nil
+Setting["proposals.poster_description"] = nil
+
 # Default custom pages
-load Rails.root.join("db", "custom_pages.rb")
+load Rails.root.join("db", "pages.rb")

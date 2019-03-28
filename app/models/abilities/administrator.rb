@@ -63,6 +63,8 @@ module Abilities
         can [:update, :destroy], SpendingProposal
       end
 
+      can :manage, Dashboard::Action
+
       can [:read, :valuate, :summary], SpendingProposal
       can [:index, :read, :new, :create, :update, :destroy, :calculate_winners], Budget
       can [:read, :create, :update, :destroy], Budget::Group
@@ -103,6 +105,7 @@ module Abilities
       can [:create, :destroy], DirectUpload
 
       can [:deliver], Newsletter, hidden_at: nil
+      can [:manage], Dashboard::AdministratorTask
     end
   end
 end

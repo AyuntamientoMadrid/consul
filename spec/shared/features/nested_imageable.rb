@@ -12,6 +12,7 @@ shared_examples "nested imageable" do |imageable_factory_name, path,
   let!(:imageable)           { create(imageable_factory_name) }
 
   before do
+
     Setting["feature.allow_images"] = true
 
     imageable_path_arguments&.each do |argument_name, path_to_value|

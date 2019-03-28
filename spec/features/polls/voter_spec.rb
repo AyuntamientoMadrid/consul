@@ -33,7 +33,6 @@ feature "Voter" do
       # Hides token temporally
       #expect(page).to have_css(".js-token-message", visible: true)
       #token = find(:css, ".js-question-answer")[:href].gsub(/.+?(?=token)/, "").gsub("token=", "")
-
       #expect(page).to have_content "You can write down this vote identifier, to check your vote on the final results: #{token}"
 
       expect(Poll::Voter.count).to eq(1)
@@ -92,7 +91,7 @@ feature "Voter" do
       within("#poll_#{poll.id}") do
         click_button("Confirm vote")
         expect(page).not_to have_button("Confirm vote")
-        expect(page).to have_content "Vote introduced!"
+        expect(page).to have_content("Vote introduced!")
       end
 
       expect(Poll::Voter.count).to eq(1)
@@ -321,5 +320,4 @@ feature "Voter" do
 
     end
   end
-
 end

@@ -14,7 +14,7 @@ describe Budget::Group do
       end
 
       it "can be repeatead in other budget's groups" do
-        expect(build(:budget_group, budget: create(:budget), name: 'object name')).to be_valid
+        expect(build(:budget_group, budget: create(:budget), name: "object name")).to be_valid
       end
 
       it "may be repeated for the same group and a different locale" do
@@ -55,6 +55,6 @@ describe Budget::Group do
       group.update(name_fr: "En Français")
       expect(group.translations.count).to eq(1)
     end
-  end
 
+  end
 end

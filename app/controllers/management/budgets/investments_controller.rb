@@ -2,7 +2,7 @@ class Management::Budgets::InvestmentsController < Management::BaseController
   before_action :load_budget
 
   load_resource :budget
-  load_resource :investment, through: :budget, class: 'Budget::Investment'
+  load_resource :investment, through: :budget, class: "Budget::Investment"
 
   before_action :only_verified_users, except: :print
 
@@ -20,7 +20,7 @@ class Management::Budgets::InvestmentsController < Management::BaseController
     @investment.author = managed_user
 
     if @investment.save
-      notice = t('flash.actions.create.notice', resource_name: Budget::Investment.model_name.human, count: 1)
+      notice = t("flash.actions.create.notice", resource_name: Budget::Investment.model_name.human, count: 1)
       redirect_to management_budget_investment_path(@budget, @investment), notice: notice
     else
       load_categories

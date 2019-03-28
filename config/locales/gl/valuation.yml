@@ -79,7 +79,7 @@ gl:
       not_in_valuating_phase: Os investimentos só se poden avaliar cando o Orzamento está en fase de avaliación
     spending_proposals:
       index:
-        geozone_filter_all: Todos os ámbitos de actuación
+        geozone_filter_all: Todas as zonas
         filters:
           valuation_open: Abertas
           valuating: En avaliación
@@ -93,7 +93,7 @@ gl:
         association_name: Asociación
         by: Enviada por
         sent: Data de creación
-        geozone: Ámbito
+        geozone: Zona
         dossier: Informe
         edit_dossier: Editar informe
         price: Custo

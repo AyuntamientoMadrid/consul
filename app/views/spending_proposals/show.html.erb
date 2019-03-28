@@ -8,7 +8,7 @@
       <h1><%= @spending_proposal.title %></h1>
 
       <div class="investment-project-info">
-        <%= render '/shared/author_info', resource: @spending_proposal %>
+        <%= render "/shared/author_info", resource: @spending_proposal %>
 
         <span class="bullet">&nbsp;&bull;&nbsp;</span>
         <%= l @spending_proposal.created_at.to_date %>

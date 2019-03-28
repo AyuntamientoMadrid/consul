@@ -369,6 +369,58 @@ en:
         back: Go back to %{org}
         title: Administration
         description: Welcome to the %{org} admin panel.
+      actions:
+        action_type:
+          proposed_action: Proposed action
+          resource: Resource
+        index:
+          create: Create resource or action
+          edit: Edit
+          delete: Delete
+          no_records: No records found
+          active: 'Yes'
+          inactive: 'No'
+          title: Resources and actions
+          action_title: Title
+          action_type: Type
+          required_supports: Required supports
+          day_offset: Required days
+          action_active: Active
+          order: Order
+          published_proposal: Published proposal
+        new:
+          creating: New action for the proposals dashboard
+          back: Back to list
+        create:
+          notice: Action created successfully
+        edit:
+          editing: Edit action for the proposals dashboard
+          back: Back to list
+        delete:
+          success: Action successfully deleted
+        form:
+          submit_button: Save
+          day_offset_help_text: Enter 0 so that this value is not taken into account
+          required_supports_help_text: Enter 0 so that this value is not taken into account
+          order_help_text: Order to show to user
+          published_proposal: For published proposals?
+          published_proposal_help_text: Mark this checkbox to create the action only for published proposals
+      administrator_tasks:
+        index:
+          title: Pending tasks
+          solve: Solve
+          no_records: There are no pending tasks
+          source: Source
+          resource: Requested resource
+        edit:
+          back: Back to pending tasks list
+          solving: Solve pending task
+        form:
+          solve: Mark as solved
+          proposal: Proposal
+          request: Requested resource
+        update:
+          success: The task has been marked as solved.
     debates:
       index:
         filter: Filter
@@ -662,6 +714,9 @@ en:
       title_booths: Voting booths
       legislation: Collaborative Legislation
       users: Users
+      dashboard: Proposals dashboard
+      administrator_tasks: Pending tasks
+      dashboard_actions: Resources and actions
     administrators:
       index:
         title: Administrators
@@ -1236,6 +1291,8 @@ en:
           form:
             submit: Update
           how_to_enable: 'To show the map to users you must enable "Proposals and budget investments geolocation" on "Features" tab.'
+        dashboard:
+          title: Proposals dashboard
       setting: Feature
       setting_actions: Actions
       setting_name: Setting
@@ -1431,6 +1488,7 @@ en:
         title: Proposal notifications
         total: Total
         proposals_with_notifications: Proposals with notifications
+        not_available: "Proposal not available"
       polls:
         title: Poll Stats
         all: Polls
