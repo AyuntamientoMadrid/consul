@@ -7,7 +7,7 @@
 
   <div class="row margin">
     <div class="small-12 medium-3 column sidebar">
-      <%= render "shared/stats/links" %>
+      <%= render "shared/stats/links", stats: @stats %>
 
       <p><strong><%= link_to t("stats.advanced"), "#advanced_statistics" %></strong></p>
       <ul class="menu vertical">
@@ -29,11 +29,11 @@
         <div id="stats_by_channel" class="stats-group">
           <h4><%= t("stats.polls.by_channel") %></h4>
 
-          <% Poll::Stats::CHANNELS.each do |channel| %>
+          <% @stats.channels.each do |channel| %>
             <%= number_with_info_tags(
-              @stats[:"total_participants_#{channel}"],
+              @stats.send("total_participants_#{channel}"),
               t("stats.polls.#{channel}_percentage",
-                percentage: number_to_stats_percentage(@stats[:"total_participants_#{channel}_percentage"])
+                percentage: number_to_stats_percentage(@stats.send(:"total_participants_#{channel}_percentage"))
               ),
               html_class: channel
             ) %>
@@ -47,7 +47,7 @@
             <thead>
               <tr>
                 <th scope="col"><%= t("polls.show.stats.votes") %></th>
-                <% Poll::Stats::CHANNELS.each do |channel| %>
+                <% @stats.channels.each do |channel| %>
                   <th scope="col"><%= t("polls.show.stats.#{channel}") %></th>
                 <% end %>
                 <th scope="col"><%= t("polls.show.stats.total") %></th>
@@ -57,59 +57,59 @@
               <tr>
                 <th scope="row"><%= t("polls.show.stats.valid") %></th>
 
-                <% Poll::Stats::CHANNELS.each do |channel| %>
+                <% @stats.channels.each do |channel| %>
                   <td>
-                    <%= @stats[:"total_#{channel}_valid"] %>
-                    <small><em>(<%= @stats[:"valid_percentage_#{channel}"].round(2) %>%)</em></small>
+                    <%= @stats.send(:"total_#{channel}_valid") %>
+                    <small><em>(<%= @stats.send(:"valid_percentage_#{channel}").round(2) %>%)</em></small>
                   </td>
                 <% end %>
 
                 <td>
-                  <%= @stats[:total_valid_votes] %>
-                  <small><em>(<%= @stats[:total_valid_percentage].round(2) %>%)</em></small>
+                  <%= @stats.total_valid_votes %>
+                  <small><em>(<%= @stats.total_valid_percentage.round(2) %>%)</em></small>
                 </td>
 
               </tr>
               <tr>
                 <th scope="row"><%= t("polls.show.stats.white") %></th>
 
-                <% Poll::Stats::CHANNELS.each do |channel| %>
+                <% @stats.channels.each do |channel| %>
                   <td>
-                    <%= @stats[:"total_#{channel}_white"] %>
-                    <small><em>(<%= @stats[:"white_percentage_#{channel}"].round(2) %>%)</em></small>
+                    <%= @stats.send(:"total_#{channel}_white") %>
+                    <small><em>(<%= @stats.send(:"white_percentage_#{channel}").round(2) %>%)</em></small>
                   </td>
                 <% end %>
 
-                <td><%= @stats[:total_white_votes] %>
-                  <small><em>(<%= @stats[:total_white_percentage].round(2) %>%)</em></small>
+                <td><%= @stats.total_white_votes %>
+                  <small><em>(<%= @stats.total_white_percentage.round(2) %>%)</em></small>
                 </td>
               </tr>
               <tr>
                 <th scope="row"><%= t("polls.show.stats.null_votes") %></th>
 
-                <% Poll::Stats::CHANNELS.each do |channel| %>
+                <% @stats.channels.each do |channel| %>
                   <td>
-                    <%= @stats[:"total_#{channel}_null"] %>
-                    <small><em>(<%= @stats[:"null_percentage_#{channel}"].round(2) %>%)</em></small>
+                    <%= @stats.send(:"total_#{channel}_null") %>
+                    <small><em>(<%= @stats.send(:"null_percentage_#{channel}").round(2) %>%)</em></small>
                   </td>
                 <% end %>
 
                 <td>
-                  <%= @stats[:total_null_votes] %>
-                  <small><em>(<%= @stats[:total_null_percentage].round(2) %>%)</em></small>
+                  <%= @stats.total_null_votes %>
+                  <small><em>(<%= @stats.total_null_percentage.round(2) %>%)</em></small>
                 </td>
               </tr>
               <tr>
                 <th scope="row"><%= t("polls.show.stats.total") %></th>
 
-                <% Poll::Stats::CHANNELS.each do |channel| %>
+                <% @stats.channels.each do |channel| %>
                   <td>
-                    <%= @stats[:"total_participants_#{channel}"] %>
-                    <small><em>(<%= @stats[:"total_participants_#{channel}_percentage"].round(2) %>%)</em></small>
+                    <%= @stats.send(:"total_participants_#{channel}") %>
+                    <small><em>(<%= @stats.send(:"total_participants_#{channel}_percentage").round(2) %>%)</em></small>
                   </td>
                 <% end %>
 
-                <td><%= @stats[:total_participants] %></td>
+                <td><%= @stats.total_participants %></td>
               </tr>
             </tbody>
           </table>
