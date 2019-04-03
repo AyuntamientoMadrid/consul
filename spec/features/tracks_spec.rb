@@ -235,8 +235,8 @@ feature "Tracking" do
       create(:poll_question_answer, question: question, title: "Han Solo")
       create(:poll_question_answer, question: question, title: "Chewbacca")
 
-      visit account_path
-      click_link "Verify my account"
+      login_as user
+      visit poll_path(poll)
 
       click_link "Han Solo"
 

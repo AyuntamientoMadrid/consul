@@ -16,20 +16,6 @@ class Admin::BudgetGroupsController < Admin::BaseController
   def edit
   end
 
-  before_action :load_budget
-  before_action :load_group, except: [:index, :new, :create]
-
-  def index
-    @groups = @budget.groups.order(:id)
-  end
-
-  def new
-    @group = @budget.groups.new
-  end
-
-  def edit
-  end
-
   def create
     @group = @budget.groups.new(budget_group_params)
     if @group.save

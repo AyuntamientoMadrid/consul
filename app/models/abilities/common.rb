@@ -87,10 +87,6 @@ module Abilities
       end
 
       if user.level_two_or_three_verified?
-        can :vote, Proposal do |proposal|
-          proposal.published?
-        end
-        can :vote_featured, Proposal
         can :create, SpendingProposal
 
         can :vote, Legislation::Proposal
@@ -106,7 +102,9 @@ module Abilities
         can :show, DirectMessage, sender_id: user.id
 
         if user.old_enough_to_participate?
-          can :vote, Proposal
+          can :vote, Proposal do |proposal|
+            proposal.published?
+          end
           can :newsletter_vote, Proposal
           can :vote_featured, Proposal
           can :vote, SpendingProposal

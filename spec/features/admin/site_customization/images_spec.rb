@@ -70,8 +70,8 @@ feature "Admin custom images" do
       click_button "Update"
     end
 
-    expect(page).to have_content("Width must be 470px")
-    expect(page).to have_content("Height must be 246px")
+    expect(page).to have_content("Width must be 330px")
+    expect(page).to have_content("Height must be 240px")
   end
 
   scenario "Delete image" do

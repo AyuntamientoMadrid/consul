@@ -54,9 +54,7 @@ class Management::ProposalsController < Management::BaseController
 
     def proposal_params
       params.require(:proposal).permit(:title, :summary, :description, :video_url,
-                                       :responsible_name, :tag_list, :terms_of_service, :geozone_id,
-                                       :skip_map,
-                                       map_location_attributes: [:latitude, :longitude, :zoom])
+                                       :responsible_name, :tag_list, :terms_of_service, :geozone_id)
     end
 
     def resource_model

@@ -510,9 +510,9 @@ feature "Admin budget investments" do
       administrator = create(:administrator, user: user)
 
       first_investment = create(:budget_investment, budget: budget, title: "Educate the children",
-                                                   administrator: administrator)
+                                                    administrator: administrator)
       create(:budget_investment, budget: budget, title: "More schools",
-                                 administrator: administrator)flunk("Failure message.")
+                                 administrator: administrator)
       create(:budget_investment, budget: budget, title: "More hospitals")
 
 

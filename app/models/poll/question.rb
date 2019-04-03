@@ -17,7 +17,7 @@ class Poll::Question < ActiveRecord::Base
   has_many :partial_results
   belongs_to :proposal
 
-  accepts_nested_attributes_for :question_answers
+  accepts_nested_attributes_for :question_answers, reject_if: :all_blank, allow_destroy: true
 
   validates_translation :title, presence: true, length: { minimum: 4 }
   validates :author, presence: true

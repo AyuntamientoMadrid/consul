@@ -66,7 +66,6 @@ class Legislation::Proposal < ActiveRecord::Base
 
   def searchable_values
     { title              => "A",
-      question           => "B",
       author.username    => "B",
       tag_list.join(" ") => "B",
       geozone.try(:name) => "B",

@@ -6,7 +6,8 @@ feature "Polls" do
 
     scenario "Budget polls should not be listed" do
       poll = create(:poll)
-      budget_poll = create(:poll, budget: create(:budget))
+      budget = create(:budget)
+      budget_poll = create(:poll, budget: budget)
 
       visit polls_path
 

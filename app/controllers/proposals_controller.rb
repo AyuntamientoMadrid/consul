@@ -122,7 +122,8 @@ class ProposalsController < ApplicationController
     def proposal_params
       params.require(:proposal).permit(:title, :summary, :description, :video_url,
                                        :responsible_name, :tag_list, :terms_of_service,
-                                       :geozone_id, :skip_map, image_attributes: image_attributes,
+                                       :geozone_id, :proceeding, :sub_proceeding, :skip_map,
+                                       image_attributes: image_attributes,
                                        documents_attributes: [:id, :title, :attachment,
                                        :cached_attachment, :user_id, :_destroy],
                                        map_location_attributes: [:latitude, :longitude, :zoom])
@@ -159,7 +160,7 @@ class ProposalsController < ApplicationController
         @resources = @resources.retired
         @resources = @resources.where(retired_reason: params[:retired]) if Proposal::RETIRE_OPTIONS.include?(params[:retired])
       else
-      @resources = @resources.not_retired
+        @resources = @resources.not_retired
       end
     end
 

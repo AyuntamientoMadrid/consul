@@ -185,14 +185,6 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "budget_content_blocks", force: :cascade do |t|
-    t.integer  "heading_id"
-    t.text     "body"
-    t.string   "locale"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   add_index "budget_content_blocks", ["heading_id"], name: "index_budget_content_blocks_on_heading_id", using: :btree
 
   create_table "budget_group_translations", force: :cascade do |t|
@@ -1321,9 +1313,12 @@ ActiveRecord::Schema.define(version: 20190307165337) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "budget_id"
+    t.integer  "related_id"
+    t.string   "related_type"
   end
 
   add_index "polls", ["budget_id"], name: "index_polls_on_budget_id", unique: true, using: :btree
+  add_index "polls", ["related_type", "related_id"], name: "index_polls_on_related_type_and_related_id", using: :btree
   add_index "polls", ["starts_at", "ends_at"], name: "index_polls_on_starts_at_and_ends_at", using: :btree
 
   create_table "probe_options", force: :cascade do |t|

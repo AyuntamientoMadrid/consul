@@ -172,7 +172,7 @@ feature "Polls" do
       visit poll_path(poll)
 
       within("div#poll_question_#{question.id}") do
-        expect(answer2.title).to appear_before(answer1.title)
+        expect(page.body.index(answer1.title)).to be < page.body.index(answer2.title)
       end
     end
 
@@ -184,7 +184,7 @@ feature "Polls" do
       visit poll_path(poll)
 
       within("div.poll-more-info-answers") do
-        expect(answer2.title).to appear_before(answer1.title)
+        expect(page.body.index(answer1.title)).to be < page.body.index(answer2.title)
       end
     end
 
