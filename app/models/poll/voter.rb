@@ -21,9 +21,9 @@ class Poll
 
     before_validation :set_demographic_info, :set_document_info, :set_denormalized_booth_assignment_id
 
-    scope :web,    -> { where(origin: 'web') }
-    scope :booth,  -> { where(origin: 'booth') }
-    scope :letter, -> { where(origin: 'letter') }
+    scope :web,    -> { where(origin: "web") }
+    scope :booth,  -> { where(origin: "booth") }
+    scope :letter, -> { where(origin: "letter") }
 
     def set_demographic_info
       return if user.blank?

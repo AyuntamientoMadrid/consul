@@ -433,16 +433,13 @@ feature "Commenting polls" do
   end
 
   feature "Voting comments" do
+
     background do
       @pablo = create(:user)
       @poll = create(:poll)
       @comment = create(:comment, commentable: @poll)
       @manuela = create(:user, verified_at: Time.current)
       login_as(@manuela)
-    end
-
-    after do
-      logout
     end
 
     scenario "Show" do

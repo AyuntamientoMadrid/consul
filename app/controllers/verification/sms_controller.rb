@@ -14,7 +14,7 @@ class Verification::SmsController < ApplicationController
   def create
     @sms = Verification::Sms.new(phone: @phone, user: current_user)
     if @sms.save
-      redirect_to edit_sms_path, notice: t('verification.sms.create.flash.success')
+      redirect_to edit_sms_path, notice: t("verification.sms.create.flash.success")
     else
       render :new
     end
@@ -37,7 +37,7 @@ class Verification::SmsController < ApplicationController
 
       redirect_to_next_path
     else
-      @error = t('verification.sms.update.error')
+      @error = t("verification.sms.update.error")
       render :edit
     end
   end
@@ -64,9 +64,9 @@ class Verification::SmsController < ApplicationController
     def redirect_to_next_path
       current_user.reload
       if current_user.level_three_verified?
-        redirect_to account_path, notice: t('verification.sms.update.flash.level_three.success')
+        redirect_to account_path, notice: t("verification.sms.update.flash.level_three.success")
       else
-        redirect_to new_letter_path, notice: t('verification.sms.update.flash.level_two.success')
+        redirect_to new_letter_path, notice: t("verification.sms.update.flash.level_two.success")
       end
     end
 

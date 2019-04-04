@@ -23,7 +23,7 @@ every 1.minute do
   command "date > ~/cron-test.txt"
 end
 
-every 1.day, at: '5:00 am' do
+every 1.day, at: "5:00 am" do
   rake "-s sitemap:refresh"
 end
 
@@ -31,10 +31,14 @@ end
 #   rake "-s budgets:stats:balloting"
 # end
 
-every 1.day, at: '4:00 am', roles: [:cron] do
+every 1.day, at: "4:00 am", roles: [:cron] do
   rake "csv:export"
 end
 
-every 1.day, at: '3:00 am', roles: [:cron] do
+every 1.day, at: "7:00 am" do
+  rake "dashboards:send_notifications"
+end
+
+every 1.day, at: "3:00 am", roles: [:cron] do
   rake "votes:reset_hot_score"
 end

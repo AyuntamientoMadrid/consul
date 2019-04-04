@@ -79,7 +79,7 @@ feature "Tags" do
     click_button "Create proposal"
 
     expect(page).to have_content "Proposal created successfully."
-
+    click_link "No, I want to publish the proposal"
     click_link "Not now, go to my proposal"
 
     expect(page).to have_content "Economía"
@@ -105,8 +105,8 @@ feature "Tags" do
     find(".js-add-tag-link", text: "Education").click
     click_button "Create proposal"
 
-    expect(page).to have_content "You've created a proposal!"
-
+    expect(page).to have_content "Proposal created successfully."
+    click_link "No, I want to publish the proposal"
     click_link "Not now, go to my proposal"
 
     within "#tags_proposal_#{Proposal.last.id}" do
@@ -149,7 +149,7 @@ feature "Tags" do
     click_button "Create proposal"
 
     expect(page).to have_content "Proposal created successfully."
-
+    click_link "No, I want to publish the proposal"
     click_link "Not now, go to my proposal"
 
     expect(page).to have_content "user_id1"

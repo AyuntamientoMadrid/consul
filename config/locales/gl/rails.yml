@@ -9,7 +9,7 @@ gl:
       - ven
       - sáb
     abbr_month_names:
-      - 
+      -
       - xan
       - feb
       - mar
@@ -35,7 +35,7 @@ gl:
       long: "%d de %B de %Y"
       short: "%d de %b"
     month_names:
-      - 
+      -
       - xaneiro
       - febreiro
       - marzo
@@ -100,7 +100,7 @@ gl:
       accepted: debe ser aceptado
       blank: non pode estar en branco
       present: debe estar en branco
-      confirmation: non coincide
+      confirmation: non coincide %{attribute}
       empty: non pode estar baleiro
       equal_to: debe ser igual a %{count}
       even: debe ser par

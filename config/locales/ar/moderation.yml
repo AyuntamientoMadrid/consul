@@ -2,16 +2,21 @@ ar:
   moderation:
     comments:
       index:
+        block_authors: حظر المؤلفين\المشاركين
         confirm: هل أنت متأكد؟
         filter: ترشيح
         filters:
           all: الكل
           pending_flag_review: معلق
+          with_ignored_flag: شوهد
         headers:
           comment: التعليق
+          moderate: المشرف
         hide_comments: إخفاء التعليقات
+        ignore_flags: شوهد
         order: طلب
         orders:
+          flags: العلامة مطلوبة
           newest: الأحدث
         title: تعليقات
     dashboard:
@@ -19,6 +24,7 @@ ar:
         title: الإشراف
     debates:
       index:
+        block_authors: حظر المؤلفين\المشاركين
         confirm: هل أنت متأكد؟
         filter: ترشيح
         filters:
@@ -51,6 +57,13 @@ ar:
         filter: ترشيح
         filters:
           all: الكل
+          pending_flag_review: بانتظار المراجعة
+          with_ignored_flag: شوهد
+        headers:
+          moderate: المشرف
+          proposal: اقتراح
+        hide_proposals: الإقتراحات المخفية
+        ignore_flags: شوهد
         order: ترتيب حسب
         orders:
           created_at: الأحدث
@@ -58,6 +71,7 @@ ar:
         title: إقتراحات
     budget_investments:
       index:
+        block_authors: حظر المؤلفين\المشاركين
         confirm: هل أنت متأكد؟
         filter: ترشيح
         filters:

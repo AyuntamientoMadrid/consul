@@ -46,7 +46,7 @@ class Signature < ApplicationRecord
       verified_at: Time.current,
       erased_at: Time.current,
       password: random_password,
-      terms_of_service: '1',
+      terms_of_service: "1",
       email: nil,
       date_of_birth: @census_api_response.date_of_birth,
       gender: @census_api_response.gender,
@@ -61,7 +61,7 @@ class Signature < ApplicationRecord
   end
 
   def random_password
-    (0...20).map { ('a'..'z').to_a[rand(26)] }.join
+    (0...20).map { ("a".."z").to_a[rand(26)] }.join
   end
 
   def in_census?

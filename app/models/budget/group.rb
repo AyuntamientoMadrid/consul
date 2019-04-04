@@ -44,6 +44,8 @@ class Budget
       slug
     end
 
+    scope :sort_by_name, -> { includes(:translations).order(:name) }
+
     def single_heading_group?
       headings.count == 1
     end

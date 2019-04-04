@@ -52,7 +52,7 @@ section "Creating header and cards for the homepage" do
     title_en: "How do citizen proposals work?",
     title_es: "¿Cómo funcionan las propuestas ciudadanas?",
 
-    description_en: "A space for everyone to create a citizens' proposal and seek supports. "\
+    description_en: "A space for everyone to create a citizen's proposal and seek supports. "\
                     "Proposals which reach to enough supports will be voted and so, together we "\
                     "can decide the issues that matter to us.",
     description_es: "Un espacio para que el ciudadano cree una propuesta y busque apoyo. "\

@@ -18,7 +18,7 @@ class Legislation::AnnotationsController < Legislation::BaseController
     @commentable = @annotation
 
     if params[:sub_annotation_ids].present?
-      @sub_annotations = Legislation::Annotation.where(id: params[:sub_annotation_ids].split(','))
+      @sub_annotations = Legislation::Annotation.where(id: params[:sub_annotation_ids].split(","))
       annotations = [@commentable, @sub_annotations]
     else
       annotations = [@commentable]

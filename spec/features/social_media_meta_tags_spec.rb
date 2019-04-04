@@ -33,7 +33,6 @@ feature "Social media meta tags" do
     scenario "Social media meta tags partial render settings content" do
 
       visit root_path
-
       expect(page).to have_meta "keywords", with: meta_keywords
       expect(page).to have_meta "twitter:site", with: twitter_handle
       expect(page).to have_meta "twitter:title", with: meta_title

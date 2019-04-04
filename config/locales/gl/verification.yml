@@ -36,7 +36,7 @@ gl:
         user_permission_info: Coa túa conta xa podes...
       update:
         flash:
-          success: A túa conta xa está verificada
+          success: Código correcto. A túa conta xa está verificada
     redirect_notices:
       already_verified: A túa conta xa está verificada
       email_already_sent: Xa che enviamos un correo electrónico cun enlace de confirmación, se non o atopas podes solicitar aquí que cho reenviemos
@@ -96,7 +96,7 @@ gl:
     step_2: Código de confirmación
     step_3: Verificación final
     user_permission_debates: Participar en debates
-    user_permission_info: Ao verificar os teus datos poderás...
+    user_permission_info: Comprobando a túa información serás capaz de...
     user_permission_proposal: Crear novas propostas
     user_permission_support_proposal: Apoiar propostas*
     user_permission_votes: Participar nas votacións finais

@@ -9,15 +9,15 @@ class Poll::Question < ApplicationRecord
   include Globalizable
 
   belongs_to :poll
-  belongs_to :author, -> { with_hidden }, class_name: 'User', foreign_key: 'author_id'
+  belongs_to :author, -> { with_hidden }, class_name: "User", foreign_key: "author_id"
 
   has_many :comments, as: :commentable
-  has_many :answers, class_name: 'Poll::Answer'
-  has_many :question_answers, -> { order 'given_order asc' }, class_name: 'Poll::Question::Answer'
+  has_many :answers, class_name: "Poll::Answer"
+  has_many :question_answers, -> { order "given_order asc" }, class_name: "Poll::Question::Answer"
   has_many :partial_results
   belongs_to :proposal
 
-  accepts_nested_attributes_for :question_answers
+  accepts_nested_attributes_for :question_answers, reject_if: :all_blank, allow_destroy: true
 
   validates_translation :title, presence: true, length: { minimum: 4 }
   validates :author, presence: true
@@ -25,7 +25,7 @@ class Poll::Question < ApplicationRecord
 
   scope :by_poll_id,    ->(poll_id) { where(poll_id: poll_id) }
 
-  scope :sort_for_list, -> { order('poll_questions.proposal_id IS NULL', :created_at)}
+  scope :sort_for_list, -> { order("poll_questions.proposal_id IS NULL", :created_at)}
   scope :for_render,    -> { includes(:author, :proposal) }
 
   def self.search(params)
@@ -36,10 +36,10 @@ class Poll::Question < ApplicationRecord
   end
 
   def searchable_values
-    { title                 => 'A',
-      proposal.try(:title)  => 'A',
-      author.username       => 'C',
-      author_visible_name   => 'C' }
+    { title                 => "A",
+      proposal.try(:title)  => "A",
+      author.username       => "C",
+      author_visible_name   => "C" }
   end
 
   def copy_attributes_from_proposal(proposal)

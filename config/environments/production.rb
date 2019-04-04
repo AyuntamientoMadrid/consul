@@ -35,8 +35,8 @@ Rails.application.configure do
   # config.action_controller.asset_host = 'http://assets.example.com'
 
   # Specifies the header that your server uses for sending files.
-  config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+  config.action_dispatch.x_sendfile_header = "X-Sendfile" # for Apache
+  # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
@@ -71,12 +71,12 @@ Rails.application.configure do
   # Uncomment the following block of code and add your SMTP service credentials
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
-  #   address:              'smtp.example.com',
+  #   address:              "smtp.example.com",
   #   port:                 587,
-  #   domain:               'example.com',
-  #   user_name:            '<username>',
-  #   password:             '<password>',
-  #   authentication:       'plain',
+  #   domain:               "example.com",
+  #   user_name:            "<username>",
+  #   password:             "<password>",
+  #   authentication:       "plain",
   #   enable_starttls_auto: true }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

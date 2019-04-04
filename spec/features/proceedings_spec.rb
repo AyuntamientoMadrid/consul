@@ -6,7 +6,8 @@ feature "Proceedings" do
   scenario "creation with sub_proceeding" do
     login_as (create(:user, :level_two))
 
-    visit new_proposal_path(proceeding: "Derechos Humanos", sub_proceeding: "Derecho a una vivienda digna")
+    visit new_proposal_path(proceeding: "Derechos Humanos",
+                            sub_proceeding: "Derecho a una vivienda digna")
 
     expect(page).to have_content("Derechos Humanos")
     expect(page).to have_content("Derecho a una vivienda digna")
@@ -17,6 +18,7 @@ feature "Proceedings" do
     check "proposal_terms_of_service"
 
     click_button "Create proposal"
+    click_link "No, I want to publish the proposal"
     click_link "Not now, go to my proposal"
 
     expect(page).to have_content("Derechos Humanos")
@@ -40,6 +42,7 @@ feature "Proceedings" do
     check "proposal_terms_of_service"
 
     click_button "Create proposal"
+    click_link "No, I want to publish the proposal"
     click_link "Not now, go to my proposal"
 
     expect(page).to have_content("Derechos Humanos")
@@ -53,7 +56,8 @@ feature "Proceedings" do
   scenario "proceeding proposals are not listed in the index" do
 
     create(:proposal, title: "A test proposal")
-    create(:proposal, title: "Another test proposal", proceeding: "Derechos Humanos", sub_proceeding: "Derecho a la intimidad")
+    create(:proposal, title: "Another test proposal", proceeding: "Derechos Humanos",
+                                                      sub_proceeding: "Derecho a la intimidad")
 
     visit proposals_path
 

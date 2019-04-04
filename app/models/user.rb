@@ -25,14 +25,14 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
   has_many :debates, -> { with_hidden }, foreign_key: :author_id
   has_many :proposals, -> { with_hidden }, foreign_key: :author_id
-  has_many :budget_investments, -> { with_hidden }, foreign_key: :author_id, class_name: 'Budget::Investment'
-  has_many :budget_recommendations, class_name: 'Budget::Recommendation'
+  has_many :budget_investments, -> { with_hidden }, foreign_key: :author_id, class_name: "Budget::Investment"
+  has_many :budget_recommendations, class_name: "Budget::Recommendation"
   has_many :comments, -> { with_hidden }
   has_many :failed_census_calls
   has_many :notifications
-  has_many :direct_messages_sent,     class_name: 'DirectMessage', foreign_key: :sender_id
-  has_many :direct_messages_received, class_name: 'DirectMessage', foreign_key: :receiver_id
-  has_many :legislation_answers, class_name: 'Legislation::Answer', dependent: :destroy, inverse_of: :user
+  has_many :direct_messages_sent,     class_name: "DirectMessage", foreign_key: :sender_id
+  has_many :direct_messages_received, class_name: "DirectMessage", foreign_key: :receiver_id
+  has_many :legislation_answers, class_name: "Legislation::Answer", dependent: :destroy, inverse_of: :user
   has_many :follows
   belongs_to :geozone
 
@@ -95,7 +95,7 @@ class User < ApplicationRecord
       email: oauth_email,
       oauth_email: oauth_email,
       password: Devise.friendly_token[0, 20],
-      terms_of_service: '1',
+      terms_of_service: "1",
       confirmed_at: oauth_email_confirmed ? DateTime.current : nil
     )
   end
@@ -205,7 +205,7 @@ class User < ApplicationRecord
   end
 
   def has_official_email?
-    domain = Setting['email_domain_for_officials']
+    domain = Setting["email_domain_for_officials"]
     email.present? && ((email.end_with? "@#{domain}") || (email.end_with? ".#{domain}"))
   end
 
@@ -279,7 +279,7 @@ class User < ApplicationRecord
   end
 
   def self.username_max_length
-    @@username_max_length ||= columns.find { |c| c.name == 'username' }.limit || 60
+    @@username_max_length ||= columns.find { |c| c.name == "username" }.limit || 60
   end
 
   def self.minimum_required_age

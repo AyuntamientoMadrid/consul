@@ -84,13 +84,16 @@ GEM
       rails
     arel (7.1.4)
     ast (2.4.0)
-    autoprefixer-rails (8.2.0)
+    autoprefixer-rails (9.1.4)
       execjs
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.12)
+    best_in_place (3.0.3)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     better_html (1.0.13)
       actionview (>= 4.0)
       activesupport (>= 4.0)
@@ -526,6 +529,8 @@ GEM
     websocket-extensions (0.1.3)
     whenever (0.10.0)
       chronic (>= 0.6.3)
+    wicked_pdf (1.1.0)
+    wkhtmltopdf-binary (0.12.4)
     xpath (3.0.0)
       nokogiri (~> 1.8)
 
@@ -538,7 +543,8 @@ DEPENDENCIES
   ahoy_matey (~> 1.6.0)
   ancestry (~> 3.0.2)
   animate-rails (~> 1.0.10)
-  autoprefixer-rails (~> 8.2.0)
+  autoprefixer-rails (~> 9.1.4)
+  best_in_place (~> 3.0.1)
   browser (~> 2.5.3)
   bullet (~> 5.7.0)
   byebug (~> 10.0.0)
@@ -618,6 +624,8 @@ DEPENDENCIES
   unicorn (~> 5.4.1)
   web-console (~> 3.3.0)
   whenever (~> 0.10.0)
+  wicked_pdf (~> 1.1.0)
+  wkhtmltopdf-binary (~> 0.12.4)
 
 BUNDLED WITH
    1.17.1

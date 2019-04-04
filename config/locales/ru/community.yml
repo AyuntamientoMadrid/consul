@@ -55,4 +55,4 @@ ru:
         recommendation_three: Наслаждайтесь этим пространством, голосами, которые заполняют его, это тоже ваше.
   topics:
     show:
-      login_to_comment: Чтобы оставить комментарий, вы должны %{signin} или %{signup}.
+      login_to_comment: Вы должны %{signin} или %{signup}, чтобы оставить комментарий.

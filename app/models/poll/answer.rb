@@ -1,7 +1,7 @@
 class Poll::Answer < ApplicationRecord
 
   belongs_to :question, -> { with_hidden }
-  belongs_to :author, ->   { with_hidden }, class_name: 'User', foreign_key: 'author_id'
+  belongs_to :author, ->   { with_hidden }, class_name: "User", foreign_key: "author_id"
 
   delegate :poll, :poll_id, to: :question
 
@@ -16,4 +16,8 @@ class Poll::Answer < ApplicationRecord
 
   scope :by_author, ->(author_id) { where(author_id: author_id) }
   scope :by_question, ->(question_id) { where(question_id: question_id) }
+
+  def record_voter_participation(token)
+    Poll::Voter.find_or_create_by(user: author, poll: poll, origin: "web", token: token)
+  end
 end

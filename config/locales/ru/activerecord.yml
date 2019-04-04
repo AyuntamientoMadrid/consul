@@ -230,7 +230,7 @@ ru:
         direct_message:
           attributes:
             max_per_day:
-              invalid: "Вы достигли лимита максимального количества личных сообщений в день"
+              invalid: "Вы достигли максимума количества личных сообщений в день"
         image:
           attributes:
             attachment:
@@ -261,6 +261,11 @@ ru:
               invalid_date_range: должно быть не раньше даты начала дебатов
             allegations_end_date:
               invalid_date_range: должно быть не раньше даты начала заявлений
+              invalid_date_range: должна равняться или быть позже даты начала
+            debate_end_date:
+              invalid_date_range: должна равняться или быть позже даты начала дебатов
+            allegations_end_date:
+              invalid_date_range: должна равняться или быть позже даты начала обвинений без оснований
         proposal:
           attributes:
             tag_list:

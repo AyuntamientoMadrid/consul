@@ -12,7 +12,7 @@ class Admin::Legislation::HomepagesController < Admin::Legislation::BaseControll
       redirect_back(fallback_location: (request.referrer || root_path),
                     notice: t("admin.legislation.processes.update.notice", link: link))
     else
-      flash.now[:error] = t('admin.legislation.processes.update.error')
+      flash.now[:error] = t("admin.legislation.processes.update.error")
       render :edit
     end
   end

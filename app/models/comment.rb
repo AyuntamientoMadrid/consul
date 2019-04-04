@@ -119,7 +119,7 @@ class Comment < ApplicationRecord
   end
 
   def self.body_max_length
-    Setting['comments_body_max_length'].to_i
+    Setting["comments_body_max_length"].to_i
   end
 
   def calculate_confidence_score

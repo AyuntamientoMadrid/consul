@@ -1,5 +1,5 @@
 <% provide :title, t("budgets.results.page_title", budget: @budget.name) %>
-<% content_for :meta_description do %><%= @budget.description_for_phase('finished') %><% end %>
+<% content_for :meta_description do %><%= @budget.description_for_phase("finished") %><% end %>
 <% provide :social_media_meta_tags do %>
 <%= render "shared/social_media_meta_tags",
             social_url: custom_budget_results_url(@budget),
@@ -63,16 +63,16 @@
   <div class="small-12 medium-9 large-10 column">
     <%= link_to t("budgets.results.show_all_link"), "#",
                 class: "js-toggle-link button hollow margin-bottom float-right-medium",
-                data: {'toggle-selector' => '.js-discarded',
-                       'toggle-text' => t("budgets.results.hide_discarded_link")} %>
+                data: {"toggle-selector" => ".js-discarded",
+                       "toggle-text" => t("budgets.results.hide_discarded_link")} %>
 
-    <%= render 'results_table', results_type: :compatible,
+    <%= render "results_table", results_type: :compatible,
                                 title: @heading.name,
                                 heading_price: @heading.price,
                                 investments: @investments.compatible %>
 
     <% if @investments.incompatible.present? %>
-      <%= render 'results_table', results_type: :incompatible,
+      <%= render "results_table", results_type: :incompatible,
                                   title: t("budgets.results.incompatibles"),
                                   heading_price: @heading.price,
                                   investments: @investments.incompatible %>
@@ -82,10 +82,10 @@
       <%= link_to budget_url(@budget) do %>
         <small><%= t("budgets.results.investment_proyects") %></small>
       <% end %><br>
-      <%= link_to budget_url(@budget, filter: 'unfeasible') do %>
+      <%= link_to budget_url(@budget, filter: "unfeasible") do %>
         <small><%= t("budgets.results.unfeasible_investment_proyects") %></small>
       <% end %><br>
-      <%= link_to budget_url(@budget, filter: 'unselected') do %>
+      <%= link_to budget_url(@budget, filter: "unselected") do %>
         <small><%= t("budgets.results.not_selected_investment_proyects") %></small>
       <% end %>
     </p>

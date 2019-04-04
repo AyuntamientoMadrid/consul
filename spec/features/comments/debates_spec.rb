@@ -305,7 +305,7 @@ feature "Commenting debates" do
     fill_in "comment-body-debate_#{debate.id}", with: "Testing submit button!"
     click_button "Publish comment"
 
-    # The button's text should now be "..."
+    # The button"s text should now be "..."
     # This should be checked before the Ajax request is finished
     expect(page).not_to have_button "Publish comment"
 

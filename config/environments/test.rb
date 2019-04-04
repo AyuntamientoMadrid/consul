@@ -34,9 +34,9 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
   config.action_mailer.default_url_options = {
-    host: 'test'
+    host: "test"
   }
-  config.action_mailer.asset_host = 'http://consul.test'
+  config.action_mailer.asset_host = "http://consul.test"
 
   # Randomize the order test cases are executed.
   config.active_support.test_order = :random
@@ -52,7 +52,7 @@ Rails.application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
-    if ENV['BULLET']
+    if ENV["BULLET"]
       Bullet.raise = true # raise an error if n+1 query occurs
     end
   end

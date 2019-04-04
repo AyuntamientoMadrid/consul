@@ -130,9 +130,9 @@ module CommentableActions
     def section(resource_name)
       case resource_name
       when "Proposal"
-        'proposals'
+        "proposals"
       when "Debate"
-        'debates'
+        "debates"
       end
     end
 end

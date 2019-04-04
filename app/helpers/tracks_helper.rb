@@ -16,7 +16,7 @@ module TracksHelper
     track_data = ""
     prefix = " data-track-event-"
     data.each do |key, value|
-      track_data = track_data + prefix + key.to_s + '=' + value + " "
+      track_data = track_data + prefix + key.to_s + "=" + value + " "
     end
   end
 

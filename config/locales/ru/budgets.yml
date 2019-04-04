@@ -17,7 +17,7 @@ ru:
         not_enough_money_html: "Вы уже присвоили доступный бюджет.<br><small>Помните, что вы можете %{change_ballot} в любое время</small>"
         no_ballots_allowed: Фаза выбора закрыта
         different_heading_assigned_html: "Вы уже проголосовали за другой заголовок: %{heading_link}"
-        change_ballot: изменить голоса
+        change_ballot: изменить ваши голоса
     groups:
       show:
         title: Выберите вариант
@@ -26,7 +26,7 @@ ru:
         unselected_title: Инвестиции не отобранны для этапа голосования
         unselected: Просмотр инвестиций, не отобранных на голосование
     phase:
-      drafting: Черновик (Невидим для остальных пользователей)
+      drafting: Черновик (Не видим для публики)
       informing: Информация
       accepting: Принятие проектов
       reviewing: Рассмотрение проектов
@@ -125,7 +125,7 @@ ru:
           zero: Нет поддержки
         give_support: Поддержка
       header:
-        check_ballot: Проверить мое голосование
+        check_ballot: Проверить мой бюллетень
         different_heading_assigned_html: "У вас есть активные голоса в другом заголовке: %{heading_link}"
         change_ballot: "Если вы передумаете, вы можете удалить свои голоса в %{check_ballot} и начать заново."
         check_ballot_link: "проверить мое голосование"

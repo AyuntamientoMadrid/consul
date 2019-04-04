@@ -429,6 +429,46 @@ ActiveRecord::Schema.define(version: 20190311220711) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "dashboard_actions", force: :cascade do |t|
+    t.string   "title",                     limit: 80
+    t.text     "description"
+    t.string   "link"
+    t.boolean  "request_to_administrators",            default: false
+    t.integer  "day_offset",                           default: 0
+    t.integer  "required_supports",                    default: 0
+    t.integer  "order",                                default: 0
+    t.boolean  "active",                               default: true
+    t.datetime "hidden_at"
+    t.integer  "action_type",                          default: 0,     null: false
+    t.string   "short_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "published_proposal",                   default: false
+  end
+
+  create_table "dashboard_administrator_tasks", force: :cascade do |t|
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.integer  "user_id"
+    t.datetime "executed_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "dashboard_administrator_tasks", ["source_type", "source_id"], name: "index_dashboard_administrator_tasks_on_source", using: :btree
+  add_index "dashboard_administrator_tasks", ["user_id"], name: "index_dashboard_administrator_tasks_on_user_id", using: :btree
+
+  create_table "dashboard_executed_actions", force: :cascade do |t|
+    t.integer  "proposal_id"
+    t.integer  "action_id"
+    t.datetime "executed_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "dashboard_executed_actions", ["action_id"], name: "index_proposal_action", using: :btree
+  add_index "dashboard_executed_actions", ["proposal_id"], name: "index_dashboard_executed_actions_on_proposal_id", using: :btree
+
   create_table "debates", force: :cascade do |t|
     t.string   "title",                        limit: 80
     t.text     "description"
@@ -799,6 +839,21 @@ ActiveRecord::Schema.define(version: 20190311220711) do
     t.index ["legislation_process_id"], name: "index_legislation_questions_on_legislation_process_id", using: :btree
   end
 
+  add_index "legislation_questions", ["hidden_at"], name: "index_legislation_questions_on_hidden_at", using: :btree
+  add_index "legislation_questions", ["legislation_process_id"], name: "index_legislation_questions_on_legislation_process_id", using: :btree
+
+  create_table "links", force: :cascade do |t|
+    t.string   "label"
+    t.string   "url"
+    t.boolean  "open_in_new_tab"
+    t.integer  "linkable_id"
+    t.string   "linkable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "links", ["linkable_type", "linkable_id"], name: "index_links_on_linkable_type_and_linkable_id", using: :btree
+
   create_table "local_census_records", force: :cascade do |t|
     t.string   "document_number", null: false
     t.string   "document_type",   null: false
@@ -1162,9 +1217,15 @@ ActiveRecord::Schema.define(version: 20190311220711) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "budget_id"
+    t.integer  "related_id"
+    t.string   "related_type"
     t.index ["budget_id"], name: "index_polls_on_budget_id", unique: true, using: :btree
     t.index ["starts_at", "ends_at"], name: "index_polls_on_starts_at_and_ends_at", using: :btree
   end
+
+  add_index "polls", ["budget_id"], name: "index_polls_on_budget_id", unique: true, using: :btree
+  add_index "polls", ["related_type", "related_id"], name: "index_polls_on_related_type_and_related_id", using: :btree
+  add_index "polls", ["starts_at", "ends_at"], name: "index_polls_on_starts_at_and_ends_at", using: :btree
 
   create_table "probe_options", force: :cascade do |t|
     t.string  "code"
@@ -1252,6 +1313,7 @@ ActiveRecord::Schema.define(version: 20190311220711) do
     t.string   "proceeding"
     t.string   "sub_proceeding"
     t.integer  "community_id"
+    t.datetime "published_at"
     t.index ["author_id", "hidden_at"], name: "index_proposals_on_author_id_and_hidden_at", using: :btree
     t.index ["author_id"], name: "index_proposals_on_author_id", using: :btree
     t.index ["cached_votes_up"], name: "index_proposals_on_cached_votes_up", using: :btree
@@ -1663,6 +1725,9 @@ ActiveRecord::Schema.define(version: 20190311220711) do
   add_foreign_key "administrators", "users"
   add_foreign_key "budget_investments", "communities"
   add_foreign_key "budget_recommendations", "users"
+  add_foreign_key "dashboard_administrator_tasks", "users"
+  add_foreign_key "dashboard_executed_actions", "dashboard_actions", column: "action_id"
+  add_foreign_key "dashboard_executed_actions", "proposals"
   add_foreign_key "documents", "users"
   add_foreign_key "failed_census_calls", "poll_officers"
   add_foreign_key "failed_census_calls", "users"

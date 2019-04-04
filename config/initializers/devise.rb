@@ -19,13 +19,13 @@ Devise.setup do |config|
   end
 
   # Configure the class responsible to send e-mails.
-  config.mailer = 'DeviseMailer'
+  config.mailer = "DeviseMailer"
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -244,7 +244,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :twitter, Rails.application.secrets.twitter_key, Rails.application.secrets.twitter_secret
-  config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret, scope: 'email', info_fields: 'email,name,verified'
+  config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret, scope: "email", info_fields: "email,name,verified"
   config.omniauth :google_oauth2, Rails.application.secrets.google_oauth2_key, Rails.application.secrets.google_oauth2_secret
 
   # ==> Warden configuration

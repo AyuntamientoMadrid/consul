@@ -94,6 +94,7 @@ describe Abilities::Common do
 
   it { should be_able_to(:destroy, own_budget_investment_image) }
   it { should_not be_able_to(:destroy, budget_investment_image) }
+  it { should_not be_able_to(:manage, Dashboard::Action) }
 
   describe "flagging content" do
     it { should be_able_to(:flag, debate)   }
@@ -148,6 +149,40 @@ describe Abilities::Common do
 
     it { should_not be_able_to(:destroy, proposal_image)         }
     it { should_not be_able_to(:destroy, proposal_document)      }
+  end
+
+  describe "proposals dashboard" do
+    it { should be_able_to(:dashboard, own_proposal) }
+    it { should_not be_able_to(:dashboard, proposal) }
+  end
+
+  describe "proposal polls" do
+    let(:poll) { create(:poll, related: own_proposal) }
+
+    it { should be_able_to(:manage_polls, own_proposal) }
+    it { should_not be_able_to(:manage_polls, proposal) }
+    it { should_not be_able_to(:stats, poll) }
+    it { should be_able_to(:results, poll) }
+  end
+
+  describe "proposal mailing" do
+    it { should be_able_to(:manage_mailing, own_proposal) }
+    it { should_not be_able_to(:manage_mailing, proposal) }
+  end
+
+  describe "proposal poster" do
+    it { should be_able_to(:manage_poster, own_proposal) }
+    it { should_not be_able_to(:manage_poster, proposal) }
+  end
+
+  describe "publishing proposals" do
+    let(:draft_own_proposal) { create(:proposal, :draft, author: user) }
+    let(:retired_proposal) { create(:proposal, :draft, :retired, author: user) }
+
+    it { should be_able_to(:publish, draft_own_proposal) }
+    it { should_not be_able_to(:publish, own_proposal) }
+    it { should_not be_able_to(:publish, proposal) }
+    it { should_not be_able_to(:publish, retired_proposal) }
   end
 
   describe "when level 2 verified" do
@@ -323,7 +358,8 @@ describe Abilities::Common do
     end
 
     context "when not old enough to vote" do
-      before(:each) { user.date_of_birth = Setting["min_age_to_participate"].to_i.years.ago + 1.year }
+      before(:each) { user.date_of_birth = Setting["min_age_to_participate"].to_i.years.ago +
+                                           1.year }
 
       it { should_not be_able_to(:vote, Proposal)          }
       it { should_not be_able_to(:vote_featured, Proposal) }

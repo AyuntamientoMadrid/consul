@@ -26,7 +26,7 @@ gl:
         one: "o debate"
         other: "Debates"
       tag:
-        one: "Etiqueta"
+        one: "Tema"
         other: "Etiquetas"
       user:
         one: "Usuario"

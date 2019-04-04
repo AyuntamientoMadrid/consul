@@ -1,6 +1,5 @@
 class IncreaseTagNameLimit < ActiveRecord::Migration[4.2]
   def up
-    execute "ALTER TABLE tags ALTER COLUMN name TYPE VARCHAR(160) USING SUBSTR(name, 1, 160)"
     change_column :tags, :name, :string, limit: 160
   end
 

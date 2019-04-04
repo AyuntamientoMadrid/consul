@@ -74,6 +74,109 @@ ar:
         filters:
           open: فتح
           finished: انتهى
+        budget_investments: إدارة المشاريع
+        table_name: الإ سم
+        table_phase: مرحلة
+        table_investments: إستثمارات
+        table_edit_groups: مجموعات العناوين
+        table_edit_budget: تعديل
+        edit_groups: تعديل مجموعات العناوين
+        edit_budget: تعديل الميزانية
+        no_budgets: "لا يوجد ميزانيات."
+      create:
+        notice: تم إنشاء الميزانية التشاركية الجديدة بنجاح!
+      update:
+        notice: تم تعديل الميزانية التشاركية بنجاح
+      edit:
+        title: تعديل الميزانية المشاركة
+        delete: حذف الميزانية
+        phase: مرحلة
+        dates: التواريخ
+        enabled: تفعيل
+        actions: الإجراءات
+        edit_phase: تعديل المرحلة
+        active: نشِط
+        blank_dates: التواريخ فارغة
+      destroy:
+        success_notice: تم حذف الميزانية بنجاح
+        unable_notice: لا يمكن حذف ميزانية لها استثمارات مرتبطة
+      new:
+        title: ميزانية تشاركية جديدة
+      winners:
+        calculate: حساب الاستثمارات الفائزة
+        calculated: جاري حساب الفائزين، قد يستغرق ذلك دقيقة.
+        recalculate: إعادة حساب الاستثمارات الفائزة
+    budget_groups:
+      name: "الإ سم"
+      headings_name: "العناوين"
+      headings_edit: "تعديل العناوين"
+      headings_manage: "إدارة العناوين"
+      max_votable_headings: "العدد الأقصى للعناوين التي يمكن للمستخدم التصويت عليها"
+      no_groups: "لا توجد مجموعات."
+      amount:
+        zero: "لا يوجد هناك مجموعات %{count}"
+        one: "هناك مجموعة 1"
+        two: "هناك مجموعتان %{count}"
+        few: "هناك %{count} مجموعات"
+        many: "هناك %{count} مجموعة"
+        other: "هناك %{count} مجموعة"
+      create:
+        notice: "تم إنشاء المجموعة بنجاح!"
+      update:
+        notice: "تم تحديث المجموعة بنجاح"
+      destroy:
+        success_notice: "تم حذف المجموعة بنجاح"
+        unable_notice: "لا يمكن حذف مجموعة لها عناوين مرتبطة"
+      form:
+        create: "إنشاء مجموعة جديدة"
+        edit: "تعديل مجموعة"
+        name: "اسم المجموعة"
+        submit: "حفظ المجموعة"
+      index:
+        back: "العودة إلى الميزانيات"
+    budget_headings:
+      name: "الإ سم"
+      no_headings: "لا توجد هناك عناوين."
+      amount:
+        zero: "%{count} لا توجد هناك عناوين"
+        one: "هناك عنوان %{count}"
+        two: "هناك %{count} عناوين"
+        few: "هناك %{count} عناوين"
+        many: "هناك %{count} عنوانا"
+        other: "هناك %{count} عنوانا"
+      create:
+        notice: "تم إنشاء العنوان بنجاح!"
+      update:
+        notice: "تم تحديث العنوان بنجاح"
+      destroy:
+        success_notice: "تم حذف العنوان بنجاح"
+        unable_notice: "لا يمكن حذف عنوان له استثمارات مرتبطة"
+      form:
+        name: "اسم العنوان"
+        amount: "القيمة"
+        population: "التعداد (اختياري)"
+        population_info: "يتم استخدام حقل \"عنوان الميزانية\" لأغراض إحصائية في نهاية الميزانية لإظهار نسبة التصويت لكل عنوان يمثل منطقة بها تعداد معين. الحقل اختياري بحيث يمكنك تركه فارغًا إذا لم يكن مطبقا."
+        latitude: "خط العرض (اختياري)"
+        longitude: "خط الطول (اختياري)"
+        coordinates_info: "إذا تم توفير خطوط الطول والعرض، فإن صفحة الاستثمارات لهذا العنوان سيتم إدراجها في الخريطة. هذه الخريطة سيتم مركزتها بإستخدام تلك الإحداثيات."
+        allow_content_block: "السماح بكتل المحتوى"
+        content_blocks_info: "إذا تم اختيار \"السماح بكتل المحتوى\"، سوف تتمكن من إنشاء محتوى مخصص ذي صلة بهذا العنوان غن طريق إعدادات > كتل المحتوى المخصصة. سوف يظهر هذا المحتوى في صفحة الاستثمارات الخاصة بهذا العنوان."
+        create: "إنشاء عنوان جديد"
+        edit: "تعديل العنوان"
+        submit: "حفظ العنوان"
+      index:
+        back: "العودة إلى المجموعات"
+    budget_phases:
+      edit:
+        start_date: تاريخ البدء
+        end_date: تاريخ الإنتهاء
+        summary: ملخص
+        summary_help_text: هذا النص سوف يخبر المستخدم عن المرحلة. لإظهاره حتى إذا كانت المرحلة غير نشطة، حدد مربع الاختيار أدناه
+        description: الوصف
+        description_help_text: سيظهر هذا النص في الرأس عندما تكون المرحلة نشطة
+        enabled: المرحلة مفعلة
+        enabled_help_text: ستكون هذه المرحلة أحد المراحل المتاحة للعامة من بين مراحل الموازنة، إلى جانب كونها نشطة لأي غرض آخر
+        save_changes: حفظ التغييرات
     budget_investments:
       index:
         heading_filter_all: كل العناوين

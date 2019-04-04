@@ -1,12 +1,20 @@
 so:
   date:
+    abbr_day_names:
+      - Axad
+      - Isniin
+      - Talado
+      - Arboco
+      - Khamiis
+      - Jimce
+      - Sabti
     abbr_month_names:
-      - 
-      - Jan
-      - Feb
-      - Mar
-      - Apr
-      - May
+      -
+      - Janaayo
+      - Febarayo
+      - Marso
+      - Abril
+      - Maay
       - Jun
       - Luliyo
       - Ogosto
@@ -27,7 +35,7 @@ so:
       long: "%B %d, %Y"
       short: "%d%d"
     month_names:
-      - 
+      -
       - Janaayo
       - Fabaraayo
       - Marso

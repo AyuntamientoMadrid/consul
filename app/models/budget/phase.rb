@@ -12,8 +12,8 @@ class Budget
     include Sanitizable
 
     belongs_to :budget
-    belongs_to :next_phase, class_name: 'Budget::Phase', foreign_key: :next_phase_id
-    has_one :prev_phase, class_name: 'Budget::Phase', foreign_key: :next_phase_id
+    belongs_to :next_phase, class_name: "Budget::Phase", foreign_key: :next_phase_id
+    has_one :prev_phase, class_name: "Budget::Phase", foreign_key: :next_phase_id
 
     validates_translation :summary, length: { maximum: SUMMARY_MAX_LENGTH }
     validates_translation :description, length: { maximum: DESCRIPTION_MAX_LENGTH }
@@ -43,7 +43,7 @@ class Budget
 
     def invalid_dates_range?
       if starts_at.present? && ends_at.present? && starts_at >= ends_at
-        errors.add(:starts_at, I18n.t('budgets.phases.errors.dates_range_invalid'))
+        errors.add(:starts_at, I18n.t("budgets.phases.errors.dates_range_invalid"))
       end
     end
 

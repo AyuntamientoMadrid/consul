@@ -18,7 +18,7 @@ class Debate < ApplicationRecord
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
 
-  belongs_to :author, -> { with_hidden }, class_name: 'User', foreign_key: 'author_id'
+  belongs_to :author, -> { with_hidden }, class_name: "User", foreign_key: "author_id"
   belongs_to :geozone
   has_one :probe_option
   has_many :comments, as: :commentable
@@ -64,11 +64,11 @@ class Debate < ApplicationRecord
   end
 
   def searchable_values
-    { title              => 'A',
-      author.username    => 'B',
-      tag_list.join(' ') => 'B',
-      geozone.try(:name) => 'B',
-      description        => 'D'
+    { title              => "A",
+      author.username    => "B",
+      tag_list.join(" ") => "B",
+      geozone.try(:name) => "B",
+      description        => "D"
     }
   end
 
@@ -101,7 +101,7 @@ class Debate < ApplicationRecord
   end
 
   def editable?
-    total_votes <= Setting['max_votes_for_debate_edit'].to_i
+    total_votes <= Setting["max_votes_for_debate_edit"].to_i
   end
 
   def editable_by?(user)
@@ -120,8 +120,8 @@ class Debate < ApplicationRecord
     return false if ProbeOption.where(debate: self).present?
     total_votes <= 100 ||
       !user.unverified? ||
-      Setting['max_ratio_anon_votes_on_debates'].to_i == 100 ||
-      anonymous_votes_ratio < Setting['max_ratio_anon_votes_on_debates'].to_i ||
+      Setting["max_ratio_anon_votes_on_debates"].to_i == 100 ||
+      anonymous_votes_ratio < Setting["max_ratio_anon_votes_on_debates"].to_i ||
       user.voted_for?(self)
   end
 
@@ -144,11 +144,11 @@ class Debate < ApplicationRecord
   end
 
   def after_hide
-    tags.each{ |t| t.decrement_custom_counter_for('Debate') }
+    tags.each{ |t| t.decrement_custom_counter_for("Debate") }
   end
 
   def after_restore
-    tags.each{ |t| t.increment_custom_counter_for('Debate') }
+    tags.each{ |t| t.increment_custom_counter_for("Debate") }
   end
 
   def featured?
@@ -157,7 +157,7 @@ class Debate < ApplicationRecord
 
   def self.debates_orders(user)
     orders = %w{hot_score confidence_score created_at relevance}
-    orders << "recommendations" if Setting['feature.user.recommendations_on_debates'] && user&.recommended_debates
+    orders << "recommendations" if Setting["feature.user.recommendations_on_debates"] && user&.recommended_debates
     return orders
   end
 

@@ -16,7 +16,7 @@ gl:
         ignore_flags: Marcar como revisadas
         order: Orde
         orders:
-          flags: Máis denunciados
+          flags: Máis denunciadas
           newest: Máis novos
         title: Comentarios
     dashboard:
