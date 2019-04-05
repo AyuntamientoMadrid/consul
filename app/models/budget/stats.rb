@@ -3,14 +3,42 @@ class Budget::Stats
   alias_method :budget, :resource
 
   def self.stats_methods
-    super +
-      %i[total_participants_support_phase total_participants_vote_phase
-         total_budget_investments total_votes total_selected_investments
-         total_unfeasible_investments headings]
+    super + support_phase_methods + vote_phase_methods
+  end
+
+  def self.support_phase_methods
+    %i[total_participants_support_phase total_budget_investments
+       total_selected_investments total_unfeasible_investments headings]
+  end
+
+  def self.vote_phase_methods
+    %i[total_votes total_participants_vote_phase]
+  end
+
+  def stats_methods
+    base_stats_methods + participation_methods + phase_methods
+  end
+
+  def phases
+    %w[support vote].select { |phase| send("#{phase}_phase_finished?") }
+  end
+
+  def all_phases
+    return phases unless phases.many?
+
+    [*phases, "every"]
+  end
+
+  def support_phase_finished?
+    budget.valuating_or_later?
+  end
+
+  def vote_phase_finished?
+    budget.finished?
   end
 
   def participants
-    User.where(id: (authors + voters + balloters + poll_ballot_voters).uniq.compact)
+    User.where(id: phases.map { |phase| send("participant_ids_#{phase}_phase") }.flatten.uniq)
   end
 
   def total_participants
@@ -51,7 +79,7 @@ class Budget::Stats
     groups[:total][:total_investments_count] = groups.collect {|_k, v| v[:total_investments_count]}.sum
     groups[:total][:total_participants_support_phase] = groups.collect {|_k, v| v[:total_participants_support_phase]}.sum
     groups[:total][:total_participants_vote_phase] = groups.collect {|_k, v| v[:total_participants_vote_phase]}.sum
-    groups[:total][:total_participants_all_phase] = groups.collect {|_k, v| v[:total_participants_all_phase]}.sum
+    groups[:total][:total_participants_every_phase] = groups.collect {|_k, v| v[:total_participants_every_phase]}.sum
 
     budget.headings.each do |heading|
       groups[heading.id].merge!(calculate_heading_stats_with_totals(groups[heading.id], groups[:total], heading.population))
@@ -59,12 +87,24 @@ class Budget::Stats
 
     groups[:total][:percentage_participants_support_phase] = groups.collect {|_k, v| v[:percentage_participants_support_phase]}.sum
     groups[:total][:percentage_participants_vote_phase] = groups.collect {|_k, v| v[:percentage_participants_vote_phase]}.sum
-    groups[:total][:percentage_participants_all_phase] = groups.collect {|_k, v| v[:percentage_participants_all_phase]}.sum
+    groups[:total][:percentage_participants_every_phase] = groups.collect {|_k, v| v[:percentage_participants_every_phase]}.sum
 
     groups
   end
 
   private
+
+    def phase_methods
+      phases.map { |phase| self.class.send("#{phase}_phase_methods") }.flatten
+    end
+
+    def participant_ids_support_phase
+      (authors + voters).uniq
+    end
+
+    def participant_ids_vote_phase
+      (balloters + poll_ballot_voters).uniq
+    end
 
     def authors
       budget.investments.pluck(:author_id)
@@ -101,7 +141,7 @@ class Budget::Stats
         total_investments_count: heading.investments.count,
         total_participants_support_phase: voters_by_heading(heading).count,
         total_participants_vote_phase: balloters_by_heading(heading.id).count,
-        total_participants_all_phase: voters_and_balloters_by_heading(heading)
+        total_participants_every_phase: voters_and_balloters_by_heading(heading)
       }
     end
 
@@ -111,8 +151,8 @@ class Budget::Stats
         percentage_district_population_support_phase: population_percent(population, heading_totals[:total_participants_support_phase]),
         percentage_participants_vote_phase: participants_percent(heading_totals, groups_totals, :total_participants_vote_phase),
         percentage_district_population_vote_phase: population_percent(population, heading_totals[:total_participants_vote_phase]),
-        percentage_participants_all_phase: participants_percent(heading_totals, groups_totals, :total_participants_all_phase),
-        percentage_district_population_all_phase: population_percent(population, heading_totals[:total_participants_all_phase])
+        percentage_participants_every_phase: participants_percent(heading_totals, groups_totals, :total_participants_every_phase),
+        percentage_district_population_every_phase: population_percent(population, heading_totals[:total_participants_every_phase])
       }
     end
 
@@ -138,6 +178,6 @@ class Budget::Stats
     stats_cache :voters, :participants, :authors, :balloters, :poll_ballot_voters
 
     def stats_cache(key, &block)
-      Rails.cache.fetch("budgets_stats/#{budget.id}/#{key}/v14", &block)
+      Rails.cache.fetch("budgets_stats/#{budget.id}/#{phases.join}/#{key}/v14", &block)
     end
 end

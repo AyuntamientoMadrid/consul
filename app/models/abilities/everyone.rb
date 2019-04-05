@@ -23,7 +23,8 @@ module Abilities
       can [:read], Budget
       can [:read], Budget::Group
       can [:read, :print, :json_data], Budget::Investment
-      can [:read_results, :read_stats, :read_executions], Budget, phase: "finished"
+      can [:read_results, :read_executions], Budget, phase: "finished"
+      can(:read_stats, Budget) { |budget| budget.valuating_or_later? }
       can :new, DirectMessage
       can [:read, :debate, :draft_publication, :allegations, :result_publication,
            :proposals, :milestones], Legislation::Process, published: true
