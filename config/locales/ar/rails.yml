@@ -9,7 +9,7 @@ ar:
       - الجمعة
       - السبت
     abbr_month_names:
-      - 
+      -
       - يناير
       - فبراير
       - مارس
@@ -30,8 +30,12 @@ ar:
       - الخميس
       - الجمعة
       - السبت
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
     month_names:
-      - 
+      -
       - يناير
       - فبراير
       - مارس
@@ -45,6 +49,8 @@ ar:
       - نوفمبر
       - ديسمبر
   datetime:
+    distance_in_words:
+      half_a_minute: نصف دقيقة
     prompts:
       day: اليوم
       hour: الساعة
@@ -53,6 +59,7 @@ ar:
       second: ثواني
       year: السنة
   errors:
+    format: "%{attribute} %{message}"
     messages:
       accepted: يجب أن يكون مقبول
       blank: لا يمكن أن يكون فارغا
@@ -86,6 +93,30 @@ ar:
   number:
     human:
       decimal_units:
+      prompt: الرجاء تحديد
+    submit:
+      create: إنشاء %{model}
+      submit: حفظ %{model}
+      update: تحديث %{model}
+  number:
+    currency:
+      format:
+        delimiter: ","
+        format: "%u%n"
+        precision: 2
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "$"
+    format:
+      delimiter: ","
+      precision: 3
+      separator: "."
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
         units:
           billion: مليار
           million: مليون
@@ -100,6 +131,11 @@ ar:
         units:
           gb: غيغا بايت
           kb: كيلو بايت
+        format: "%n %u"
+        units:
+          gb: غيغا بايت
+          kb: كيلو بايت
+          mb: ميغابايت
           tb: تيرابايت
     percentage:
       format:

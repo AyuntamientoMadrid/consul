@@ -39,6 +39,14 @@ feature "Polls" do
       end
     end
 
+    scenario "Proposal polls won't be listed" do
+      proposal = create(:proposal)
+      _poll = create(:poll, related: proposal)
+
+      visit polls_path
+      expect(page).to have_content("There are no open votings")
+    end
+
     scenario "Filtering polls" do
       create(:poll, name: "Current poll")
       create(:poll, :expired, name: "Expired poll")
@@ -188,7 +196,6 @@ feature "Polls" do
       visit poll_path(poll)
 
       expect(page).to have_content("You must Sign in or Sign up to participate")
-
       expect(page).to have_link("Han Solo", href: new_user_session_path)
       expect(page).to have_link("Chewbacca", href: new_user_session_path)
     end
@@ -265,7 +272,6 @@ feature "Polls" do
 
       #Nvotes
       #expect(page).to have_selector(".booth-container")
-
       expect(page).to have_link("Han Solo")
       expect(page).to have_link("Chewbacca")
     end
@@ -280,7 +286,6 @@ feature "Polls" do
 
       #Nvotes
       #expect(page).to have_selector(".booth-container")
-
       expect(page).to have_link("Han Solo")
       expect(page).to have_link("Chewbacca")
     end
@@ -314,8 +319,6 @@ feature "Polls" do
 
       #Nvotes
       #expect(page).to have_selector(".booth-container")
-
-      expect(page).to have_link("Han Solo")
       expect(page).to have_link("Chewbacca")
     end
 

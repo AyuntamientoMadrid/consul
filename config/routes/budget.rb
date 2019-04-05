@@ -15,8 +15,8 @@ resources :budgets, only: [:show, :index] do
   end
 
   resource :results, only: :show, controller: "budgets/results"
-  resource :executions, only: :show, controller: 'budgets/executions'
+  resource :executions, only: :show, controller: "budgets/executions"
 end
 
-get 'investments/:id/json_data', action: :json_data, controller: 'budgets/investments'
-get '/budgets/:budget_id/investments/:id/json_data', action: :json_data, controller: 'budgets/investments'
+get "investments/:id/json_data", action: :json_data, controller: "budgets/investments"
+get "/budgets/:budget_id/investments/:id/json_data", action: :json_data, controller: "budgets/investments"

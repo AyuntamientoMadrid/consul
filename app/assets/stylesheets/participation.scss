@@ -319,7 +319,8 @@
 .legislation-process-edit,
 .milestone-new,
 .milestone-edit,
-.image-form {
+.image-form,
+.dashboard-action-form {
   @include direct-uploads;
 }
 
@@ -1464,7 +1465,6 @@
 }
 
 .progress-bar-nav {
-  padding: $line-height 0;
   position: relative;
   z-index: 3;
 

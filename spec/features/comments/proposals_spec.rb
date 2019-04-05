@@ -420,10 +420,6 @@ feature "Commenting proposals" do
       login_as(@manuela)
     end
 
-    after do
-      logout
-    end
-
     scenario "Show" do
       create(:vote, voter: @manuela, votable: @comment, vote_flag: true)
       create(:vote, voter: @pablo, votable: @comment, vote_flag: false)

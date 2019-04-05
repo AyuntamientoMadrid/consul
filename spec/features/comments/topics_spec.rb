@@ -470,10 +470,6 @@ feature "Commenting topics from proposals" do
       login_as(@manuela)
     end
 
-    after do
-      logout
-    end
-
     scenario "Show" do
       create(:vote, voter: @manuela, votable: @comment, vote_flag: true)
       create(:vote, voter: @pablo, votable: @comment, vote_flag: false)
@@ -1026,10 +1022,6 @@ feature "Commenting topics from budget investments" do
       login_as(@manuela)
     end
 
-    after do
-      logout
-    end
-
     scenario "Show" do
       create(:vote, voter: @manuela, votable: @comment, vote_flag: true)
       create(:vote, voter: @pablo, votable: @comment, vote_flag: false)
@@ -1080,11 +1072,11 @@ feature "Commenting topics from budget investments" do
         find(".against a").click
 
         within(".in_favor") do
-          expect(page).to have_content("0")
+          expect(page).to have_content "0"
         end
 
         within(".against") do
-          expect(page).to have_content("1")
+          expect(page).to have_content "1"
         end
 
         expect(page).to have_content("1 vote")

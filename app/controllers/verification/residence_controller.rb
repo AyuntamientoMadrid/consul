@@ -12,7 +12,7 @@ class Verification::ResidenceController < ApplicationController
     @residence = Verification::Residence.new(residence_params.merge(user: current_user))
     if @residence.save
       log_event("verification", "census")
-      redirect_to verified_user_path, notice: t('verification.residence.create.flash.success')
+      redirect_to verified_user_path, notice: t("verification.residence.create.flash.success")
     else
       render :new
     end

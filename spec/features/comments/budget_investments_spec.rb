@@ -418,6 +418,7 @@ feature "Commenting Budget::Investments" do
   end
 
   feature "Voting comments" do
+
     background do
       @manuela = create(:user, verified_at: Time.current)
       @pablo = create(:user)

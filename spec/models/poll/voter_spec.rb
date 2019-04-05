@@ -77,7 +77,6 @@ describe Poll::Voter do
 
     it "is not valid if the user has voted via web" do
       answer = create(:poll_answer)
-
       create(:poll_voter, :from_web, user: answer.author, poll: answer.poll)
 
       voter = build(:poll_voter, poll: answer.question.poll, user: answer.author)

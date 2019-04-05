@@ -197,7 +197,7 @@ feature "Proposals" do
 
       click_link "Print proposals"
 
-      expect(page).to have_selector('.js-order-selector[data-order="confidence_score"]')
+      expect(page).to have_selector(".js-order-selector[data-order='confidence_score']")
 
       within(".proposals-list") do
         expect(best_proposal.title).to appear_before(medium_proposal.title)
@@ -206,7 +206,7 @@ feature "Proposals" do
 
       select "newest", from: "order-selector"
 
-      expect(page).to have_selector('.js-order-selector[data-order="created_at"]')
+      expect(page).to have_selector(".js-order-selector[data-order='created_at']")
 
       expect(current_url).to include("order=created_at")
       expect(current_url).to include("page=1")

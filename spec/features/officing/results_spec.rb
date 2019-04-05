@@ -108,7 +108,7 @@ feature "Officing Results", :with_frozen_time do
 
     click_button "Save"
 
-    within("#results_#{partial_result.booth_assignment_id}_#{partial_result.date.strftime('%Y%m%d')}") do
+    within("#results_#{partial_result.booth_assignment_id}_#{partial_result.date.strftime("%Y%m%d")}") do
       expect(page).to have_content(I18n.l(partial_result.date, format: :long))
       expect(page).to have_content(partial_result.booth_assignment.booth.name)
       click_link "See results"

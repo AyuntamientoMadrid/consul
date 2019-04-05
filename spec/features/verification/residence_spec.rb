@@ -140,7 +140,8 @@ feature "Residence" do
 
     click_button "Verify residence"
 
-    expect(page).to have_content "In order to be verified, you must be registered in the municipality of Madrid"
+    expect(page).to have_content "In order to be verified, you must be registered in "\
+                                 "the municipality of Madrid"
   end
 
   scenario "Error on census" do

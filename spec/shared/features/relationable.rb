@@ -33,7 +33,7 @@ shared_examples "relationable" do |relationable_model_name|
     expect(page).to have_selector("#related_content", visible: true)
 
     within("#related_content") do
-      fill_in "url", with: "#{Setting['url'] + related1.url}"
+      fill_in "url", with: "#{Setting["url"] + related1.url}"
       click_button "Add"
     end
 

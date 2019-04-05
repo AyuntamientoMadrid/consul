@@ -4,7 +4,6 @@ gl:
       title: Condicións de uso
       subtitle: AVISO LEGAL DAS CONDICIÓNS DE USO, PRIVACIDADE E PROTECCIÓN DOS DATOS DE CARÁCTER PERSOAL DO PORTAL DE GOBERNO ABERTO
       description: Páxina de información sobre as condicións de uso, privacidade e protección de datos de carácter persoal.
-    general_terms: Termos e condicións
     help:
       title: "%{org} é unha plataforma de participación cidadá"
       guide: "Esta guía explica para que serven e como funcionan cada unha das seccións de %{org}."
@@ -70,27 +69,23 @@ gl:
       title: Política de privacidade
       subtitle: INFORMACIÓN RELACIONADA COA PRIVACIDADE DOS DATOS
       info_items:
-        - 
+        -
           text: A navegación a través da información dispoñible no Portal de Goberno Aberto é anónima.
-        - 
+        -
           text: Para poder usar os servizos ofrecidos no Portal de Goberno Aberto, o usuario debe rexistrarse e proporcionar datos de carácter persoal de acordo coas especificacións incluídas en cada tipo de rexistro.
-        - 
+        -
           text: 'Os datos proporcionados serán incorporados e procesados pola entidade local de acordo coas condicións estabelecidas no seguinte ficheiro:'
-        - 
+        -
           subitems:
-            - 
+            -
               field: 'Nome de ficheiro:'
               description: NOME DO FICHEIRO
-            - 
+            -
               field: 'Uso do ficheiro:'
               description: A xestión dos procesos participativos para controlar a cualificación das persoas que participan nel, basease en fontes numéricas e en recontos estatísticos dos resultados que se derivan dos procesos participativos.
-            - 
+            -
               field: 'Organismo responsable do ficheiro:'
               description: ORGANISMO RESPONSABLE DO FICHEIRO
-        - 
-          text: O interesado poderá exercer os dereitos de acceso, rectificación, cancelación e oposición ante o órgano responsable indicado, todo iso informado de conformidade co artigo 5 da Lei Orgánica 15/1999, de 13 de decembro, de protección de datos de carácter persoal.
-        - 
-          text: Como principio xeral, este sitio web non comparte nin divulga a información obtida, agás cando sexa autorizada polo usuario, ou a información fose requirida pola autoridade xudicial, fiscal, policía xudicial, ou calquera dos casos regulados no Artigo 11 da Lei Orgánica 15/1999, do 13 de decembro, de protección de datos de carácter persoal.
     accessibility:
       title: Accesibilidade
       description: |-
@@ -98,7 +93,7 @@ gl:
 
         Cando os sitios web son deseñados coa accesibilidade en mente, todos os usuarios poden acceder ao contido en condicións iguais, por exemplo:
       examples:
-        - Proporcionando un texto alternativo ás imaxes, os usuarios invidentes ou con problemas de visión, poden utilizar lectores especiais para acceder á información.
+        - Engadindo un texto alternativo ás imaxes, as persoas con dificultades visuais poden facer uso de lectores especiais para acceder á información.
         - Cando os vídeos inclúen subtítulos, os usuarios con problemas auditivos poden entendelos perfectamente.
         - Se os contidos se redactan nunha linguaxe sinxela e descritiva, os usuarios con problemas de aprendizaxe teñen máis facilidades para comprendelos.
         - Se o usuario ten problemas de mobilidade e de uso co rato, pode usar as axudas na navegación a través do teclado.
@@ -110,22 +105,22 @@ gl:
           key_header: Tecla
           page_header: Páxina
           rows:
-            - 
+            -
               key_column: 0
               page_column: Inicio
-            - 
+            -
               key_column: 1
               page_column: Debates
-            - 
+            -
               key_column: 2
               page_column: Propostas cidadás
-            - 
+            -
               key_column: 3
               page_column: Votos
-            - 
+            -
               key_column: 4
               page_column: Orzamentos participativos
-            - 
+            -
               key_column: 5
               page_column: Procesos lexislativos
         browser_table:
@@ -134,19 +129,19 @@ gl:
           browser_header: Navegador
           key_header: Atallo de teclado
           rows:
-            - 
+            -
               browser_column: Explorer
               key_column: ALT + atallo e INTRO
-            - 
+            -
               browser_column: Firefox
               key_column: ALT + MAIÚS + atallo
-            - 
+            -
               browser_column: Chrome
               key_column: ALT + atallo (CTRL + ALT + atallos en MAC)
-            - 
+            -
               browser_column: Safari
               key_column: ALT + atallo (CMD + atallo en MAC)
-            - 
+            -
               browser_column: Opera
               key_column: MAIÚS + ESC + atallo
       textsize:
@@ -156,33 +151,33 @@ gl:
           browser_header: Navegador
           action_header: Acción a realizar
           rows:
-            - 
+            -
               browser_column: Explorer
               action_column: Ver > Tamaño do texto
-            - 
+            -
               browser_column: Firefox
               action_column: Ver > Tamaño
-            - 
+            -
               browser_column: Chrome
               action_column: Axustes (icon) > Opcións > Avanzado > Contido web > Tamaño letra
-            - 
+            -
               browser_column: Safari
               action_column: Ver > Zoom in/Zoom out
-            - 
+            -
               browser_column: Opera
               action_column: Ver > escala
         browser_shortcuts_table:
           description: 'Outro xeito de modificar o tamaño da letra é usar un atallo de teclado propio dos navegadores, por exemplo:'
           rows:
-            - 
+            -
               shortcut_column: CTRL e + (CMD e + en MAC)
               description_column: Aumenta o tamaño de letra
-            - 
+            -
               shortcut_column: CTRL e - (CMD e - en MAC)
-              description_column: Reduce o tamaño de letra
+              description_column: Reduce o tamaño do texto
       compatibility:
         title: Compatibilidade cos estándares e o deseño visual
-        description_html: 'Todas as páxinas deste sitio web cumpren coa <strong> Guía de Accesibilidade </strong> ou os Principios Xerais do Deseño Accesible que son recomendados polo Grupo de Traballo <abbr title = "Web Accessibility Initiative" lang = "en"> WAI </ abbr> pertencente ao W3C.'
+        description_html: 'Todas as páxinas deste sitio web cumpren coa <strong>Guía de Accesibilidade</strong> ou os Principios Xerais do Deseño Accesible que son recomendados polo Grupo de Traballo <abbr title="Web Accessibility Initiative" lang="en"> WAI </abbr> pertencente ao W3C.'
     titles:
       accessibility: Accesibilidade
       conditions: Condicións de uso

@@ -4,8 +4,8 @@ class Valuator < ActiveRecord::Base
 
   delegate :name, :email, :name_and_email, to: :user
 
-  has_many :valuator_assignments, dependent: :destroy, class_name: 'Budget::ValuatorAssignment'
-  has_many :investments, through: :valuator_assignments, class_name: 'Budget::Investment'
+  has_many :valuator_assignments, dependent: :destroy, class_name: "Budget::ValuatorAssignment"
+  has_many :investments, through: :valuator_assignments, class_name: "Budget::Investment"
 
   validates :user_id, presence: true, uniqueness: true
 

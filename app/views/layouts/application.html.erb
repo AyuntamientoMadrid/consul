@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>" data-current-user-id="<%= current_user.try(:id) %>">
   <head>
-    <%= render "layouts/common_head", default_title: setting['org_name'] %>
+    <%= render "layouts/common_head", default_title: setting["org_name"] %>
     <%= render "layouts/tracking_data" %>
     <%= render "layouts/meta_tags" %>
     <%= content_for :canonical %>
@@ -19,19 +19,19 @@
   <body class="<%= yield (:body_class) %>">
     <%= setting["html.per_page_code_body"].try(:html_safe) %>
 
-    <h1 class="show-for-sr"><%= setting['org_name'] %></h1>
+    <h1 class="show-for-sr"><%= setting["org_name"] %></h1>
 
     <div class="wrapper <%= yield (:wrapper_class) %>">
-      <%= render 'layouts/header' %>
-      <%= render 'layouts/ie_version_too_old' %>
-      <%= render 'layouts/flash' %>
+      <%= render partial: "layouts/header", locals: { with_subnavigation: true } %>
+      <%= render "layouts/ie_version_too_old" %>
+      <%= render "layouts/flash" %>
 
       <%= yield %>
 
       <div class="push"></div>
     </div>
     <div class="footer">
-      <%= render 'layouts/footer' %>
+      <%= render "layouts/footer" %>
     </div>
     <span id="analytics">
       <%= render "layouts/analytics" %>

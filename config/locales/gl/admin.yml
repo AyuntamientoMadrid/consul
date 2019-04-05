@@ -443,7 +443,7 @@ gl:
         index:
           create: Novo proceso
           delete: Borrar
-          title: Proceso de lexislación colaborativa
+          title: Procesos lexislativos
           filters:
             open: Abertas
             all: Todo
@@ -1470,7 +1470,7 @@ gl:
       title: Páxina principal
       description: Os módulos activos aparecerán na páxina principal na mesma orde que aquí.
       header_title: Cabeceira
-      no_header: Non hai cabeceira.
+      no_header: Non hai cabeceiras.
       create_header: Crear cabeceira
       cards_title: Tarxetas
       create_card: Crear tarxeta

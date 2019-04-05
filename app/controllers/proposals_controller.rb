@@ -18,7 +18,7 @@ class ProposalsController < ApplicationController
   invisible_captcha only: [:create, :update], honeypot: :subtitle
 
   has_orders ->(c) { Proposal.proposals_orders(c.current_user) }, only: :index
-  has_orders %w{most_voted newest oldest}, only: :show
+  has_orders %w[most_voted newest oldest], only: :show
 
   load_and_authorize_resource
   helper_method :resource_model, :resource_name
@@ -29,9 +29,12 @@ class ProposalsController < ApplicationController
     @notifications = @proposal.notifications.not_moderated
     load_rank
     @document = Document.new(documentable: @proposal)
-    @related_contents = Kaminari.paginate_array(@proposal.relationed_contents).page(params[:page]).per(5)
+    @related_contents = Kaminari.paginate_array(@proposal.relationed_contents)
+                                .page(params[:page]).per(5)
 
-    redirect_to proposal_path(@proposal), status: :moved_permanently if request.path != proposal_path(@proposal)
+    if request.path != proposal_path(@proposal)
+      redirect_to proposal_path(@proposal), status: :moved_permanently
+    end
   end
 
   def create
@@ -39,14 +42,18 @@ class ProposalsController < ApplicationController
 
     if @proposal.save
       log_event("proposal", "create")
-      redirect_to share_proposal_path(@proposal), notice: I18n.t('flash.actions.create.proposal')
+      redirect_to created_proposal_path(@proposal), notice: I18n.t("flash.actions.create.proposal")
     else
       render :new
     end
   end
 
+  def created
+  end
+
   def index_customization
     hide_proceedings
+    discard_draft
     discard_archived
     load_retired
     hide_advanced_search if custom_search?
@@ -54,7 +61,7 @@ class ProposalsController < ApplicationController
   end
 
   def vote
-    @proposal.register_vote(current_user, 'yes')
+    @proposal.register_vote(current_user, "yes")
     set_proposal_votes(@proposal)
     load_rank
     log_event("proposal", 'support', @proposal.id, @proposal_rank, 6, @proposal_rank)
@@ -69,7 +76,7 @@ class ProposalsController < ApplicationController
 
   def retire
     if valid_retired_params? && @proposal.update(retired_params.merge(retired_at: Time.current))
-      redirect_to proposal_path(@proposal), notice: t('proposals.notice.retired')
+      redirect_to proposal_path(@proposal), notice: t("proposals.notice.retired")
     else
       render action: :retire_form
     end
@@ -82,7 +89,7 @@ class ProposalsController < ApplicationController
   end
 
   def vote_featured
-    @proposal.register_vote(current_user, 'yes')
+    @proposal.register_vote(current_user, "yes")
     set_featured_proposal_votes(@proposal)
   end
 
@@ -99,19 +106,26 @@ class ProposalsController < ApplicationController
 
   def disable_recommendations
     if current_user.update(recommended_proposals: false)
-      redirect_to proposals_path, notice: t('proposals.index.recommendations.actions.success')
+      redirect_to proposals_path, notice: t("proposals.index.recommendations.actions.success")
     else
-      redirect_to proposals_path, error: t('proposals.index.recommendations.actions.error')
+      redirect_to proposals_path, error: t("proposals.index.recommendations.actions.error")
     end
+  end
+
+  def publish
+    @proposal.publish
+    redirect_to share_proposal_path(@proposal), notice: t("proposals.notice.published")
   end
 
   private
 
     def proposal_params
       params.require(:proposal).permit(:title, :summary, :description, :video_url,
-                                       :responsible_name, :tag_list, :terms_of_service, :geozone_id, :proceeding, :sub_proceeding, :skip_map,
+                                       :responsible_name, :tag_list, :terms_of_service,
+                                       :geozone_id, :proceeding, :sub_proceeding, :skip_map,
                                        image_attributes: image_attributes,
-                                       documents_attributes: [:id, :title, :attachment, :cached_attachment, :user_id, :_destroy],
+                                       documents_attributes: [:id, :title, :attachment,
+                                       :cached_attachment, :user_id, :_destroy],
                                        map_location_attributes: [:latitude, :longitude, :zoom])
     end
 
@@ -120,8 +134,8 @@ class ProposalsController < ApplicationController
     end
 
     def valid_retired_params?
-      @proposal.errors.add(:retired_reason, I18n.t('errors.messages.blank')) if params[:proposal][:retired_reason].blank?
-      @proposal.errors.add(:retired_explanation, I18n.t('errors.messages.blank')) if params[:proposal][:retired_explanation].blank?
+      @proposal.errors.add(:retired_reason, I18n.t("errors.messages.blank")) if params[:proposal][:retired_reason].blank?
+      @proposal.errors.add(:retired_explanation, I18n.t("errors.messages.blank")) if params[:proposal][:retired_explanation].blank?
       @proposal.errors.empty?
     end
 
@@ -133,6 +147,10 @@ class ProposalsController < ApplicationController
       @featured_proposals_votes = current_user ? current_user.proposal_votes(proposals) : {}
     end
 
+    def discard_draft
+      @resources = @resources.published
+    end
+
     def discard_archived
       @resources = @resources.not_archived unless @current_order == "archival_date"
     end
@@ -142,13 +160,13 @@ class ProposalsController < ApplicationController
         @resources = @resources.retired
         @resources = @resources.where(retired_reason: params[:retired]) if Proposal::RETIRE_OPTIONS.include?(params[:retired])
       else
-      @resources = @resources.not_retired
+        @resources = @resources.not_retired
       end
     end
 
     def load_featured
       return unless !@advanced_search_terms && @search_terms.blank? && @tag_filter.blank? && params[:retired].blank? && @current_order != "recommendations"
-      if Setting['feature.featured_proposals']
+      if Setting["feature.featured_proposals"]
         @featured_proposals = Proposal.not_archived.not_proceedings.unsuccessful
                               .sort_by_confidence_score.limit(Setting['featured_proposals_number'])
 
@@ -187,7 +205,7 @@ class ProposalsController < ApplicationController
     end
 
     def proposals_recommendations
-      if Setting['feature.user.recommendations_on_proposals'] && current_user.recommended_proposals
+      if Setting["feature.user.recommendations_on_proposals"] && current_user.recommended_proposals
         @recommended_proposals = Proposal.recommendations(current_user).sort_by_random.limit(3)
       end
     end

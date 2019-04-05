@@ -284,16 +284,16 @@ feature "Emails" do
       expect(email).to have_body_text(notification1.notifiable.body)
       expect(email).to have_body_text(proposal1.author.name)
 
-      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: 'tab-notifications')}/)
-      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: 'comments')}/)
-      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: 'social-share')}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: "tab-notifications")}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: "comments")}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal1, anchor: "social-share")}/)
 
       expect(email).to have_body_text(proposal2.title)
       expect(email).to have_body_text(notification2.notifiable.title)
       expect(email).to have_body_text(notification2.notifiable.body)
-      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: 'tab-notifications')}/)
-      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: 'comments')}/)
-      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: 'social-share')}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: "tab-notifications")}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: "comments")}/)
+      expect(email).to have_body_text(/#{proposal_path(proposal2, anchor: "social-share")}/)
       expect(email).to have_body_text(proposal2.author.name)
 
       expect(email).not_to have_body_text(proposal3.title)

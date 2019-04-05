@@ -19,8 +19,8 @@ class Verification::Residence
   validate :redeemable_code_is_redeemable
 
   def initialize(attrs = {})
-    self.date_of_birth = parse_date('date_of_birth', attrs)
-    attrs = remove_date('date_of_birth', attrs)
+    self.date_of_birth = parse_date("date_of_birth", attrs)
+    attrs = remove_date("date_of_birth", attrs)
     super
     self.redeemable_code ||= self.user.try(:redeemable_code)
     clean_document_number
@@ -53,7 +53,7 @@ class Verification::Residence
   end
 
   def document_number_uniqueness
-    errors.add(:document_number, I18n.t('errors.messages.taken')) if User.active.where(document_number: document_number).any?
+    errors.add(:document_number, I18n.t("errors.messages.taken")) if User.active.where(document_number: document_number).any?
   end
 
   def redeemable_code_is_redeemable

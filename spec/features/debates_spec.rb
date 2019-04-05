@@ -296,15 +296,15 @@ feature "Debates" do
 
     visit new_debate_path
     fill_in "debate_title", with: "Testing an attack"
-    fill_in "debate_description", with: '<p>This is <script>alert("an attack");</script></p>'
+    fill_in "debate_description", with: "<p>This is <script>alert('an attack');</script></p>"
     check "debate_terms_of_service"
 
     click_button "Start a debate"
 
     expect(page).to have_content "Debate created successfully."
     expect(page).to have_content "Testing an attack"
-    expect(page.html).to include '<p>This is alert("an attack");</p>'
-    expect(page.html).not_to include '<script>alert("an attack");</script>'
+    expect(page.html).to include "<p>This is alert('an attack');</p>"
+    expect(page.html).not_to include "<script>alert('an attack');</script>"
     expect(page.html).not_to include "&lt;p&gt;This is"
   end
 
@@ -979,8 +979,8 @@ feature "Debates" do
 
           within "#js-advanced-search" do
             expect(page).to have_select("advanced_search[date_min]", selected: "Customized")
-            expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime('%d/%m/%Y')}']")
-            expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime('%d/%m/%Y')}']")
+            expect(page).to have_selector("input[name='advanced_search[date_min]'][value*='#{7.days.ago.strftime("%d/%m/%Y")}']")
+            expect(page).to have_selector("input[name='advanced_search[date_max]'][value*='#{1.day.ago.strftime("%d/%m/%Y")}']")
           end
         end
 
@@ -1027,7 +1027,7 @@ feature "Debates" do
 
     scenario "Reorder by recommendations results maintaing search" do
       Setting["feature.user.recommendations"] = true
-      Setting["feature.user.recommendations_for_debates"] = true
+      Setting["feature.user.recommendations_on_debates"] = true
 
       user = create(:user, recommended_debates: true)
       login_as(user)
@@ -1053,7 +1053,7 @@ feature "Debates" do
       end
 
       Setting["feature.user.recommendations"] = nil
-      Setting["feature.user.recommendations_for_debates"] = nil
+      Setting["feature.user.recommendations_on_debates"] = nil
     end
 
     scenario "After a search do not show featured debates" do
@@ -1173,8 +1173,11 @@ feature "Debates" do
 
       visit new_debate_path
       fill_in "debate_title", with: "debate"
+      check "debate_terms_of_service"
 
-      expect(page).to have_content "You are seeing 5 of 6 debates containing the term 'debate'"
+      within("div#js-suggest") do
+        expect(page).to have_content "You are seeing 5 of 6 debates containing the term 'debate'"
+      end
     end
 
     scenario "No found suggestions", :js do
@@ -1188,7 +1191,9 @@ feature "Debates" do
       fill_in "debate_title", with: "proposal"
       check "debate_terms_of_service"
 
-      expect(page).not_to have_content "You are seeing"
+      within("div#js-suggest") do
+        expect(page).not_to have_content "You are seeing"
+      end
     end
   end
 
