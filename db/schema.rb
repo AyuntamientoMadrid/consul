@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190307165337) do
+ActiveRecord::Schema.define(version: 20190408133956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1531,6 +1531,15 @@ ActiveRecord::Schema.define(version: 20190307165337) do
 
   add_index "stats", ["namespace", "group"], name: "index_stats_on_namespace_and_group", using: :btree
   add_index "stats", ["namespace"], name: "index_stats_on_namespace", using: :btree
+
+  create_table "stats_versions", force: :cascade do |t|
+    t.integer  "process_id"
+    t.string   "process_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "stats_versions", ["process_type", "process_id"], name: "index_stats_versions_on_process_type_and_process_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
