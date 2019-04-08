@@ -2,6 +2,7 @@ class Budget < ActiveRecord::Base
 
   include Measurable
   include Sluggable
+  include StatsVersionable
 
   translates :name, touch: true
   include Globalizable

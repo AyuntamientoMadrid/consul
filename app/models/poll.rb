@@ -7,6 +7,7 @@ class Poll < ActiveRecord::Base
   include ActsAsParanoidAliases
   include Notifiable
   include Sluggable
+  include StatsVersionable
 
   translates :name,        touch: true
   translates :summary,     touch: true
