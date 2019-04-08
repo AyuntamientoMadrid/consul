@@ -31,6 +31,10 @@ every 29.minutes do
   rake "-s budgets:stats:balloting"
 end
 
+every 2.hours do
+  rake "-s stats:generate"
+end
+
 every 1.day, at: '4:00 am', roles: [:cron] do
   rake "csv:export"
 end
