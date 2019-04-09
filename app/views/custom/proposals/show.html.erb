@@ -75,9 +75,9 @@
           <h2><%= t("votes.supports") %></h2>
           <div id="<%= dom_id(@proposal) %>_votes">
             <% if @proposal.draft? %>
-                <div class="callout primary">
-                  <p class=text-center><strong><%= t("proposals.show.draft") %></strong></p>
-                </div>
+              <div class="callout primary">
+                <p class="small"><%= t("proposals.show.draft") %></p>
+              </div>
             <% elsif @proposal.successful? %>
               <p>
                 <%= t("proposals.proposal.successful") %>
