@@ -101,6 +101,10 @@ class Poll::Stats
     end
   end
 
+  def total_no_demographic_data
+    super + total_unregistered_booth
+  end
+
   private
 
     def participant_ids
@@ -113,6 +117,14 @@ class Poll::Stats
 
     def recounts
       @recounts ||= poll.recounts
+    end
+
+    def total_registered_booth
+      voters.where(origin: "booth").count
+    end
+
+    def total_unregistered_booth
+      [total_participants_booth - total_registered_booth, 0].max
     end
 
     stats_cache(*stats_methods)
