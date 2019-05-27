@@ -61,7 +61,7 @@ gem "wkhtmltopdf-binary", "~> 0.12.4"
 
 source "https://rails-assets.org" do
   gem "rails-assets-leaflet"
-  gem "rails-assets-markdown-it", "~> 8.2.1"
+  gem "rails-assets-markdown-it", "~> 8.4.2"
 end
 
 group :development, :test do
