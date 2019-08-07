@@ -194,6 +194,7 @@ en:
           undecided: Undecided
           unfeasible: Unfeasible
           min_total_supports: Minimum supports
+          max_total_supports: Maximum supports
           winners: Winners
           valuation_open: Open
           one_filter_html: "Current applied filters: <b><em>%{filter}</em></b>"
