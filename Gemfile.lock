@@ -348,7 +348,7 @@ GEM
     powerpack (0.1.2)
     public_suffix (3.0.3)
     puma (3.12.1)
-    rack (2.0.6)
+    rack (2.1.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-attack (5.0.1)
