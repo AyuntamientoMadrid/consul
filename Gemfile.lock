@@ -382,7 +382,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (3.0.0)
     raindrops (0.19.0)
-    rake (12.3.2)
+    rake (12.3.3)
     recaptcha (4.14.0)
       json
     recipient_interceptor (0.2.0)
