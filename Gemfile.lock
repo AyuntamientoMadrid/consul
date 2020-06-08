@@ -197,7 +197,7 @@ GEM
       activesupport (>= 4.1)
       railties (>= 4.1)
       tzinfo (~> 1.2, >= 1.2.2)
-    geocoder (1.4.5)
+    geocoder (1.6.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     globalize (5.2.0)
@@ -524,8 +524,8 @@ GEM
     wicked_pdf (1.1.0)
     wkhtmltopdf-binary (0.12.4)
     xpath (3.0.0)
-      nokogiri (~> 1.8)
       activesupport
+      nokogiri (~> 1.8)
 
 PLATFORMS
   ruby
