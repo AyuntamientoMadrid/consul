@@ -4,6 +4,9 @@ en:
       verification:
         residence: "Residence"
         sms: "SMS"
+      moderated_texts/import:
+        one: Text for automatic moderation import
+        other: Texts for automatic moderation imports
     attributes:
       verification:
         residence:
@@ -20,3 +23,12 @@ en:
         document_type: "Document type"
         document_number: "Document number (including letters)"
         year_of_birth: "Year born"
+      moderated_texts/import:
+        file: File
+    errors:
+      models:
+        moderated_texts/import:
+          attributes:
+            file:
+              extension: "The file you're trying to upload is invalid. It must be in %{valid_extensions} format."
+              headers: "The headers for the file you're trying to upload are invalid. They must have the following names: %{required_headers}."

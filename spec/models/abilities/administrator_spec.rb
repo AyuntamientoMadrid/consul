@@ -95,4 +95,7 @@ describe Abilities::Administrator do
 
   it { is_expected.to be_able_to :manage, Dashboard::AdministratorTask }
   it { is_expected.to be_able_to :manage, dashboard_administrator_task }
+
+  it { is_expected.to be_able_to :manage, ModeratedText }
+  it { is_expected.to be_able_to :create, ModeratedTexts::Import }
 end

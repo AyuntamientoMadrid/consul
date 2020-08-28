@@ -104,7 +104,7 @@ class Budget
     before_validation :set_denormalized_ids
 
     def comments_count
-      comments.count
+      comments.filtered.count
     end
 
     def url

@@ -29,6 +29,7 @@ en:
         topic: "Topic updated successfully."
         valuator_group: "Valuator group updated successfully"
         translation: "Translation updated successfully"
+        comment: "Comment updated successfully"
       destroy:
         budget_investment: "Investment project deleted succesfully."
         error: "Could not delete"

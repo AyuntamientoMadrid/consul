@@ -1,0 +1,18 @@
+<div class="row comments">
+  <div id="comments" class="small-12 column">
+    <%= back_link_to user_path(current_user, filter: "comments") %>
+
+    <div class="callout alert margin-top">
+      <p>
+        <%= t("users.comments.edit.info_message_html",
+            words: @comment.moderated_texts.map(&:text).join(", ")) %>
+      </p>
+    </div>
+
+    <%= render "form", {
+      commentable: @comment.commentable,
+      parent_id: nil,
+      toggeable: false
+    } %>
+  </div>
+</div>

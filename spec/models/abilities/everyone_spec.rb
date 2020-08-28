@@ -29,6 +29,8 @@ describe Abilities::Everyone do
   it { should be_able_to(:index, Budget) }
 
   it { should_not be_able_to(:manage, Dashboard::Action) }
+  it { should_not be_able_to :manage, ModeratedText }
+  it { should_not be_able_to :create, ModeratedTexts::Import }
 
   context "when accessing poll results" do
     let(:results_enabled) { true }

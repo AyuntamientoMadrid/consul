@@ -47,6 +47,7 @@ en:
       author: Author
       deleted: This comment has been deleted
       moderator: Moderator
+      moderated_html: This comment won't be shown next time this page is reloaded as it has been deemed offensive. You can edit it by accessing the <a href="%{link}">My Content</a> section
       responses:
         one: 1 response
         other: "%{count} responses"
@@ -198,6 +199,7 @@ en:
     document: Document
     topic: Topic
     image: Image
+    comment: Comment
   geozones:
     none: All city
   layouts:
@@ -842,6 +844,9 @@ en:
       debates: Debates
       budget_investments: Budget investments
       comments: Comments
+      labels:
+        pending_moderated: Pending moderated
+        confirmed_moderation: Moderated
       actions: Actions
       filters:
         comments:
@@ -871,6 +876,11 @@ en:
       see: "See proposal"
       actions: Actions
       retired_help_text: Dashboard not available for retired proposals
+    comments:
+      edit:
+        info_message_html: "This comment contains the following words, which are labeled as offensive, and thus, making your comment non-visible to the public: <strong>%{words}</strong>"
+        header: Comment
+        button: Amend comment
   votes:
     agree: I agree
     anonymous: Too many anonymous votes to admit vote %{verify_account}.

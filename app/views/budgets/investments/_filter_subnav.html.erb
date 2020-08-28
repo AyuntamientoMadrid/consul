@@ -9,7 +9,7 @@
     <%= link_to "#tab-comments" do %>
       <h3>
         <%= t("budgets.investments.show.comments_tab") %>
-        <span class="js-comments-count">(<%= @investment.comments_count %>)</span>
+        <span class="js-comments-count">(<%= @investment.comments.filtered.count %>)</span>
       </h3>
     <% end %>
   </li>

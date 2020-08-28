@@ -67,6 +67,13 @@
               <%= l comment.created_at.to_datetime, format: :datetime %>
             <% end %>
           </span>
+
+          <% if comment.is_offensive == true %>
+            &nbsp;&bull;&nbsp;
+            <span class="label alert">
+              <%= t("comments.comment.moderated_html", link: user_path(comment.author, filter: "comments")) %>
+            </span>
+          <% end %>
         </div>
 
         <div class="comment-user

@@ -14,7 +14,9 @@ class Admin::SystemEmailsController < Admin::BaseController
       direct_message_for_receiver:  %w[view edit_info],
       direct_message_for_sender:    %w[view edit_info],
       email_verification:           %w[view edit_info],
-      user_invite:                  %w[view edit_info]
+      user_invite:                  %w[view edit_info],
+      confirmed_moderation:         %w[view edit_info],
+      declined_moderation:          %w[view edit_info]
     }
   end
 
@@ -34,6 +36,8 @@ class Admin::SystemEmailsController < Admin::BaseController
       load_sample_user
     when "user_invite"
       @subject = t("mailers.user_invite.subject", org_name: Setting["org_name"])
+    when /_moderation\z/
+      load_sample_moderable
     end
   end
 
@@ -108,6 +112,15 @@ class Admin::SystemEmailsController < Admin::BaseController
                                           title: t("admin.system_emails.message_title"),
                                           body: t("admin.system_emails.message_body"))
       @subject = t("mailers.#{@system_email}.subject")
+    end
+
+    def load_sample_moderable
+      if ModeratedContent.any?
+        @moderable = ModeratedContent.where(moderable_type: 'Comment').sample
+        @subject   = t("mailers.moderable.#{@system_email}_subject", moderable: t("mailers.moderable.resource.#{@moderable.moderable_type.downcase}"))
+      else
+        redirect_to admin_system_emails_path, alert: t("admin.system_emails.alert.no_moderations")
+      end
     end
 
     def commentable_name

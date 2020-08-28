@@ -11,6 +11,8 @@ module CommentsHelper
   def leave_comment_text(commentable, parent_id=nil)
     if commentable.class == Legislation::Question
       t("legislation.questions.comments.form.leave_comment")
+    elsif controller_name == "users" && action_name == "edit_comment"
+      t("users.comments.edit.header")
     else
       comment_kind = find_comment_kind(commentable)
       if parent_id.present?
@@ -28,6 +30,8 @@ module CommentsHelper
   def comment_button_text(parent_id, commentable)
     if commentable.class == Legislation::Question
       parent_id.present? ? t("comments_helper.reply_button") : t("legislation.questions.comments.comment_button")
+    elsif controller_name == "comments" && action_name == "edit"
+      t("users.comments.edit.button")
     else
       comment_kind = find_comment_kind(commentable)
       parent_id.present?  ? t("#{comment_kind.pluralize}_helper.reply_button") : t("#{comment_kind.pluralize}_helper.comment_button")

@@ -16,4 +16,18 @@ describe AdminHelper do
 
   end
 
+  describe "#moderated_date" do
+    it "returns declined_at with format datetime when moderated_content is declined" do
+      moderated_content = create(:moderated_content, :declined)
+
+      expect(moderated_date(moderated_content.comment)).to eq(I18n.l(moderated_content.declined_at, format: :datetime))
+    end
+
+    it "returns confirmed_at with format datetime when moderated_content is confirmed" do
+      moderated_content = create(:moderated_content, :confirmed)
+
+      expect(moderated_date(moderated_content.comment)).to eq(I18n.l(moderated_content.confirmed_at, format: :datetime))
+    end
+  end
+
 end

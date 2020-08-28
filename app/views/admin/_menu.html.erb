@@ -134,6 +134,14 @@
         <strong><%= t("admin.menu.title_moderated_content") %></strong>
       </a>
       <ul <%= "class=is-active" if menu_moderated_content? %>>
+        <li <%= "class=is-active" if moderated_texts_section? %>>
+          <%= link_to t("admin.menu.moderated_texts"), admin_moderated_texts_path %>
+        </li>
+
+        <li <%= "class=is-active" if controller_name == "auto_moderated_content" %>>
+          <%= link_to t("admin.menu.auto_moderated_content"), admin_auto_moderated_content_index_path %>
+        </li>
+
         <% if feature?(:proposals) %>
           <li <%= "class=is-active" if controller_name == "hidden_proposals" %>>
             <%= link_to t("admin.menu.hidden_proposals"), admin_hidden_proposals_path %>

@@ -162,6 +162,8 @@ ignore_unused:
   - "admin.homepage.*"
   - "admin.dashboard.administrator_tasks.index.filter*"
   - "admin.dashboard.actions.index.default.*"
+  - "admin.moderated_texts.*.submit_button"
+  - "admin.auto_moderated_content.index.*"
   - "moderation.comments.index.filter*"
   - "moderation.comments.index.order*"
   - "moderation.debates.index.filter*"

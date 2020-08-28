@@ -538,4 +538,34 @@ describe "Emails" do
     end
 
   end
+
+  context "Automated moderation" do
+    let(:user) { create(:user) }
+    let(:admin) { create(:administrator) }
+    let(:vulgar) { create(:moderated_text, text: "vulgar") }
+    let!(:comment) { create(:comment, body: "vulgar comment", author: user) }
+    let!(:offense) { create(:moderated_content, moderable: comment, moderated_text: vulgar) }
+
+    before do
+      login_as(admin.user)
+      visit admin_auto_moderated_content_index_path
+      expect(page).to have_content("vulgar comment")
+    end
+
+    it "sends email when moderation is declined" do
+      click_link "Show again"
+
+      email = open_last_email
+      expect(email).to have_subject("Your comment has been deemed not offensive to the community.")
+      expect(email).to deliver_to(comment.author)
+    end
+
+    it "sends email when moderation is approved" do
+      click_link "Confirm moderation"
+
+      email = open_last_email
+      expect(email).to have_subject("Your comment has been deemed offensive to the community.")
+      expect(email).to deliver_to(comment.author)
+    end
+  end
 end

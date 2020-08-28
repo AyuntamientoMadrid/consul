@@ -62,7 +62,10 @@ class UsersController < ApplicationController
     end
 
     def load_comments
-      @comments = only_active_commentables.includes(:commentable).order(created_at: :desc).page(params[:page])
+      @comments = only_active_commentables
+        .includes(:commentable, :moderated_contents)
+        .order(created_at: :desc)
+        .page(params[:page])
     end
 
     def load_budget_investments

@@ -124,6 +124,34 @@ class Mailer < ApplicationMailer
     mail(to: @email_to, from: @newsletter.from, subject: @newsletter.subject)
   end
 
+  def confirmed_moderation(moderable)
+    @moderable = moderable
+    @author = moderable.author
+    @email_to = @author.email
+
+    with_user(@author) do
+      mail(to: @email_to,
+        subject: t("mailers.moderable.confirmed_moderation_subject",
+          moderable: t("mailers.moderable.resource.#{@moderable.class.to_s.downcase}")
+        )
+      )
+    end
+  end
+
+  def declined_moderation(moderable)
+    @moderable = moderable
+    @author = moderable.author
+    @email_to = @author.email
+
+    with_user(@author) do
+      mail(to: @email_to,
+        subject: t("mailers.moderable.declined_moderation_subject",
+          moderable: t("mailers.moderable.resource.#{@moderable.class.to_s.downcase}")
+        )
+      )
+    end
+  end
+
   private
 
   def with_user(user, &block)

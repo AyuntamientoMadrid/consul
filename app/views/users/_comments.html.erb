@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th scope="col"><%= t("users.show.comments") %></th>
+      <th class="text-right"><%= t("users.show.actions") %></th>
     </tr>
   </thead>
   <tbody>
@@ -10,7 +11,14 @@
         <td>
           <%= comment_commentable_title(comment) %>
           <br>
+          <% if is_moderated?(comment) %>
+            <span class="label <%= moderated_label_class(comment) %>"><%= moderated_label_text(comment) %></span>
+          <% end %>
           <%= comment.body %>
+        </td>
+        <td class="text-right">
+          <%= link_to t("shared.edit"),
+                      edit_comment_path(comment) if current_user.present? && current_user.can?(:edit, comment) %>
         </td>
       </tr>
     <% end %>

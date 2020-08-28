@@ -28,7 +28,7 @@
             <p class="proposal-info">
               <span class="icon-comments"></span>&nbsp;
               <%= link_to t("proposals.proposal.comments",
-                          count: proposal.comments_count),
+                          count: proposal.comments.filtered.count),
                           namespaced_proposal_path(proposal,
                           anchor: "comments") %>
 

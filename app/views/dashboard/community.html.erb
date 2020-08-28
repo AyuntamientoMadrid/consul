@@ -37,7 +37,7 @@
   <div class="small-12 large-1 column community-totals">
     <span class="icon-comments"></span>
     <span class="community-number">
-      <%= number_with_delimiter(proposal.community.comments_count, delimiter: ".") %>
+      <%= number_with_delimiter(proposal.community.comments.filtered.count, delimiter: ".") %>
     </span>
     <p class="community-info">
       <%= t("dashboard.community.comments") %>

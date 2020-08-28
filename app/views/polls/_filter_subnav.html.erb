@@ -5,7 +5,7 @@
         <%= link_to "#tab-comments" do %>
           <h3>
             <%= t("polls.show.comments_tab") %>
-            <span class="js-comments-count">(<%= @poll.comments_count %>)</span>
+            <span class="js-comments-count">(<%= @poll.comments.filtered.count %>)</span>
           </h3>
         <% end %>
       </li>

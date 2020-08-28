@@ -6,7 +6,7 @@
 
     <p class="topic-info">
       <span class="icon-comments"></span>&nbsp;
-      <%= link_to t("community.show.topic.comments", count: topic.comments_count), community_topic_path(@community, topic, anchor: "comments") %>
+      <%= link_to t("community.show.topic.comments", count: topic.comments.filtered.count), community_topic_path(@community, topic, anchor: "comments") %>
       <span class="bullet">&nbsp;&bull;&nbsp;</span>
       <%= I18n.l topic.created_at.to_date %>
       <span class="bullet">&nbsp;&bull;&nbsp;</span>

@@ -8,7 +8,7 @@ module QuestionsHelper
 
   def comment_count(resource)
     comment_kind = find_comment_kind(resource)
-    t("debates.show.#{comment_kind.pluralize}", count: resource.comments_count)
+    t("debates.show.#{comment_kind.pluralize}", count: resource.comments.filtered.count)
   end
 
   def comment_title

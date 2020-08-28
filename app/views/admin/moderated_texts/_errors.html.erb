@@ -1,0 +1,14 @@
+<% if @word.errors.any? %>
+
+  <div id="error_explanation" data-alert class="callout alert" data-closable>
+    <button class="close-button" aria-label="<%= t("application.close") %>" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <strong>
+      <%= @word.errors.count %>
+      <%= t("admin.moderated_texts.errors.form.error", count: @word.errors.count) %>
+    </strong>
+  </div>
+
+<% end %>

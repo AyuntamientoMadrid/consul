@@ -658,6 +658,62 @@ en:
         delete: Delete
       search:
         title: 'Managers: User search'
+    moderated_texts:
+      index:
+        title: Text for automatic moderation
+        create: Create new text
+        import_csv: Import CSV
+        text: Text
+        detected_occurrences: Detected occurrences
+        no_texts: There are no moderated words
+      new:
+        title: New text
+        submit_button: Create text
+      create:
+        notice: Text created successfully
+      edit:
+        title: Edit moderated word
+        submit_button: Modify word
+      update:
+        notice: Word modified successfully
+        error: An error has ocurred while modifying this word. Please, try again
+      destroy:
+        alert: This action will delete this word.
+        notice: Word successfully deleted.
+      imports:
+        index:
+          title: Import from a CSV file
+        create:
+          notice: The uploaded file was successfully processed
+      errors:
+        form:
+          error:
+            one: "error prevented this text from being saved"
+            other: "errors prevented this text from being saved"
+    auto_moderated_content:
+      index:
+        title: Automatically moderated content
+        no_moderations: No comments have been automatically moderated
+        comment: Comment
+        source: Source
+        moderated_text: Moderated text
+        author: Author
+        filter: Filter
+        buttons:
+          show_again: Show again
+          confirm_moderation: Confirm moderation
+          no_buttons: This comment has been moderated already on %{date}
+        confirm:
+          show_again: Are you sure you want to show this comment again?
+          confirm_moderation: Are you sure you want to hide this comment permanently?
+        filters:
+          pending: Pending moderation
+          confirmed: Confirmed moderation
+          declined: Declined moderation
+        source_kind:
+          debate: Debate
+          proposal: Proposal
+          legislation/proposal: Process
     menu:
       activity: Moderator activity
       admin: Admin menu
@@ -721,6 +777,8 @@ en:
       dashboard: Proposals dashboard
       administrator_tasks: Resources requested
       dashboard_actions: Resources and actions
+      moderated_texts: Text for automatic moderation
+      auto_moderated_content: Automatically moderated content
     administrators:
       index:
         title: Administrators
@@ -894,6 +952,12 @@ en:
       user_invite:
         title: "User Invitation"
         description: "Sent to the person that has been invited to register an account."
+      confirmed_moderation:
+        title: "Confirmed moderation"
+        description: "Sent to an user whose moderable resource has been deemed as offensive."
+      declined_moderation:
+        title: "Declined moderation"
+        description: "Sent to an user whose moderable resource has been deemed non-offensive."
       edit_info: "You can edit this email in"
       message_title: "Message's Title"
       message_body: "This is a sample of message's content."
@@ -901,6 +965,7 @@ en:
         no_investments: "There aren't any budget investment created. Some example data is needed in order to preview the email."
         no_comments: "There aren't any comments created. Some example data is needed in order to preview the email."
         no_replies: "There aren't any replies created. Some example data is needed in order to preview the email."
+        no_moderations: "No resources have been moderated. Some examples data is needed in order to preview the email."
     emails_download:
       index:
         title: Emails download

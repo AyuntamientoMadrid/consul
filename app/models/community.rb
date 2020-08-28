@@ -27,7 +27,7 @@ class Community < ApplicationRecord
   end
 
   def comments_count
-    comments.count
+    comments.filtered.count
   end
 
   def comments

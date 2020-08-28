@@ -194,4 +194,50 @@ describe Comment do
       expect(described_class.public_for_api).not_to include(valuation_comment)
     end
   end
+
+  describe "allows_editing?" do
+    it "returns false if it has confirmed moderated contents" do
+      moderated_content = create(:moderated_content, :confirmed)
+      comment = moderated_content.moderable
+
+      expect(comment).not_to be_allows_editing
+    end
+
+    it "returns true if it has not revised moderated contents" do
+      moderated_content = create(:moderated_content)
+      comment = moderated_content.moderable
+
+      expect(comment).to be_allows_editing
+    end
+
+    it "returns false if it has not revised moderated contents" do
+      moderated_content = create(:moderated_content, :declined)
+      comment = moderated_content.moderable
+
+      expect(comment).not_to be_allows_editing
+    end
+  end
+
+  describe "confirmed_moderation?" do
+    it "returns true if it has confirmed moderated contents" do
+      moderated_content = create(:moderated_content, :confirmed)
+      comment = moderated_content.moderable
+
+      expect(comment).to be_confirmed_moderation
+    end
+
+    it "returns false if it has not revised moderated contents" do
+      moderated_content = create(:moderated_content)
+      comment = moderated_content.moderable
+
+      expect(comment).not_to be_confirmed_moderation
+    end
+
+    it "returns false if it has not revised moderated contents" do
+      moderated_content = create(:moderated_content, :declined)
+      comment = moderated_content.moderable
+
+      expect(comment).not_to be_confirmed_moderation
+    end
+  end
 end

@@ -1,0 +1,56 @@
+<h2 class="inline-block">
+  <%= t("admin.auto_moderated_content.index.title") %>
+</h2>
+
+<%= render "shared/filter_subnav", i18n_namespace: "admin.auto_moderated_content.index" %>
+
+<% if @moderated_comments.any? %>
+  <h3 class="inline-block"><%= page_entries_info @moderated_comments %></h3><br>
+  <table>
+    <thead>
+      <th><%= t("admin.auto_moderated_content.index.comment") %></th>
+      <th><%= t("admin.auto_moderated_content.index.source") %></th>
+      <th><%= t("admin.auto_moderated_content.index.moderated_text") %></th>
+      <th><%= t("admin.auto_moderated_content.index.author") %></th>
+      <th class="text-right"><%= t("admin.actions.actions") %></th>
+    </thead>
+    <tbody>
+      <% @moderated_comments.each do |comment| %>
+        <tr id="<%= dom_id(comment) %>">
+          <td><%= comment.body %></td>
+          <td><%= t("admin.auto_moderated_content.index.source_kind.#{comment.commentable_type.underscore}") %></td>
+          <td><%= comment.moderated_texts.map(&:text).join(", ") %></td>
+          <td><%= link_to comment.author.name, user_path(comment.author, filter: "comments"), target: "_blank" %></td>
+          <td class="text-right">
+            <% if show_moderation_buttons?(comment) %>
+              <%= t("admin.auto_moderated_content.index.buttons.no_buttons", date: moderated_date(comment)) %>
+            <% else %>
+              <%= link_to t("admin.auto_moderated_content.index.buttons.show_again"),
+                          admin_auto_moderated_content_show_again_path(
+                            comment,
+                            type: comment.class
+                          ),
+                          method: :put,
+                          class: "button hollow success",
+                          data: { confirm:  t("admin.auto_moderated_content.index.confirm.show_again") } %>
+
+                <%= link_to t("admin.auto_moderated_content.index.buttons.confirm_moderation"),
+                            admin_auto_moderated_content_confirm_moderation_path(
+                              comment,
+                              type: comment.class
+                            ),
+                            method: :put,
+                            class: "button",
+                            data: { confirm: t("admin.auto_moderated_content.index.confirm.confirm_moderation") } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @moderated_comments %>
+<% else %>
+  <div class="callout primary">
+    <%= t("admin.auto_moderated_content.index.no_moderations") %>
+  </div>
+<% end %>

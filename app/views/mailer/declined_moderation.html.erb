@@ -1,0 +1,27 @@
+<td style="padding-bottom: 20px; padding-left: 10px;">
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.moderable.hi") %>
+  </p>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.moderable.declined_moderation_html", moderable: t("mailers.moderable.resource.#{@moderable.class.to_s.downcase}")) %>
+  </p>
+
+  <q>
+    <%= @moderable.body %>
+  </q>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.moderable.apologies") %>
+  </p>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.moderable.thanks") %>
+  </p>
+
+  <p style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 14px;font-weight: normal;line-height: 24px;">
+    <%= t("mailers.moderable.sincerely") %><br>
+  <span style="font-family: 'Open Sans','Helvetica Neue',arial,sans-serif;font-size: 12px;font-weight: normal;line-height: 24px; color: #ccc;">
+    <%= t("mailers.moderable.signatory") %></span>
+  </p>
+</td>

@@ -520,4 +520,91 @@ describe "Commenting proposals" do
     end
   end
 
+  describe "Automated moderation" do
+    let!(:parent) { create(:comment,
+      body: "parent comment",
+      commentable: proposal,
+      user: user)
+    }
+
+    before do
+      create(:moderated_text, text: "vulgar")
+      login_as(user)
+      visit proposal_path(proposal)
+    end
+
+    scenario "Non-offensive comments are created successfully", :js do
+      fill_in "comment-body-proposal_#{proposal.id}", with: "not a comment"
+      click_button 'Publish comment'
+
+      within "#tab-comments-label" do
+        expect(page).to have_content "Comments (1)"
+      end
+
+      within "#comments" do
+        expect(page).to have_content "not a comment"
+        expect(page).not_to have_content "This comment won't be shown next time this page is reloaded as it has been deemed offensive"
+      end
+    end
+
+    scenario "Offensive comment hides after reloading", :js do
+      fill_in "comment-body-proposal_#{proposal.id}", with: "vulgar comment"
+      click_button 'Publish comment'
+
+      within "#tab-comments-label" do
+        expect(page).to have_content "Comments (1)"
+      end
+
+      within "#comments" do
+        expect(page).to have_content "vulgar comment"
+        expect(page).to have_content "This comment won't be shown next time this page is reloaded as it has been deemed offensive"
+      end
+
+      visit proposal_path(proposal)
+
+      within "#tab-comments-label" do
+        expect(page).to have_content "Comments (2)"
+      end
+
+      within "#comments" do
+        expect(page).not_to have_content "vulgar comment"
+        expect(page).not_to have_content "This comment won't be shown next time this page is reloaded as it has been deemed offensive"
+      end
+    end
+
+    scenario "Non-offensive replies are created succesfully", :js do
+      within "#comment_#{parent.id}" do
+        expect(page).to have_content(parent.body)
+        click_link "Reply"
+      end
+
+      within "#js-comment-form-comment_#{parent.id}" do
+        fill_in "comment-body-comment_#{parent.id}", with: "not a reply"
+        click_button "Publish reply"
+      end
+
+      expect(page).to have_content "not a reply"
+      expect(page).not_to have_content "This comment won't be shown next time this page is reloaded as it has been deemed offensive"
+    end
+
+    scenario "Offensive reply hides after reloading", :js do
+      within "#comment_#{parent.id}" do
+        expect(page).to have_content(parent.body)
+        click_link "Reply"
+      end
+
+      within "#js-comment-form-comment_#{parent.id}" do
+        fill_in "comment-body-comment_#{parent.id}", with: "A vulgar reply"
+        click_button "Publish reply"
+      end
+
+      expect(page).to have_content("A vulgar reply")
+      expect(page).to have_content("This comment won't be shown next time this page is reloaded as it has been deemed offensive")
+
+      visit proposal_path(proposal)
+
+      expect(page).to have_content(parent.body)
+      expect(page).not_to have_content("A vulgar reply")
+    end
+  end
 end

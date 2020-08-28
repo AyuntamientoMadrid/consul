@@ -97,4 +97,28 @@ FactoryBot.define do
     value_es "Texto en español"
     value_en "Text in english"
   end
+
+  factory :moderated_text, class: "ModeratedText" do
+    text "bad word"
+  end
+
+  factory :moderated_text_import, class: "ModeratedTexts::Import" do
+    file {
+      path = "spec/fixtures/files/moderated_texts/import/valid.csv"
+      Rack::Test::UploadedFile.new(Rails.root.join(path))
+    }
+  end
+
+  factory :moderated_content, class: "ModeratedContent" do
+    association :moderable, factory: :comment
+    association :moderated_text, factory: :moderated_text
+
+    trait :declined do
+      declined_at { Time.current }
+    end
+
+    trait :confirmed do
+      confirmed_at { Time.current }
+    end
+  end
 end

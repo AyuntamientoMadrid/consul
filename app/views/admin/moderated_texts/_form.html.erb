@@ -1,0 +1,14 @@
+<%= form_for [:admin, @word] do |f| %>
+  <%= render "errors" %>
+
+  <div class="small-12 medium-6 column">
+    <%= f.text_field :text %>
+  </div>
+
+  <div class="clear">
+    <div class="small-12 medium-4 large-2 column">
+      <%= f.submit t("admin.moderated_texts.#{admin_submit_action(@word)}.submit_button"),
+                   class: "button success expanded" %>
+    </div>
+  </div>
+<% end %>

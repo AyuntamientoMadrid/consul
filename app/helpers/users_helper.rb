@@ -71,4 +71,19 @@ module UsersHelper
     end
   end
 
+  def is_moderated?(comment)
+    comment.moderated_contents.any? &&
+    !comment.moderated_contents.map(&:declined_at).all?
+  end
+
+  def moderated_label_text(comment)
+    return t("users.show.labels.confirmed_moderation") if comment.confirmed_moderation?
+    t("users.show.labels.pending_moderated")
+  end
+
+  def moderated_label_class(comment)
+    return "alert" if comment.confirmed_moderation?
+    "warning"
+  end
+
 end

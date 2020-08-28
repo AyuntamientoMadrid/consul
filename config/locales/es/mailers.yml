@@ -68,6 +68,19 @@ es:
       hi: "Estimado/a usuario/a"
       thanks: "Gracias de nuevo por tu participación."
       sincerely: "Atentamente"
+    moderable:
+      hi: "Estimado/a usuario, "
+      confirmed_moderation_subject: "Tu %{moderable} ha sido determinado ofensivo para la comunidad."
+      declined_moderation_subject: "Tu %{moderable} ha sido determinado no ofensivo para la comunidad."
+      confirmed_moderation_html: "Tu <strong>%{moderable}</strong> ha sido determinado ofensivo para la comunidad, y no será visible públicamente."
+      declined_moderation_html: "Tu <strong>%{moderable}</strong> ha sido determinado no ofensivo para la comunidad y ya se esta mostrando"
+      sorry: "Sentimos las molestias ocasionadas y volvemos a darte las gracias por tu inestimable participación."
+      apologies: "Sentimos las molestias ocasionadas."
+      thanks: "Muchas gracias por participar."
+      sincerely: "Atentamente"
+      signatory: "Área de Participación Ciudadana, Transparencia y Gobierno Abierto del Ayuntamiento de Madrid"
+      resource:
+        comment: "comentario"
     new_actions_notification_rake_created:
       subject: "Más novedades de tu propuesta ciudadana"
       hi: "Hola %{name},"

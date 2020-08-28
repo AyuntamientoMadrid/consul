@@ -7,11 +7,11 @@
         <%= link_to "#tab-comments" do %>
           <h3>
             <%= t("community.topic.show.tab.comments_tab") %>
-            <span class="js-comments-count">(<%= @topic.comments_count %>)</span>
+            <span class="js-comments-count">(<%= @topic.comments.filtered.count %>)</span>
           </h3>
         <% end %>
       </li>
-      
+
     </ul>
 
   </div>

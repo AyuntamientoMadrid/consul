@@ -68,6 +68,19 @@ en:
       hi: "Dear user,"
       thanks: "Thank you again for participating."
       sincerely: "Sincererly"
+    moderable:
+      hi: "Dear user, "
+      confirmed_moderation_subject: "Your %{moderable} has been deemed offensive to the community."
+      declined_moderation_subject: "Your %{moderable} has been deemed not offensive to the community."
+      confirmed_moderation_html: "Your <strong>%{moderable}</strong> has been deemed offensive to the community, and won't be shown publicly."
+      declined_moderation_html: "Your <strong>%{moderable}</strong> has been deemed not offensive to the community, and will be shown publicly soon."
+      sorry: "Sorry for the inconvenience and we again thank you for your invaluable participation."
+      apologies: "We'd like to apologize for the inconvenience, and thank you for your patience."
+      thanks: "Thank you very much for participating."
+      sincerely: "Sincerely"
+      signatory: "Área de Participación Ciudadana, Transparencia y Gobierno Abierto del Ayuntamiento de Madrid"
+      resource:
+        comment: "comment"
     new_actions_notification_rake_created:
       subject: "More news about your citizen proposal"
       hi: "Hello %{name},"
