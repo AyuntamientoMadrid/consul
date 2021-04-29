@@ -1,0 +1,22 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: nokogiri
+    versions:
+    - 1.11.1
+    - 1.11.2
+  - dependency-name: ahoy_matey
+    versions:
+    - 3.1.0
+  - dependency-name: rollbar
+    versions:
+    - 3.1.1
+  - dependency-name: foundation_rails_helper
+    versions:
+    - 3.0.0
