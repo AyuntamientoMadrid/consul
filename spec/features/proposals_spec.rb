@@ -1396,18 +1396,18 @@ describe "Proposals" do
         end
 
         scenario "Search by multiple filters", :js do
-          ana  = create :user, official_level: 1
-          john = create :user, official_level: 1
+          chamberi  = create(:geozone, name: "Chamberí")
+          barajas = create(:geozone, name: "Barajas")
 
-          proposal1 = create(:proposal, title: "Get Schwifty",   author: ana,  created_at: 1.minute.ago)
-          proposal2 = create(:proposal, title: "Hello Schwifty", author: john, created_at: 2.days.ago)
+          proposal1 = create(:proposal, title: "Get Schwifty",   geozone: chamberi, created_at: 1.minute.ago)
+          proposal2 = create(:proposal, title: "Hello Schwifty", geozone: barajas, created_at: 2.days.ago)
           proposal3 = create(:proposal, title: "Save the forest")
 
           visit proposals_path
 
           click_link "Advanced search"
           fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
+          select "Chamberí", from: "Scope of operation"
           select "Last 24 hours", from: "js-advanced-search-date-min"
 
           click_button "Filter"
@@ -1420,11 +1420,12 @@ describe "Proposals" do
         end
 
         scenario "Maintain advanced search criteria", :js do
+          create(:geozone, name: "Chamberí")
           visit proposals_path
           click_link "Advanced search"
 
           fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
+          select "Chamberí", from: "advanced_search_geozone_id"
           select "Last 24 hours", from: "js-advanced-search-date-min"
 
           click_button "Filter"
@@ -1433,7 +1434,7 @@ describe "Proposals" do
 
           within "#js-advanced-search" do
             expect(page).to have_selector("input[name='search'][value='Schwifty']")
-            expect(page).to have_select("advanced_search[official_level]", selected: Setting["official_level_1_name"])
+            expect(page).to have_select("advanced_search[geozone_id]", selected: "Chamberí")
             expect(page).to have_select("advanced_search[date_min]", selected: "Last 24 hours")
           end
         end
