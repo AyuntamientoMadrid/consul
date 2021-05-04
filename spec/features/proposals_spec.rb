@@ -842,6 +842,23 @@ describe "Proposals" do
       expect(current_url).to include("page=1")
     end
 
+    scenario "Proposals are ordered by oldest", :js do
+      create(:proposal, title: "Oldest proposal", created_at: Time.current - 1.month)
+      create(:proposal, title: "Medium proposal", created_at: Time.current - 1.week)
+      create(:proposal, title: "Newest proposal", created_at: Time.current - 1.day)
+
+      visit proposals_path
+      click_link "Oldest first"
+
+      expect(page).to have_selector("a.is-active", text: "Oldest first")
+      within "#proposals" do
+        expect("Oldest proposal").to appear_before("Medium proposal")
+        expect("Medium proposal").to appear_before("Newest proposal")
+      end
+      expect(page).to have_current_path(/order=oldest/)
+      expect(page).to have_current_path(/page=1/)
+    end
+
     context "Recommendations" do
 
       let!(:best_proposal)   { create(:proposal, title: "Best",   cached_votes_up: 10, tag_list: "Sport") }
