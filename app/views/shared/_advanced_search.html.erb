@@ -48,6 +48,13 @@
         </div>
       </div>
 
+      <% if controller_name == "proposals" %>
+        <div class="small-12 large-3 column">
+          <label for="advanced_search_geozone_id"><%= t("proposals.form.geozone") %></label>
+          <%= select_tag("advanced_search[geozone_id]", advanced_search_geozone_options, include_blank: t("geozones.none")) %>
+        </div>
+      <% end %>
+
       <div class="small-12 medium-3 column end clear">
         <%= submit_tag t("shared.advanced_search.search"), class: "button expanded" %>
       </div>

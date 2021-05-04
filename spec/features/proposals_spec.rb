@@ -1440,6 +1440,34 @@ describe "Proposals" do
         end
 
       end
+
+      context "Search by geozone" do
+        scenario "Shows only proposals within selected geozone", :js do
+          create(:proposal, title: "Proposal without geozone")
+          create(:proposal, title: "Chamberí proposal", geozone: create(:geozone, name: "Chamberí"))
+          create(:proposal, title: "Retiro proposal", geozone: create(:geozone, name: "Retiro"))
+
+          visit proposals_path
+
+          within("#proposals") do
+            expect(page).to have_content("Chamberí proposal")
+            expect(page).to have_content("Proposal without geozone")
+            expect(page).to have_content("Retiro proposal")
+          end
+
+          click_link "Advanced search"
+          select "Chamberí", from: "Scope of operation"
+          click_button "Filter"
+
+          expect(page).to have_content("There is 1 citizen proposal")
+
+          within("#proposals") do
+            expect(page).to have_content("Chamberí proposal")
+            expect(page).not_to have_content("Proposal without geozone")
+            expect(page).not_to have_content("Retiro proposal")
+          end
+        end
+      end
     end
 
     scenario "Order by relevance by default", :js do

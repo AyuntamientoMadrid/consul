@@ -136,4 +136,8 @@ module ProposalsHelper
   def show_recommended_proposals?
     params[:selected].blank? && feature?("user.recommendations") && @recommended_proposals.present?
   end
+
+  def advanced_search_geozone_options
+    options_for_select(geozone_select_options, params[:advanced_search]&.dig(:geozone_id))
+  end
 end
