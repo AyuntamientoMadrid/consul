@@ -591,7 +591,7 @@ describe "Proposals" do
       click_link "No, I want to publish the proposal"
       click_link "Not now, go to my proposal"
 
-      within "#geozone" do
+      within ".geozone" do
         expect(page).to have_content "All city"
       end
     end
@@ -614,7 +614,7 @@ describe "Proposals" do
       click_link "No, I want to publish the proposal"
       click_link "Not now, go to my proposal"
 
-      within "#geozone" do
+      within ".geozone" do
         expect(page).to have_content "California"
       end
     end
@@ -1760,9 +1760,7 @@ describe "Proposals" do
       scenario "From proposal" do
         visit proposal_path(@proposal1)
 
-        within("#geozone") do
-          click_link "California"
-        end
+        click_link "California"
 
         within("#proposals") do
           expect(page).to have_css(".proposal", count: 2)
