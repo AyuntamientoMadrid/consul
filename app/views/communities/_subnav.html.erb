@@ -16,6 +16,17 @@
       <% end %>
     </li>
 
+    <% if render_district_proposals_tab?(@community) %>
+      <li class="tabs-title">
+        <%= link_to "#tab-proposals" do %>
+          <h3>
+            <%= t("community.show.tab.proposals") %>
+            <span>(<%= @proposals.total_count %>)</span>
+          </h3>
+        <% end %>
+      </li>
+    <% end %>
+
     <% if @community.proposal.present? && @community.proposal.comunity_hide == false %>
       <li class="tabs-title">
         <%= link_to "#tab-polls" do %>
@@ -32,6 +43,19 @@
     <div class="tabs-panel is-active" id="tab-participants">
       <%= render partial: "participant", collection: @participants %>
     </div>
+
+    <% if render_district_proposals_tab?(@community) %>
+      <div class="tabs-panel" id="tab-proposals">
+        <div class="proposals-list small-12 medium-9 column">
+          <% if @proposals.any? %>
+            <%= render partial: "proposals/proposal", collection: @proposals %>
+            <%= paginate @proposals, param_name: "proposals_page", params: { anchor: "tab-proposals" } %>
+          <% else %>
+            <%= t("community.show.proposals.none", district: @community.proposal.geozone.name) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 
     <% if @community.proposal.present? && @community.proposal.comunity_hide == false %>
       <div class="tabs-panel topic-show" id="tab-polls">

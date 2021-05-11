@@ -21,6 +21,7 @@ en:
         sign_up: "sign up"
       tab:
         participants: Participants
+        proposals: "District proposals"
       sidebar:
         participate: Participate
         new_topic: Create topic
@@ -33,6 +34,8 @@ en:
           zero: No comments
       author: Author
       back: Back to %{community} %{proposal}
+      proposals:
+        none: "There are no proposals in the %{district} district."
     topic:
       create: Create a topic
       edit: Edit Topic

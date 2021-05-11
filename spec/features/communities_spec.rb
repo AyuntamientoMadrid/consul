@@ -153,6 +153,76 @@ describe "Communities" do
 
       expect { visit community_path(community) }.to raise_error(ActionController::RoutingError)
     end
-  end
 
+    scenario "does not render district proposals tab for real proposals", :js do
+      geozone = create(:geozone)
+      proposal = create(:proposal, geozone: geozone)
+
+      visit community_path(proposal.community)
+
+      expect(page).not_to have_link text: "District proposals"
+    end
+
+    scenario "renders district proposals tab for proposals with comunity_hide", :js do
+      geozone = create(:geozone)
+      create(:proposal, geozone: geozone)
+      fake_proposal = create(:proposal, geozone: geozone, comunity_hide: true)
+
+      visit community_path(fake_proposal.community)
+
+      expect(page).to have_link "District proposals (1)"
+    end
+
+    context "District proposals tab", :js do
+      let(:geozone) { create(:geozone) }
+      let(:fake_proposal) { create(:proposal, comunity_hide: true, geozone: geozone) }
+
+      scenario "shows empty message when district does not have any proposals" do
+        visit community_path(fake_proposal.community)
+
+        click_link "District proposals (0)"
+
+        expect(page).to have_content "There are no proposals in the #{geozone.name} district."
+      end
+
+      scenario "shows paginated proposals when there are more than the defined per page" do
+        allow(Proposal).to receive(:default_per_page).and_return(2)
+        proposals = create_list(:proposal, 3, geozone: geozone)
+        visit community_path(fake_proposal.community)
+        click_link "District proposals (3)"
+
+        within "li.is-active" do
+          expect(page).to have_link "District proposals (3)"
+        end
+        expect(page).to have_content proposals.first.title
+        expect(page).to have_content proposals[Proposal.default_per_page - 1].title
+        expect(page).not_to have_content proposals.last.title
+        expect(page).to have_css "ul.pagination"
+
+        click_link "Next"
+
+        expect(page).to have_content proposals.last.title
+      end
+
+      scenario "shows oldest proposals first" do
+        create(:proposal, title: "Older proposal", geozone: geozone, created_at: 2.day.ago)
+        create(:proposal, title: "Newer proposal", geozone: geozone, created_at: 1.day.ago)
+
+        visit community_path(fake_proposal.community, anchor: "tab-proposals")
+
+        expect("Older proposal").to appear_before("Newer proposal")
+      end
+
+      scenario "does not show proposals with community hide" do
+        create(:proposal, title: "Older proposal", geozone: geozone)
+        create(:proposal, title: "Newer proposal", geozone: geozone, created_at: 1.day.ago)
+
+        visit community_path(fake_proposal.community, anchor: "tab-proposals")
+
+        within ".proposals-list" do
+          expect(page).not_to have_content(fake_proposal.title)
+        end
+      end
+    end
+  end
 end
