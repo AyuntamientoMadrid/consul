@@ -289,7 +289,9 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.0512)
-    mimemagic (0.3.5)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.1)
@@ -379,7 +381,7 @@ GEM
       railties (= 5.0.7.2)
       sprockets-rails (>= 2.0.0)
     rails-assets-leaflet (1.5.1)
-    rails-assets-markdown-it (8.2.2)
+    rails-assets-markdown-it (9.0.1)
     rails-controller-testing (1.0.5)
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
@@ -619,7 +621,7 @@ DEPENDENCIES
   puma (~> 3.12.1)
   rails (= 5.0.7.2)
   rails-assets-leaflet!
-  rails-assets-markdown-it (~> 8.2.1)!
+  rails-assets-markdown-it (~> 9.0.1)!
   rails-controller-testing
   recaptcha (~> 4.14)
   recipient_interceptor (~> 0.2.0)
