@@ -1240,123 +1240,12 @@ describe "Proposals" do
         end
       end
 
-      context "Search by author type" do
+      scenario "does not show filter by author category", :js do
+        visit proposals_path
 
-        scenario "Public employee", :js do
-          ana = create :user, official_level: 1
-          john = create :user, official_level: 2
+        click_link "Advanced search"
 
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "Municipal Organization", :js do
-          ana = create :user, official_level: 2
-          john = create :user, official_level: 3
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_2_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "General director", :js do
-          ana = create :user, official_level: 3
-          john = create :user, official_level: 4
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_3_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "City councillor", :js do
-          ana = create :user, official_level: 4
-          john = create :user, official_level: 5
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_4_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "Mayoress", :js do
-          ana = create :user, official_level: 5
-          john = create :user, official_level: 4
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_5_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
+        expect(page).not_to have_field("By author category")
       end
 
       context "Search by date" do

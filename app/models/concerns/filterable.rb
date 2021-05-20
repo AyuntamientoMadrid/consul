@@ -2,7 +2,6 @@ module Filterable
   extend ActiveSupport::Concern
 
   included do
-    scope :by_official_level, ->(official_level) { where(users: { official_level: official_level }).joins(:author) }
     scope :by_date_range,     ->(date_range)     { where(created_at: date_range) }
   end
 
@@ -20,7 +19,7 @@ module Filterable
 
     def allowed_filter?(filter, value)
       return if value.blank?
-      ["official_level", "date_range"].include?(filter)
+      ["date_range"].include?(filter)
     end
 
   end

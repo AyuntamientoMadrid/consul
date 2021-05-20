@@ -1,10 +1,4 @@
 module SearchHelper
-
-  def official_level_search_options
-    options_for_select((1..5).map{ |i| [setting["official_level_#{i}_name"], i] },
-                       params[:advanced_search].try(:[], :official_level))
-  end
-
   def date_range_options
     options_for_select([
       [t("shared.advanced_search.date_1"), 1],
