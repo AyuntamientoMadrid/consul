@@ -117,9 +117,8 @@ class SuresController < SuresBaseController
         disabled = []
         data = Sures::SearchSetting.find_by(title: "Distrito").data
         data_status = Sures::SearchSetting.find_by(title: "Distrito").data_status
-        
         parse_data_json(data_status).map {|k,v| disabled << k.to_s if v == false}
-        parse_data_json(data).map {|k,v| @districts = @districts.merge!({k=>v}) if disabled.include?(v.to_s) == false}
+        parse_data_json(data).map {|k,v| @districts = @districts.merge!({k.to_s == "Toda la ciudad" ? "SURES(TODOS)" : k=>v}) if disabled.include?(v.to_s) == false}
         @districts
     end
 end

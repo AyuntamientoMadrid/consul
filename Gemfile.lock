@@ -8,7 +8,6 @@ GIT
 
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     actioncable (5.0.7.2)
       actionpack (= 5.0.7.2)
@@ -618,8 +617,8 @@ DEPENDENCIES
   pg_search (~> 2.0.1)
   puma (~> 3.12.1)
   rails (= 5.0.7.2)
-  rails-assets-leaflet!
-  rails-assets-markdown-it (~> 8.2.1)!
+  rails-assets-leaflet
+  rails-assets-markdown-it (~> 8.2.1)
   rails-controller-testing
   recaptcha (~> 4.14)
   recipient_interceptor (~> 0.2.0)

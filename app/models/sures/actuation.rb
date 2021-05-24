@@ -26,17 +26,12 @@ class Sures::Actuation < ApplicationRecord
     validates :status, presence: true
     validate :valid_annos
 
-
     private
 
     def valid_annos
-        if self.check_anno 
+        if self.check_anno.to_s == "true"
             if !self.annos.match(/^\d{4}$/)
                 self.errors.add(:annos, "Se han introducido más de 4 dígitos o formato incorrecto")
-            end
-        elsif self.check_multianno
-            if !self.annos.match(/^(\d{4};)*\d{4}$/)
-                self.errors.add(:annos, "Se han introducido un formato incorrecto debe introducirse 'XXXX;XXXX' o 'XXXX'")
             end
         end
     end

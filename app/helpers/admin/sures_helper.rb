@@ -2,13 +2,25 @@ module Admin::SuresHelper
     require 'json' 
     def get_list_sures_status  
         aux = {}
-        ["study", "tramit", "process", "fhinish" ].each {|x| aux.merge!({:"#{I18n.t("admin.sures.actuations.actuation.status_#{x}")}" => x}) }
+        #["study", "tramit", "process", "fhinish" ].each {|x| aux.merge!({:"#{I18n.t("admin.sures.actuations.actuation.status_#{x}")}" => x}) }
+        disabled = []
+        data = Sures::SearchSetting.find_by(title: "Estado de ejecución de la actuación").data
+        data_status = Sures::SearchSetting.find_by(title: "Estado de ejecución de la actuación").data_status
+        
+        parse_data_json(data_status).map {|k,v| disabled << k.to_s if v == false}
+        parse_data_json(data).map {|k,v| aux = aux.merge!({k=>v}) if disabled.include?(v.to_s) == false}
         aux
     end
 
     def get_list_sures_financing   
         aux = {}
-        ["planed", "tramit", "ifs", "other" ].each {|x| aux.merge!({:"#{I18n.t("admin.sures.actuations.actuation.financing_#{x}")}" => x}) }
+        #["planed", "tramit", "ifs", "other" ].each {|x| aux.merge!({:"#{I18n.t("admin.sures.actuations.actuation.financing_#{x}")}" => x}) }
+        disabled = []
+        data = Sures::SearchSetting.find_by(title: "Estratégia").data
+        data_status = Sures::SearchSetting.find_by(title: "Estratégia").data_status
+        
+        parse_data_json(data_status).map {|k,v| disabled << k.to_s if v == false}
+        parse_data_json(data).map {|k,v| aux = aux.merge!({k=>v}) if disabled.include?(v.to_s) == false}
         aux 
     end
 

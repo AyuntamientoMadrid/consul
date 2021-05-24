@@ -65,10 +65,10 @@ gem 'paperclip-av-transcoder'
 gem "cocaine"
 gem 'jw_player_helper'
 
-source "https://rails-assets.org" do
+#source "https://rails-assets.org" do
   gem "rails-assets-leaflet"
   gem "rails-assets-markdown-it", "~> 8.2.1"
-end
+#end
 
 group :development, :test do
   gem "bullet", "~> 5.7.0"

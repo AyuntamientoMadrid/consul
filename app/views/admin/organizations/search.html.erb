@@ -1,5 +1,5 @@
 <h2><%= t("admin.organizations.search.title") %></h2>
-
+<%= render "shared/profiles_filter_subnav" %>
 <div class="small-12 medium-6">
   <%= form_for(Organization.new, url: search_admin_organizations_path, method: :get) do |f| %>
     <div class="input-group">

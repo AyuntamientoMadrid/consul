@@ -30,17 +30,20 @@
                     <%end%>
                     <% @sures_searchs_settings.each do |search|%>
                         <%if search.title != "Barrio" %>
-                        <div class="small-12 large-<%= @sures_searchs_settings.find_by(title: "Distrito", active: true).blank? ? "4" : "6"%> column end">
-                            <% if search.title != "Distrito" %><%= label_tag search.title.parameterize.underscore.to_sym, search.title %><% end %>
-                            <% if search.data_type == 'select'%>
-                                <% if search.title != "Distrito" %>
-                                    <%= select_tag search.title.parameterize.underscore.to_sym, options_for_select(parse_data_json(search.data).map {|k,v| [k,v]}, params[search.title.parameterize.underscore.to_sym]),
-                                    include_blank: "" %>
-                                <% end %>
-                            <%else%>
-                                <%= text_field_tag search.title.parameterize.underscore.to_sym, params[search.title.parameterize.underscore.to_sym] %>
-                            <%end%>
-                        </div>
+                            <div class="small-12 large-<%= @sures_searchs_settings.find_by(title: "Distrito", active: true).blank? ? "4" : "6"%> column end">
+                                <% if search.title != "Distrito" %><%= label_tag search.title.parameterize.underscore.to_sym, search.title %><% end %>
+                                <% if search.data_type == 'select'%>
+                                    <% if search.title != "Distrito" && search.title == "Estado de ejecución de la actuación"%>
+                                        <%= select_tag search.title.parameterize.underscore.to_sym, options_for_select(get_list_sures_status, params[search.title.parameterize.underscore.to_sym]),
+                                        include_blank: "" %>
+                                    <%elsif search.title == "Estratégia"%>
+                                        <%= select_tag search.title.parameterize.underscore.to_sym, options_for_select(get_list_sures_financing, params[search.title.parameterize.underscore.to_sym]),
+                                        include_blank: "" %>
+                                    <% end %>
+                                <%else%>
+                                    <%= text_field_tag search.title.parameterize.underscore.to_sym, params[search.title.parameterize.underscore.to_sym] %>
+                                <%end%>
+                            </div>
                         <%end%>
                     <%end%>
                     <%if !@sures_searchs_settings.find_by(title: "Distrito", active: true).blank? %>
