@@ -112,7 +112,7 @@ describe "Communities" do
 
       visit community_path(community)
 
-      within ".communities-participant" do
+      within ".community-tabs" do
         expect(page).to have_content "Participants (2)"
         expect(page).to have_content topic.author.name
         expect(page).to have_content proposal.author.name
@@ -127,7 +127,7 @@ describe "Communities" do
 
       visit community_path(community)
 
-      within ".communities-participant" do
+      within ".community-tabs" do
         expect(page).to have_content "Participants (3)"
         expect(page).to have_content topic.author.name
         expect(page).to have_content comment.author.name
