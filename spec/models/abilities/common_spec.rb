@@ -58,6 +58,8 @@ describe Abilities::Common do
   let(:own_budget_investment_image) { build(:image, imageable: own_investment_in_accepting_budget) }
   let(:budget_investment_image)     { build(:image, imageable: investment_in_accepting_budget) }
 
+  let(:legislation_question) { build(:legislation_question) }
+
   it { should be_able_to(:index, Debate) }
   it { should be_able_to(:show, debate)  }
   it { should be_able_to(:vote, debate)  }
@@ -95,6 +97,8 @@ describe Abilities::Common do
   it { should be_able_to(:destroy, own_budget_investment_image) }
   it { should_not be_able_to(:destroy, budget_investment_image) }
   it { should_not be_able_to(:manage, Dashboard::Action) }
+
+  it { should_not be_able_to(:vote, legislation_question) }
 
   describe "flagging content" do
     it { should be_able_to(:flag, debate)   }
@@ -198,6 +202,8 @@ describe Abilities::Common do
     it { should be_able_to(:create, investment_in_accepting_budget) }
     it { should_not be_able_to(:create, investment_in_selecting_budget) }
     it { should_not be_able_to(:create, investment_in_balloting_budget) }
+
+    it { should be_able_to(:vote, legislation_question) }
 
     describe "Direct Message" do
       it { should     be_able_to(:new,    DirectMessage)           }

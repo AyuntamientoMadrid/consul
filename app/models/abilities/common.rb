@@ -90,6 +90,7 @@ module Abilities
 
       if user.level_two_or_three_verified?
         can :vote, Legislation::Proposal
+        can :vote, Legislation::Question
         can :vote_featured, Legislation::Proposal
         can :create, Legislation::Answer
 

@@ -2,6 +2,7 @@ class Legislation::Question < ApplicationRecord
   acts_as_paranoid column: :hidden_at
   include ActsAsParanoidAliases
   include Notifiable
+  acts_as_votable
 
   translates :title, touch: true
   include Globalizable
@@ -48,5 +49,8 @@ class Legislation::Question < ApplicationRecord
   def comments_open?
     process.debate_phase.open?
   end
-  
+
+  def register_vote(user, vote_value)
+    vote_by(voter: user, vote: vote_value) if user&.can?(:vote, self)
+  end
 end

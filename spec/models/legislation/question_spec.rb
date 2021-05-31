@@ -68,4 +68,19 @@ describe Legislation::Question do
     it_behaves_like "notifiable"
   end
 
+  describe "#register_vote" do
+    it "does not create the vote when user has not level_two verification" do
+      user = create(:user)
+      question = create(:legislation_question)
+
+      expect { question.register_vote(user, true) }.not_to change { Vote.count }
+    end
+
+    it "creates the vote when user has level_two verification" do
+      user = create(:user, :level_two)
+      question = create(:legislation_question)
+
+      expect { question.register_vote(user, true) }.to change { Vote.count }
+    end
+  end
 end
