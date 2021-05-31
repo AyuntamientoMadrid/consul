@@ -9,6 +9,10 @@ en:
       processes:
         form:
           film_library: Film library
+      questions:
+        table:
+          downvotes: Clear question votes
+          upvotes: Confusing question votes
     segment_recipient:
       beta_testers: "Beta testers"
     budget_investments:

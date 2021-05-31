@@ -107,6 +107,10 @@ es:
           film_library_limit: "Límite de películas"
           film_library_limit_down: "Si no se introduce limite o se indica que es '0', no hay limite de propuestas"
           film_library_admin: "Sólo administradores"
+      questions:
+        table:
+          downvotes: "Votos pregunta confusa"
+          upvotes: "Votos pregunta clara"
     segment_recipient:
       beta_testers: "Beta testers"
     budget_investments:

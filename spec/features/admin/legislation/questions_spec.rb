@@ -40,6 +40,26 @@ describe "Admin legislation questions" do
       expect(page).to have_content("Question 1")
       expect(page).to have_content("Question 2")
     end
+
+    scenario "displays legislation process questions clarity votes", :js do
+      question1 = create(:legislation_question, process: process, title: "Question 1")
+      question2 = create(:legislation_question, process: process, title: "Question 2")
+      create(:vote, votable: question1, vote_flag: true)
+      create(:vote, votable: question2, vote_flag: false)
+
+      visit admin_legislation_process_questions_path(process)
+
+      within "tr#legislation_question_#{question1.id}" do
+        expect(page).to have_content("Question 1")
+        expect(page).to have_css(".upvotes", text: "1")
+        expect(page).to have_css(".downvotes", text: "0")
+      end
+      within "tr#legislation_question_#{question2.id}" do
+        expect(page).to have_content("Question 2")
+        expect(page).to have_css(".upvotes", text: "0")
+        expect(page).to have_css(".downvotes", text: "1")
+      end
+    end
   end
 
   context "Create" do

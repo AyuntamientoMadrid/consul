@@ -24,6 +24,8 @@
             <th><%= t("admin.legislation.questions.table.question_options") %></th>
             <th class="text-center"><%= t("admin.legislation.questions.table.answers_count") %></th>
             <th class="text-center"><%= t("admin.legislation.questions.table.comments_count") %></th>
+            <th class="text-center"><%= t("admin.legislation.questions.table.upvotes") %></th>
+            <th class="text-center"><%= t("admin.legislation.questions.table.downvotes") %></th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +56,8 @@
             </td>
             <td class="text-center"><%= count %></td>
             <td class="text-center"><%= link_to question.comments.count, legislation_process_question_path(@process, question, anchor: "comments") %></td>
+            <td class="upvotes text-center"><%= question.get_upvotes.size %></td>
+            <td class="downvotes text-center"><%= question.get_downvotes.size %></td>
           </tr>
         <% end %>
         </tbody>
