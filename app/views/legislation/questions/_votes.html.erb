@@ -1,0 +1,36 @@
+<% voted_classes = css_classes_for_vote(@legislation_question_votes, question) %>
+<div id="<%= dom_id(question)%>_votes" class="votes">
+
+  <div class="<%= "participation-allowed" if !user_signed_in? || cannot?(:vote, question) %>">
+    <%= button_to vote_legislation_process_question_path(question.process, question, value: "yes"),
+      class: "like #{voted_classes[:in_favor]}",
+      remote: true,
+      disabled: !user_signed_in? || cannot?(:vote, question) do %>
+      <span class="icon-like" aria-hidden="true"></span>
+      <span class="text"><%= t("legislation.questions.show.clear") %></span>
+    <% end %>
+
+    <%= button_to vote_legislation_process_question_path(question.process, question, value: "no"),
+      class: "unlike #{voted_classes[:against]}",
+      remote: true,
+      disabled: !user_signed_in? || cannot?(:vote, question) do %>
+      <span class="icon-unlike" aria-hidden="true"></span>
+      <span class="text"><%= t("legislation.questions.show.confusing") %></span>
+    <% end %>
+  </div>
+
+  <% if !user_signed_in? || cannot?(:vote, question) %>
+    <div class="participation-not-allowed" style="display:none" aria-hidden="false">
+      <p>
+        <% if !user_signed_in? %>
+          <%= t("votes.unauthenticated",
+            signin: link_to(t("votes.signin"), new_user_session_path),
+            signup: link_to(t("votes.signup"), new_user_registration_path)).html_safe %>
+        <% else %>
+          <%= t("legislation.questions.show.unverified",
+              verify_account: link_to(t("votes.verify_account"), verification_path )).html_safe %>
+        <% end %>
+      </p>
+    </div>
+  <% end %>
+</div>

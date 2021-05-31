@@ -70,7 +70,7 @@
     vertical-align: super;
     text-decoration: none;
 
-    .percentage {
+    .percentage, .text {
       color: $text;
       display: inline-block;
       font-size: $small-font-size;
@@ -772,6 +772,7 @@
 
 .debate,
 .debate-show,
+.debate-questions,
 .proposal-show,
 .legislation-proposals,
 .topic, 

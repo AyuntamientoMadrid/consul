@@ -52,6 +52,11 @@
     </div>
 
     <aside class="small-12 medium-3 column">
+      <div class="sidebar-divider"></div>
+      <h3><%= t("legislation.questions.show.title") %></h3>
+      <p><%= t("legislation.questions.show.question") %></p>
+      <%= render "votes", question: @question %>
+
       <div id="social-share" class="sidebar-divider"></div>
       <h3><%= t(".share") %></h3>
       <%= render "/shared/social_share", title: markdown(@question.title), url: legislation_process_question_url(@question.process, @question) %>

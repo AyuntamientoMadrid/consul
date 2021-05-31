@@ -106,5 +106,64 @@ describe "Legislation" do
 
       expect(page).not_to have_selector(:link_or_button, "Submit answer")
     end
+
+    context "question clarity", :js do
+      scenario "shows votes section on sidebar" do
+        visit legislation_process_question_path(@process, @process.questions.first)
+
+        within "aside" do
+          expect(page).to have_selector("h3", text: "HELP US TO IMPROVE!")
+          expect(page).to have_content("Does the question of this debate seem clear to you?")
+          expect(page).to have_button("Clear", disabled: true)
+          expect(page).to have_button("Confusing", disabled: true)
+        end
+      end
+
+      scenario "when the user is not logged in is not allowed to participate" do
+        visit legislation_process_question_path(@process, @process.questions.first)
+
+        within "aside" do
+          find("div.votes").hover
+          expect(page).to have_content "You must Sign in or Sign up to continue."
+          expect(page).to have_selector(".participation-allowed", visible: false)
+          expect(page).to have_selector(".participation-not-allowed", visible: true)
+        end
+      end
+
+      scenario "when the user is not level two is not allowed to participate" do
+        user = create(:user)
+        login_as(user)
+        visit legislation_process_question_path(@process, @process.questions.first)
+
+        within "aside" do
+          find("div.votes").hover
+          expect(page).to have_content("You must be a verified user to participate, verify your account.")
+          expect(page).to have_selector(".participation-allowed", visible: false)
+          expect(page).to have_selector(".participation-not-allowed", visible: true)
+        end
+      end
+
+      context "when the user has level two verification" do
+        before do
+          user = create(:user, :level_two)
+          login_as(user)
+        end
+
+        scenario "is able to vote and change the vote direction" do
+          visit legislation_process_question_path(@process, @process.questions.first)
+
+          within "aside" do
+            click_button "Clear"
+
+            expect(page).to have_css("button.voted.like")
+
+            click_button "Confusing"
+
+            expect(page).not_to have_css("button.voted.like")
+            expect(page).to have_css("button.voted.unlike")
+          end
+        end
+      end
+    end
   end
 end

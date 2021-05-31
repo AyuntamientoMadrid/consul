@@ -1,0 +1,33 @@
+.debate-questions {
+  .votes {
+    border-left: 0;
+    border-top: 0;
+    padding: 0;
+
+    > div {
+      display: flex;
+      justify-content: center;
+    }
+
+    .participation-not-allowed {
+      position: relative;
+    }
+
+    .unlike {
+      margin-left: 1.5em;
+    }
+
+    .like,
+    .unlike {
+      align-items: center;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+
+      .text {
+        line-height: $line-height;
+        padding: 0;
+      }
+    }
+  }
+}

@@ -47,6 +47,10 @@ ActsAsVotable::Vote.class_eval do
     where(votable_type: "Legislation::Proposal", votable_id: proposals)
   end
 
+  def self.for_legislation_questions(questions)
+    where(votable_type: "Legislation::Question", votable_id: questions)
+  end
+
   def self.city_wide
     joins(:votable).where("#{votable.table_name}.geozone is null")
   end

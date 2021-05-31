@@ -11,6 +11,7 @@ namespace :legislation do
     end
 
     resources :questions, only: [:show] do
+      post :vote, on: :member
       resources :answers, only: [:create]
     end
 
