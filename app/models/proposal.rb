@@ -40,6 +40,7 @@ class Proposal < ApplicationRecord
   validates :summary, presence: true
   validates :author, presence: true
   validates :responsible_name, presence: true, unless: :skip_user_verification?
+  validates :geozone, presence: true, if: :comunity_hide?
 
   validates :title, length: { in: 4..Proposal.title_max_length }
   validates :description, length: { maximum: Proposal.description_max_length }
