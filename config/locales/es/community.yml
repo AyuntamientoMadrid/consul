@@ -22,6 +22,7 @@ es:
         sign_up: "registrarte"
       tab:
         participants: Participantes
+        proposals: Propuestas del distrito
       sidebar:
         participate: Participa
         new_topic: Crea un tema
@@ -35,6 +36,8 @@ es:
           other: "%{count} Comentarios"
       author: Autor
       back: Volver a %{community} %{proposal}
+      proposals:
+        none: "No hay propuestas en el distrito %{district}"
     topic:
       create: Crear un tema
       edit: Editar tema

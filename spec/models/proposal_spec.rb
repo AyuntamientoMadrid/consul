@@ -148,6 +148,26 @@ describe Proposal do
     expect(proposal).not_to be_valid
   end
 
+  describe "#geozone" do
+    it "is not valid without an associated geozone when comunity_hide is true" do
+      proposal = build(:proposal, comunity_hide: true, geozone: nil)
+
+      expect(proposal).not_to be_valid
+    end
+
+    it "is valid when comunity_hide is true and has a gezone defined" do
+      proposal = build(:proposal, comunity_hide: true, geozone: create(:geozone))
+
+      expect(proposal).to be_valid
+    end
+
+    it "is valid when comunity_hide is false without a gezone defined" do
+      proposal = build(:proposal, comunity_hide: nil, geozone: nil)
+
+      expect(proposal).to be_valid
+    end
+  end
+
   it "has a code" do
     Setting["proposal_code_prefix"] = "TEST"
     proposal = create(:proposal)

@@ -6,10 +6,16 @@ class CommunitiesController < ApplicationController
 
   skip_authorization_check
 
+  helper_method :render_district_proposals_tab?
+
   def show
     @map_locations = @community.proposal.map_location if @community.proposal
     raise ActionController::RoutingError, "Not Found" unless communitable_exists?
     set_topic_votes(@topics)
+    if render_district_proposals_tab?(@community)
+      load_geozone_proposals
+      set_proposal_votes(@proposals)
+    end
     redirect_to root_path if Setting["feature.community"].blank?
   end
 
@@ -37,11 +43,20 @@ class CommunitiesController < ApplicationController
     @participants = @community.participants
   end
 
+  def load_geozone_proposals
+    geozone = @community.proposal.geozone
+    @proposals = geozone.proposals.without_comunity.order(:created_at).page(params[:proposals_page])
+  end
+
   def valid_order?
     params[:order].present? && TOPIC_ORDERS.include?(params[:order])
   end
 
   def communitable_exists?
     @community.proposal.present? || @community.investment.present?
+  end
+
+  def render_district_proposals_tab?(community)
+    community.proposal&.comunity_hide?
   end
 end

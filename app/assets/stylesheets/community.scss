@@ -18,13 +18,17 @@
   }
 }
 
-.communities-participant {
+.community-tabs {
 
   .comment-body {
     display: inline-block;
     float: left;
     margin-right: $line-height;
     margin-bottom: $line-height;
+  }
+
+  .proposals-list {
+    padding: 0;
   }
 }
 

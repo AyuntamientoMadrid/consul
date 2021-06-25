@@ -87,7 +87,7 @@
               <p><%= t("proposals.proposal.archived") %></p>
             </div>
           <% else %>
-            <%= render "votes",
+            <%= render "proposals/votes",
                        { proposal: proposal,
                          vote_url: vote_proposal_path(proposal, value: "yes") } %>
           <% end %>
@@ -97,4 +97,4 @@
     </div>
   </div>
 </div>
-<%end%>
+<% end %>
