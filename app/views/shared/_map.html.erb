@@ -11,7 +11,7 @@
           <% @geozones.each do |geozone| %>
             <%unless geozone.name == "Toda la ciudad"%>
               <%if params[:type].blank? %>
-                <li><%= link_to geozone.name, proposals_path(geozone: geozone.id) %></li>
+                <li><%= link_to geozone.name, proposals_path("advanced_search[geozone_id]": geozone.id) %></li>
               <% else %>
                 <li><%= link_to geozone.name, "#{legislation_process_proposals_path(process_id: params[:process_id],search: geozone.name, type: params[:type], map: true)}#filter-subnav" %></li>
               <%end%>
@@ -28,7 +28,7 @@
         <% @geozones.each do |geozone| %>
           <area shape="poly"
                 coords="<%= geozone.html_map_coordinates %>"
-                href="<%= params[:type].blank? ? proposals_path(geozone: geozone.id) : "#{legislation_process_proposals_path(process_id: params[:process_id],search: geozone.name, type: params[:type], map: true)}#filter-subnav" %>"
+                href="<%= params[:type].blank? ? proposals_path("advanced_search[geozone_id]": geozone.id) : "#{legislation_process_proposals_path(process_id: params[:process_id],search: geozone.name, type: params[:type], map: true)}#filter-subnav" %>"
                 title="<%= geozone.name %>"
                 alt="<%= geozone.name %>">
         <% end %>

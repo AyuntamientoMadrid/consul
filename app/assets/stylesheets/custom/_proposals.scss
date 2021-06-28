@@ -1,0 +1,13 @@
+.proposal {
+  ul.geozone, ul.tags {
+    display: inline-block;
+
+    li {
+      display: inline-block;
+    }
+  }
+
+  ul.geozone a {
+    font-size: 0.75rem;
+  }
+}

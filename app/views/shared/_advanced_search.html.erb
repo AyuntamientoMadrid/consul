@@ -18,12 +18,6 @@
                            placeholder: t("shared.advanced_search.general_placeholder") %>
       </div>
 
-      <div class="small-12 large-3 column">
-        <label for="advanced_search_official_level"><%= t("shared.advanced_search.author_type") %></label>
-        <%= select_tag("advanced_search[official_level]", official_level_search_options,
-                      include_blank: t("shared.advanced_search.author_type_blank")) %>
-      </div>
-
       <div class="small-12 large-9">
         <div class="small-12 large-4 column">
           <label for="js-advanced-search-date-min"><%= t("shared.advanced_search.date") %></label>
@@ -53,6 +47,13 @@
           </div>
         </div>
       </div>
+
+      <% if controller_name == "proposals" %>
+        <div class="small-12 large-3 column">
+          <label for="advanced_search_geozone_id"><%= t("proposals.form.geozone") %></label>
+          <%= select_tag("advanced_search[geozone_id]", advanced_search_geozone_options, include_blank: t("geozones.none")) %>
+        </div>
+      <% end %>
 
       <div class="small-12 medium-3 column end clear">
         <%= submit_tag t("shared.advanced_search.search"), class: "button expanded" %>

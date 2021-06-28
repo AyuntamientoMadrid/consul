@@ -667,6 +667,24 @@ describe Proposal do
         expect(results.third).to eq(oldest)
       end
 
+      it "is able to reorder by oldest after searching" do
+        recent  = create(:proposal,  title: "stop corruption", cached_votes_up: 1, created_at: 1.week.ago)
+        newest  = create(:proposal,  title: "stop corruption", cached_votes_up: 2, created_at: Time.current)
+        oldest  = create(:proposal,  title: "stop corruption", cached_votes_up: 3, created_at: 1.month.ago)
+
+        results = described_class.search("stop corruption")
+
+        expect(results.first).to eq(oldest)
+        expect(results.second).to eq(newest)
+        expect(results.third).to eq(recent)
+
+        results = results.sort_by_oldest
+
+        expect(results.first).to eq(oldest)
+        expect(results.second).to eq(recent)
+        expect(results.third).to eq(newest)
+      end
+
       it "is able to reorder by most commented after searching" do
         least_commented = create(:proposal,  title: "stop corruption",  cached_votes_up: 1, comments_count: 1)
         most_commented  = create(:proposal,  title: "stop corruption",  cached_votes_up: 2, comments_count: 100)

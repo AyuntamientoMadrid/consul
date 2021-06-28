@@ -665,7 +665,7 @@ describe "Proposals" do
       click_link "No, I want to publish the proposal"
       click_link "Not now, go to my proposal"
 
-      within "#geozone" do
+      within ".geozone" do
         expect(page).to have_content "All city"
       end
     end
@@ -688,7 +688,7 @@ describe "Proposals" do
       click_link "No, I want to publish the proposal"
       click_link "Not now, go to my proposal"
 
-      within "#geozone" do
+      within ".geozone" do
         expect(page).to have_content "California"
       end
     end
@@ -914,6 +914,23 @@ describe "Proposals" do
 
       expect(current_url).to include("order=created_at")
       expect(current_url).to include("page=1")
+    end
+
+    scenario "Proposals are ordered by oldest", :js do
+      create(:proposal, title: "Oldest proposal", created_at: Time.current - 1.month)
+      create(:proposal, title: "Medium proposal", created_at: Time.current - 1.week)
+      create(:proposal, title: "Newest proposal", created_at: Time.current - 1.day)
+
+      visit proposals_path
+      click_link "Oldest first"
+
+      expect(page).to have_selector("a.is-active", text: "Oldest first")
+      within "#proposals" do
+        expect("Oldest proposal").to appear_before("Medium proposal")
+        expect("Medium proposal").to appear_before("Newest proposal")
+      end
+      expect(page).to have_current_path(/order=oldest/)
+      expect(page).to have_current_path(/page=1/)
     end
 
     context "Recommendations" do
@@ -1314,123 +1331,12 @@ describe "Proposals" do
         end
       end
 
-      context "Search by author type" do
+      scenario "does not show filter by author category", :js do
+        visit proposals_path
 
-        scenario "Public employee", :js do
-          ana = create :user, official_level: 1
-          john = create :user, official_level: 2
+        click_link "Advanced search"
 
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "Municipal Organization", :js do
-          ana = create :user, official_level: 2
-          john = create :user, official_level: 3
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_2_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "General director", :js do
-          ana = create :user, official_level: 3
-          john = create :user, official_level: 4
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_3_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "City councillor", :js do
-          ana = create :user, official_level: 4
-          john = create :user, official_level: 5
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_4_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
-        scenario "Mayoress", :js do
-          ana = create :user, official_level: 5
-          john = create :user, official_level: 4
-
-          proposal1 = create(:proposal, author: ana)
-          proposal2 = create(:proposal, author: ana)
-          proposal3 = create(:proposal, author: john)
-
-          visit proposals_path
-
-          click_link "Advanced search"
-          select Setting["official_level_5_name"], from: "advanced_search_official_level"
-          click_button "Filter"
-
-          expect(page).to have_content("There are 2 citizen proposals")
-
-          within("#proposals") do
-            expect(page).to have_content(proposal1.title)
-            expect(page).to have_content(proposal2.title)
-            expect(page).not_to have_content(proposal3.title)
-          end
-        end
-
+        expect(page).not_to have_field("By author category")
       end
 
       context "Search by date" do
@@ -1564,18 +1470,18 @@ describe "Proposals" do
         end
 
         scenario "Search by multiple filters", :js do
-          ana  = create :user, official_level: 1
-          john = create :user, official_level: 1
+          chamberi  = create(:geozone, name: "Chamberí")
+          barajas = create(:geozone, name: "Barajas")
 
-          proposal1 = create(:proposal, title: "Get Schwifty",   author: ana,  created_at: 1.minute.ago)
-          proposal2 = create(:proposal, title: "Hello Schwifty", author: john, created_at: 2.days.ago)
+          proposal1 = create(:proposal, title: "Get Schwifty",   geozone: chamberi, created_at: 1.minute.ago)
+          proposal2 = create(:proposal, title: "Hello Schwifty", geozone: barajas, created_at: 2.days.ago)
           proposal3 = create(:proposal, title: "Save the forest")
 
           visit proposals_path
 
           click_link "Advanced search"
           fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
+          select "Chamberí", from: "Scope of operation"
           select "Last 24 hours", from: "js-advanced-search-date-min"
 
           click_button "Filter"
@@ -1588,11 +1494,12 @@ describe "Proposals" do
         end
 
         scenario "Maintain advanced search criteria", :js do
+          create(:geozone, name: "Chamberí")
           visit proposals_path
           click_link "Advanced search"
 
           fill_in "Write the text", with: "Schwifty"
-          select Setting["official_level_1_name"], from: "advanced_search_official_level"
+          select "Chamberí", from: "advanced_search_geozone_id"
           select "Last 24 hours", from: "js-advanced-search-date-min"
 
           click_button "Filter"
@@ -1601,7 +1508,7 @@ describe "Proposals" do
 
           within "#js-advanced-search" do
             expect(page).to have_selector("input[name='search'][value='Schwifty']")
-            expect(page).to have_select("advanced_search[official_level]", selected: Setting["official_level_1_name"])
+            expect(page).to have_select("advanced_search[geozone_id]", selected: "Chamberí")
             expect(page).to have_select("advanced_search[date_min]", selected: "Last 24 hours")
           end
         end
@@ -1624,6 +1531,34 @@ describe "Proposals" do
           end
         end
 
+      end
+
+      context "Search by geozone" do
+        scenario "Shows only proposals within selected geozone", :js do
+          create(:proposal, title: "Proposal without geozone")
+          create(:proposal, title: "Chamberí proposal", geozone: create(:geozone, name: "Chamberí"))
+          create(:proposal, title: "Retiro proposal", geozone: create(:geozone, name: "Retiro"))
+
+          visit proposals_path
+
+          within("#proposals") do
+            expect(page).to have_content("Chamberí proposal")
+            expect(page).to have_content("Proposal without geozone")
+            expect(page).to have_content("Retiro proposal")
+          end
+
+          click_link "Advanced search"
+          select "Chamberí", from: "Scope of operation"
+          click_button "Filter"
+
+          expect(page).to have_content("There is 1 citizen proposal")
+
+          within("#proposals") do
+            expect(page).to have_content("Chamberí proposal")
+            expect(page).not_to have_content("Proposal without geozone")
+            expect(page).not_to have_content("Retiro proposal")
+          end
+        end
       end
     end
 
@@ -1899,9 +1834,7 @@ describe "Proposals" do
       scenario "From proposal" do
         visit proposal_path(@proposal1)
 
-        within("#geozone") do
-          click_link "California"
-        end
+        click_link "California"
 
         within("#proposals") do
           expect(page).to have_css(".proposal", count: 2)

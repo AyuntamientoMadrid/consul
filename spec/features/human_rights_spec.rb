@@ -82,31 +82,6 @@ describe "Human Rights" do
         end
       end
 
-      scenario "Search by official position", :js do
-        ana  = create :user, official_level: 2
-        john = create :user, official_level: 3
-
-        proposal1 = create(:proposal, :human_rights, author: ana)
-        proposal2 = create(:proposal, :human_rights, author: ana)
-        proposal3 = create(:proposal, :human_rights, author: john)
-        proposal4 = create(:proposal, author: ana)
-
-        visit human_rights_proposals_path
-
-        click_link "Advanced search"
-        select Setting["official_level_2_name"], from: "advanced_search_official_level"
-        click_button "Filter"
-
-        expect(page).to have_content("There are 2 citizen proposals")
-
-        within("#proposals") do
-          expect(page).to have_content(proposal1.title)
-          expect(page).to have_content(proposal2.title)
-          expect(page).not_to have_content(proposal3.title)
-          expect(page).not_to have_content(proposal4.title)
-        end
-      end
-
       scenario "Order by random by default" do
         per_page = Kaminari.config.default_per_page
         (per_page + 2).times { create(:proposal, :human_rights) }

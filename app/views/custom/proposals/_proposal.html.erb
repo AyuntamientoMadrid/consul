@@ -64,7 +64,8 @@
               <p><%= proposal.summary %></p>
               <div class="truncate"></div>
             </div>
-            <%= render "shared/tags", taggable: proposal, limit: 5 %>
+            <%= render "shared/geozone", geozonable: proposal %>
+            <%= render "shared/tags", taggable: proposal, limit: 4 %>
           <% end %>
         </div>
       </div>

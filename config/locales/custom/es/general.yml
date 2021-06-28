@@ -60,6 +60,8 @@ es:
         help_text_2: "Para crear una propuesta hay que registrarse en %{org}. Las propuestas que consigan el apoyo del 1% de la gente (personas mayores de 16 años empadronadas en Madrid; %{supports} apoyos) en la web, pasan a votación. Para apoyar propuestas es necesario tener una cuenta verificada."
         help_text_3: "El Ayuntamiento de Madrid convoca una votación ciudadana cuando las propuestas consiguen los apoyos necesarios. Una vez celebrada, si hay más gente a favor que en contra, el Consistorio asume la propuesta y la lleva a cabo."
         help_text_4: 'En febrero de 2017 tuvo lugar la primera votación ciudadana en la que se aprobaron las propuestas "Madrid 100% sostenible" y "Billete único para el transporte público".'
+      orders:
+        oldest: Más antiguas
     form:
       sub_proceeding: "Derecho"
       proposal_type: Tipo de propuesta
