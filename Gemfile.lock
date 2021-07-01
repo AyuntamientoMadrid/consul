@@ -412,8 +412,7 @@ GEM
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
     rinku (2.0.6)
-    rollbar (2.18.2)
-      multi_json
+    rollbar (3.1.2)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -625,7 +624,7 @@ DEPENDENCIES
   redcarpet (~> 3.4.0)
   responders (~> 2.4.0)
   rinku (~> 2.0.2)
-  rollbar (~> 2.18.0)
+  rollbar (~> 3.1.2)
   rspec-rails (~> 3.8)
   rubocop (~> 0.54.0)
   rubocop-rspec (~> 1.26.0)
