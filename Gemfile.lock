@@ -350,7 +350,7 @@ GEM
       activerecord (>= 4.0, < 6.1)
     parser (2.7.1.4)
       ast (~> 2.4.1)
-    pg (0.21.0)
+    pg (1.2.3)
     pg_search (2.0.1)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
@@ -613,7 +613,7 @@ DEPENDENCIES
   paperclip-av-transcoder
   paperclip-ffmpeg
   paranoia (~> 2.4.1)
-  pg (~> 0.21.0)
+  pg (~> 1.2.3)
   pg_search (~> 2.0.1)
   puma (~> 3.12.1)
   rails (= 5.0.7.2)
