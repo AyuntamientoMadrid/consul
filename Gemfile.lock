@@ -404,7 +404,7 @@ GEM
       json
     recipient_interceptor (0.2.0)
       mail
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     referer-parser (0.3.0)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -622,7 +622,7 @@ DEPENDENCIES
   rails-controller-testing
   recaptcha (~> 4.14)
   recipient_interceptor (~> 0.2.0)
-  redcarpet (~> 3.4.0)
+  redcarpet (~> 3.5.1)
   responders (~> 2.4.0)
   rinku (~> 2.0.2)
   rollbar (~> 2.18.0)
