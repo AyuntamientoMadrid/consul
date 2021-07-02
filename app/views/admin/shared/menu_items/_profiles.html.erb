@@ -1,4 +1,4 @@
-<li <%= "class=is-active" if controller_name == "users"%>>
+<li <%= "class=is-active" if menu_profiles? %>>
     <%= link_to admin_users_path do %>
     <span class="icon-organizations"></span>
     <strong><%= t("admin.menu.title_profiles") %></strong>

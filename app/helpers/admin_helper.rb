@@ -95,7 +95,7 @@ module AdminHelper
   end
 
   def menu_parbudget?   
-    controller.class.parent.to_s == "Admin::Parbudget"
+    controller.class.parent.to_s == "Admin::Parbudget" && !["editors", "readers"].include?(controller_name)
   end
 
   def menu_parbudget_maintence?
@@ -107,7 +107,7 @@ module AdminHelper
   end
 
   def menu_complan?   
-    controller.class.parent.to_s == "Admin::Complan"
+    controller.class.parent.to_s == "Admin::Complan" && !["editors", "readers"].include?(controller_name)
   end
 
   def menu_complan_maintence?
