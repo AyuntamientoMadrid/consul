@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210624085951) do
+ActiveRecord::Schema.define(version: 20210701122127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,17 @@ ActiveRecord::Schema.define(version: 20210624085951) do
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_answers_on_author_id", using: :btree
     t.index ["context"], name: "index_answers_on_context", using: :btree
+  end
+
+  create_table "audits", force: :cascade do |t|
+    t.string   "action"
+    t.integer  "user_id"
+    t.string   "resource"
+    t.string   "description"
+    t.string   "audit_type"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_audits_on_user_id", using: :btree
   end
 
   create_table "banner_sections", force: :cascade do |t|
@@ -2043,7 +2054,7 @@ ActiveRecord::Schema.define(version: 20210624085951) do
     t.datetime "updated_at",                           null: false
     t.string   "borought"
     t.string   "other"
-    t.jsonb    "geozones"
+    t.jsonb    "geozones",             default: "{}",  null: false
     t.string   "project"
     t.index ["geozones"], name: "index_sures_actuations_on_geozones", using: :gin
   end
@@ -2216,7 +2227,7 @@ ActiveRecord::Schema.define(version: 20210624085951) do
     t.date     "access_key_generated_at"
     t.integer  "access_key_tried",                           default: 0
     t.date     "date_hide"
-    t.string   "name"
+    t.string   "first_name"
     t.string   "last_name"
     t.string   "last_name_alt"
     t.integer  "adress_id"
@@ -2388,6 +2399,7 @@ ActiveRecord::Schema.define(version: 20210624085951) do
   add_foreign_key "actuations_multi_years", "sures_actuations", column: "sures_actuations_id"
   add_foreign_key "administrators", "users"
   add_foreign_key "adresses", "users", column: "users_id"
+  add_foreign_key "audits", "users"
   add_foreign_key "budget_investments", "communities"
   add_foreign_key "complan_activities", "complan_performances"
   add_foreign_key "complan_ambits", "complan_performances"

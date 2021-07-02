@@ -1,0 +1,2 @@
+module Parbudget::AuditsHelper
+end

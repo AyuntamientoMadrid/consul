@@ -1,0 +1,2 @@
+module Complan::AuditsHelper
+end

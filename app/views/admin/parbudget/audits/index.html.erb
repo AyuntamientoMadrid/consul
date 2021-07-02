@@ -1,0 +1,7 @@
+<% if params[:filter].blank? || params[:filter].to_s == 'all' %> 
+    <%= t("admin.menu.audits") %>
+  <%else%>
+    <%= t("admin.menu.resource_audits", resource: "#{t("admin.menu.parbudget_tabs.#{params[:filter].to_s}")}") %>
+  <% end %>
+
+<%= render "admin/shared/audits/index", audits: @audits %>

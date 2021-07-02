@@ -47,6 +47,7 @@ namespace :admin do
     resources :readers, only: [:index, :new, :create, :destroy] do
       get :search, on: :collection
     end
+    resources :audits
 
   end
 
@@ -73,6 +74,7 @@ namespace :admin do
     resources :readers, only: [:index, :new, :create, :destroy] do
       get :search, on: :collection
     end
+    resources :audits
   end
 
   resources :hidden_users, only: [:index, :show] do

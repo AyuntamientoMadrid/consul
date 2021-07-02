@@ -144,6 +144,7 @@ module Abilities
       can :manage, Complan::Typology
       can :manage, Complan::ThecnicalTable
 
+      can :manage, Audit
     end
   end
 end

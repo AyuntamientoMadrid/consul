@@ -1,0 +1,39 @@
+<div class="small-12 column">
+  <% if audits.any? %>
+    <h3><%= page_entries_info audits %></h3>
+
+    <table class="stack sortable">
+      <thead>
+        <th scope="col" class="text-center"><%= t("admin.complan.audit.action") %></th>
+        <th scope="col"><%= t("admin.complan.audit.autor") %></th>
+        <th scope="col"><%= t("admin.complan.audit.date") %></th>
+        <th scope="col" class="small-3"><%= t("admin.complan.audit.resource") %></th>
+        <th scope="col" class="small-3"><%= t("admin.complan.audit.description") %></th>
+      </thead>
+      <tbody>
+        <% audits.each do |audit| %>
+            <tr id="<%= dom_id(audit) %>">
+              <td class="text-center">
+                <%= audit.try(:action)%>
+              </td>
+              <td>
+                <%= User.find_by(id:audit.try(:user_id)).try(:username) %>
+              </td>
+              <td>
+                <%= audit.try(:created_at).strftime("%d-%m-%Y") %>
+              </td>
+              <td>
+                <%= audit.try(:resource) %>
+              </td>
+              <td>
+                <%= audit.try(:description) %>
+              </td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate audits %>
+  <% else %>
+    <div class="callout primary"><%= page_entries_info audits %></div>
+  <% end %>
+</div>

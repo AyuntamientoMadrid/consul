@@ -88,6 +88,9 @@ es:
       complan/thecnical_table:
         one: "Mesa técnica"
         other: "Mesas técnicas"
+      complan/audit:
+        one: "Auditoría"
+        other: "Auditorías"
       parbudget/ambit:
         one: "Ámbito"
         other: "Ámbitos"
@@ -106,6 +109,9 @@ es:
       parbudget/topic:
         one: "Tema"
         other: "Temas"
+      parbudget/audit:
+        one: "Auditoría"
+        other: "Auditorías"
       event_agend:
         one: "Evento de agenda"
         other: "Eventos de agenda"

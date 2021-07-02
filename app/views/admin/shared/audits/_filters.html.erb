@@ -1,0 +1,27 @@
+<%=form_tag({controller: "audits", action: "index"}, {method: :get}) do %>
+    <div class="small-12 column">
+        <fieldset style="border: 1px solid grey;margin: 1em 0;padding: 1em;">
+            <legend><%=t("admin.menu.complan_tabs.legend_filter")%></legend>
+            <div class="small-12 medium-3 column">
+                <%=label_tag :operation, t('admin.complan.audit.operation')%>
+                <%= text_field_tag :operation, params[:operation] %>
+            </div>                
+            <div class="small-12 medium-3 column end">
+                <%=label_tag :autor, t('admin.complan.audit.autor')%>
+                <%= text_field_tag :autor, params[:autor] %>
+            </div> 
+                <div class="small-12 medium-3 column end">
+                <%=label_tag :date_from, t('admin.complan.audit.date_from')%>
+                <%= date_field_tag :date_from, params[:date_from] %>
+            </div>
+            <div class="small-12 medium-3 column end">
+                <%=label_tag :date_to, t('admin.complan.audit.date_to')%>
+                <%= date_field_tag :date_to, params[:date_to] %>
+            </div>
+            <div class="float-right clear">
+                <%= link_to t("admin.menu.complan_tabs.button_clean"), admin_complan_audits_path, class: "button secondary" %>
+                <%= submit_tag t("admin.menu.complan_tabs.button_find"), class: "button" %>
+            </div>
+        </fieldset>
+    </div>
+<% end%>
