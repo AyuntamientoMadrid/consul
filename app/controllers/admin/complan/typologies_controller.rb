@@ -1,4 +1,5 @@
 class Admin::Complan::TypologiesController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv
   before_action :load_resource, only: [:update_typology,:destroy]
   load_and_authorize_resource :typology, class: "Complan::Typology"
@@ -12,6 +13,7 @@ class Admin::Complan::TypologiesController < Admin::Complan::BaseController
   def create_typology
     @typology=  @model.new
     if @typology.save(validate: false)
+      audit_create(@typology)
       redirect_to admin_complan_typologies_path,  notice: I18n.t("admin.complan.typology.create_success")
     else
       flash[:error] = I18n.t("admin.complan.typology.create_error")
@@ -24,6 +26,7 @@ class Admin::Complan::TypologiesController < Admin::Complan::BaseController
 
   def update_typology
     if @typology.update(typology_strong_params)
+      audit_update(@typology)
       redirect_to admin_complan_typologies_path,  notice: I18n.t("admin.complan.typology.update_success")
     else
       flash[:error] = I18n.t("admin.complan.typology.update_error")
@@ -35,7 +38,9 @@ class Admin::Complan::TypologiesController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @typology.id
     if @typology.destroy
+      audit_delete("typology", id, "parbudget")
       redirect_to admin_complan_typologies_path,  notice: I18n.t("admin.complan.typology.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.typology.destroy_error")

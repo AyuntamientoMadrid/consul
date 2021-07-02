@@ -1,4 +1,5 @@
 class Admin::Parbudget::TopicsController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv
   before_action :load_resource, only: [:update_topic,:destroy]
   before_action :authenticate_editor, only: [:index, :generate_topic, :destroy, :update_topic]
@@ -12,6 +13,7 @@ class Admin::Parbudget::TopicsController < Admin::Parbudget::BaseController
   def generate_topic
     topic=  @model.new
     if topic.save(validate: false)
+      audit_create(topic)
       redirect_to admin_parbudget_topics_path,  notice: I18n.t("admin.parbudget.topic.create_success")
     else
       flash[:error] =I18n.t("admin.parbudget.topic.create_error")
@@ -24,6 +26,7 @@ class Admin::Parbudget::TopicsController < Admin::Parbudget::BaseController
 
   def update_topic
     if @topic.update(topic_strong_params)
+      audit_update(@topic)
       redirect_to admin_parbudget_topics_path,  notice: I18n.t("admin.parbudget.topic.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.topic.update_error")
@@ -35,7 +38,9 @@ class Admin::Parbudget::TopicsController < Admin::Parbudget::BaseController
   end
 
   def destroy
+    id = @topic.id
     if @topic.destroy
+      audit_delete("topic", id, "parbudget")
       redirect_to admin_parbudget_topics_path,  notice: I18n.t("admin.parbudget.topic.destroy_success")
     else
       flash[:error] = I18n.t("admin.parbudget.topic.destroy_error")

@@ -102,12 +102,20 @@ module AdminHelper
     ["ambits", "topics", "centers", "projects", "responsibles", "meetings"].include?(controller_name) && controller.class.parent.to_s == "Admin::Parbudget"
   end
 
+  def menu_parbudget_audits?
+    ["audits"].include?(controller_name) && controller.class.parent.to_s == "Admin::Parbudget"
+  end
+
   def menu_complan?   
     controller.class.parent.to_s == "Admin::Complan"
   end
 
   def menu_complan_maintence?
     ["projects", "performances", "centers", "strategies", "typologies", "thecnical_tables"].include?(controller_name) && controller.class.parent.to_s == "Admin::Complan"
+  end
+
+  def menu_complan_audits?
+    ["audits"].include?(controller_name) && controller.class.parent.to_s == "Admin::Complan"
   end
 
   def moderated_texts_section?

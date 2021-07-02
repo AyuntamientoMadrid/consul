@@ -1,4 +1,5 @@
 class Admin::Complan::ProjectsController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :load_resource, only: [:update_project,:destroy]
@@ -14,6 +15,7 @@ class Admin::Complan::ProjectsController < Admin::Complan::BaseController
   def create_project
     @project=  @model.new
     if @project.save(validate: false)
+      audit_create(@project)
       redirect_to admin_complan_projects_path,  notice: I18n.t("admin.complan.project.create_success")
     else
       flash[:error] = I18n.t("admin.complan.project.create_error")
@@ -26,6 +28,7 @@ class Admin::Complan::ProjectsController < Admin::Complan::BaseController
 
   def update_project
     if @project.update(project_strong_params)
+      audit_update(@project)
       redirect_to admin_complan_projects_path,  notice: I18n.t("admin.complan.project.update_success")
     else
       flash[:error] = I18n.t("admin.complan.project.update_error")
@@ -37,7 +40,9 @@ class Admin::Complan::ProjectsController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @project.id
     if @project.destroy
+      audit_delete("project", id, "parbudget")
       redirect_to admin_complan_projects_path,  notice: I18n.t("admin.complan.project.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.project.destroy_error")

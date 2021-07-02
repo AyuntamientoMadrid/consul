@@ -1,4 +1,5 @@
 class Admin::Complan::PerformancesController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -18,6 +19,7 @@ class Admin::Complan::PerformancesController < Admin::Complan::BaseController
   def create
     @performance=  @model.new(performance_strong_params)
     if @performance.save
+      audit_create(@performance)
       redirect_to admin_complan_performances_path,  notice: I18n.t("admin.complan.performance.create_success")
     else
       flash[:error] = I18n.t("admin.complan.performance.create_error")
@@ -30,6 +32,7 @@ class Admin::Complan::PerformancesController < Admin::Complan::BaseController
 
   def update
     if @performance.update(performance_strong_params)
+      audit_update(@performance)
       redirect_to admin_complan_performances_path,  notice: I18n.t("admin.complan.performance.update_success")
     else
       flash[:error] = I18n.t("admin.complan.performance.update_error")
@@ -41,7 +44,9 @@ class Admin::Complan::PerformancesController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @performance.id
     if @performance.destroy
+      audit_delete("performance", id, "parbudget")
       redirect_to admin_complan_performances_path,  notice: I18n.t("admin.complan.performance.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.performance.destroy_error")

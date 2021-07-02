@@ -1,4 +1,5 @@
 class Admin::Parbudget::ProjectsController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :load_center
@@ -18,6 +19,7 @@ class Admin::Parbudget::ProjectsController < Admin::Parbudget::BaseController
   def create
     @project=  @model.new(project_strong_params)
     if @project.save
+      audit_create(@project)
       redirect_to admin_parbudget_projects_path,  notice: I18n.t("admin.parbudget.project.create_success")
     else
       flash[:error] = I18n.t("admin.parbudget.project.create_error")
@@ -38,6 +40,7 @@ class Admin::Parbudget::ProjectsController < Admin::Parbudget::BaseController
         @project.parbudget_centers = []
         @project.save
       end
+      audit_update(@project)
       redirect_to admin_parbudget_projects_path,  notice: I18n.t("admin.parbudget.project.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.project.update_error")
@@ -49,6 +52,7 @@ class Admin::Parbudget::ProjectsController < Admin::Parbudget::BaseController
   end
 
   def destroy
+    id = @project.id
     @project.parbudget_centers.each do |center|
       center.parbudget_project_id = nil
       center.save(validate: false)
@@ -56,6 +60,7 @@ class Admin::Parbudget::ProjectsController < Admin::Parbudget::BaseController
     @project.parbudget_centers = []
     @project.save
     if @project.destroy
+      audit_delete("project", id, "parbudget")
       redirect_to admin_parbudget_projects_path,  notice: I18n.t("admin.parbudget.project.destroy_success")
     else
       flash[:error] = I18n.t("admin.parbudget.project.destroy_error")

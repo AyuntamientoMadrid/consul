@@ -1,4 +1,5 @@
 class Admin::Parbudget::CentersController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -18,6 +19,7 @@ class Admin::Parbudget::CentersController < Admin::Parbudget::BaseController
   def create
     @center=  @model.new(center_strong_params)
     if @center.save
+      audit_create(@center)
       redirect_to admin_parbudget_centers_path,  notice: I18n.t("admin.parbudget.center.create_success")
     else
       flash[:error] = I18n.t("admin.parbudget.center.create_error")
@@ -30,6 +32,7 @@ class Admin::Parbudget::CentersController < Admin::Parbudget::BaseController
 
   def update
     if @center.update(center_strong_params)
+      audit_update(@center)
       redirect_to admin_parbudget_centers_path,  notice: I18n.t("admin.parbudget.center.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.center.update_error")
@@ -41,7 +44,9 @@ class Admin::Parbudget::CentersController < Admin::Parbudget::BaseController
   end
 
   def destroy
+    id = @center.id
     if @center.destroy
+      audit_delete("center", id, "parbudget")
       redirect_to admin_parbudget_centers_path,  notice: I18n.t("admin.parbudget.center.destroy_success")
     else
       flash[:error] = I18n.t("admin.parbudget.center.destroy_error")

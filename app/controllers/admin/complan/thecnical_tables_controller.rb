@@ -1,4 +1,5 @@
 class Admin::Complan::ThecnicalTablesController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -18,6 +19,7 @@ class Admin::Complan::ThecnicalTablesController < Admin::Complan::BaseController
   def create
     @thecnical_table=  @model.new(thecnical_table_strong_params)
     if @thecnical_table.save
+      audit_create(@thecnical_table)
       redirect_to admin_complan_thecnical_tables_path,  notice: I18n.t("admin.complan.thecnical_table.create_success")
     else
       flash[:error] = I18n.t("admin.complan.thecnical_table.create_error")
@@ -30,6 +32,7 @@ class Admin::Complan::ThecnicalTablesController < Admin::Complan::BaseController
 
   def update
     if @thecnical_table.update(thecnical_table_strong_params)
+      audit_update(@thecnical_table)
       redirect_to admin_complan_thecnical_tables_path,  notice: I18n.t("admin.complan.thecnical_table.update_success")
     else
       flash[:error] = I18n.t("admin.complan.thecnical_table.update_error")
@@ -41,7 +44,9 @@ class Admin::Complan::ThecnicalTablesController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @technical_table.id
     if @thecnical_table.destroy
+      audit_delete("thecnical_table", id, "parbudget")
       redirect_to admin_complan_thecnical_tables_path,  notice: I18n.t("admin.complan.thecnical_table.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.thecnical_table.destroy_error")

@@ -10,7 +10,7 @@
     <li <%= "class=is-active" if  menu_parbudget_maintence? %>>
         <%= link_to t("admin.menu.parbudget_maintance"), admin_parbudget_ambits_path %>
     </li>
-    <li <%= "class=is-active" if controller_name == "parbudget" %>>
+    <li <%= "class=is-active" if menu_parbudget_audits? %>>
         <%= link_to t("admin.menu.parbudget_audits"), admin_parbudget_audits_path  %>
     </li>
     </ul>

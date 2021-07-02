@@ -1,4 +1,5 @@
 class Admin::Complan::StrategiesController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_resource, only: [:update_strategy,:destroy]
 
@@ -13,6 +14,7 @@ class Admin::Complan::StrategiesController < Admin::Complan::BaseController
   def create_strategy
     @strategy=  @model.new
     if @strategy.save(validate: false)
+      audit_create(@strategy)
       redirect_to admin_complan_strategies_path,  notice: I18n.t("admin.complan.strategy.create_success")
     else
       flash[:error] = I18n.t("admin.complan.strategy.create_error")
@@ -25,6 +27,7 @@ class Admin::Complan::StrategiesController < Admin::Complan::BaseController
 
   def update_strategy
     if @strategy.update(strategy_strong_params)
+      audit_update(@strategy)
       redirect_to admin_complan_strategies_path,  notice: I18n.t("admin.complan.strategy.update_success")
     else
       flash[:error] = I18n.t("admin.complan.strategy.update_error")
@@ -36,7 +39,9 @@ class Admin::Complan::StrategiesController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @strategy.id
     if @strategy.destroy
+      audit_delete("strategy", id, "parbudget")
       redirect_to admin_complan_strategies_path,  notice: I18n.t("admin.complan.strategy.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.strategy.destroy_error")

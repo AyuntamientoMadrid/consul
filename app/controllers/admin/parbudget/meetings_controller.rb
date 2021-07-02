@@ -1,4 +1,5 @@
 class Admin::Parbudget::MeetingsController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -17,6 +18,7 @@ class Admin::Parbudget::MeetingsController < Admin::Parbudget::BaseController
   def create
     @meeting=  @model.new(meeting_strong_params)
     if @meeting.save
+      audit_create(@meeting)
       redirect_to admin_parbudget_meetings_path,  notice: I18n.t("admin.parbudget.meeting.create_success")
     else
       flash[:error] = I18n.t("admin.parbudget.meeting.create_error")
@@ -29,6 +31,7 @@ class Admin::Parbudget::MeetingsController < Admin::Parbudget::BaseController
 
   def update
     if @meeting.update(meeting_strong_params)
+      audit_update(@meeting)
       redirect_to admin_parbudget_meetings_path,  notice: I18n.t("admin.parbudget.meeting.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.meeting.update_error")
@@ -40,7 +43,9 @@ class Admin::Parbudget::MeetingsController < Admin::Parbudget::BaseController
   end
 
   def destroy
+    id = @meeting.id
     if @meeting.destroy
+      audit_delete("meeting", id, "parbudget")
       redirect_to admin_parbudget_meetings_path,  notice: I18n.t("admin.parbudget.meeting.destroy_success")
     else
       flash[:error] = I18n.t("admin.parbudget.meeting.destroy_error")

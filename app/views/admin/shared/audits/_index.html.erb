@@ -1,4 +1,4 @@
-<%= render "shared/filter_subnav", i18n_namespace: "admin.complan.audit" %>
+<%= render "shared/filter_subnav", i18n_namespace: "admin.#{controller.to_s.include?("complan") ? "complan" : "parbudget"}.audit" %>
 
 <%= render "admin/shared/audits/export"%>
 

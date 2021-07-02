@@ -17,10 +17,10 @@ class Admin::Complan::AuditsController < Admin::Complan::BaseController
 
         begin
             if !parametrize[:filter].blank? && parametrize[:filter].to_s != 'all'
-              @audits = @audits.where(resource: parametrize[:filter].to_s)
+                @audits = @audits.where(resource: parametrize[:filter].to_s)
             end
-          rescue
-          end
+        rescue
+        end
 
         begin
             if !parametrize[:operation].blank?

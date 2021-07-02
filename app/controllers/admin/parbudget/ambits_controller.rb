@@ -1,4 +1,5 @@
 class Admin::Parbudget::AmbitsController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv
   before_action :load_resource, only: [:update_ambit,:destroy]
   before_action :authenticate_editor, only: [:create_ambit, :destroy, :update_ambit]
@@ -13,6 +14,7 @@ class Admin::Parbudget::AmbitsController < Admin::Parbudget::BaseController
   def create_ambit
     ambit=  @model.new
     if ambit.save(validate: false)
+      audit_create(ambit)
       redirect_to admin_parbudget_ambits_path,  notice: I18n.t("admin.parbudget.ambit.create_success")
     else
       flash[:error] = I18n.t("admin.parbudget.ambit.create_error")
@@ -25,6 +27,7 @@ class Admin::Parbudget::AmbitsController < Admin::Parbudget::BaseController
 
   def update_ambit
     if @ambit.update(ambit_strong_params)
+      audit_update(@ambit)
       redirect_to admin_parbudget_ambits_path,  notice: I18n.t("admin.parbudget.ambit.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.ambit.update_error")
@@ -36,7 +39,9 @@ class Admin::Parbudget::AmbitsController < Admin::Parbudget::BaseController
   end
 
   def destroy
+    id = @ambit.id
     if @ambit.destroy
+      audit_delete("ambit", id, "parbudget")
       redirect_to admin_parbudget_ambits_path,  notice: I18n.t("admin.parbudget.ambit.destroy_success")
     else
       flash[:error] =  I18n.t("admin.parbudget.ambit.destroy_error")

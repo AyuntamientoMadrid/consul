@@ -23,7 +23,7 @@
                 <%= audit.try(:created_at).strftime("%d-%m-%Y") %>
               </td>
               <td>
-                <%= audit.try(:resource) %>
+                <%= t("admin.menu.audit_tabs.#{audit.try(:resource)}") %>
               </td>
               <td>
                 <%= audit.try(:description) %>

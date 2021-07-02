@@ -1,4 +1,5 @@
 class Admin::Complan::FinancingsController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -18,6 +19,7 @@ class Admin::Complan::FinancingsController < Admin::Complan::BaseController
   def create
     @financing=  @model.new(financing_strong_params)
     if @financing.save
+      audit_create(@financing)
       redirect_to admin_complan_financings_path,  notice: I18n.t("admin.complan.financing.create_success")
     else
       flash[:error] = I18n.t("admin.complan.financing.create_error")
@@ -30,6 +32,7 @@ class Admin::Complan::FinancingsController < Admin::Complan::BaseController
 
   def update
     if @financing.update(financing_strong_params)
+      audit_update(@financing)
       redirect_to admin_complan_financings_path,  notice: I18n.t("admin.complan.financing.update_success")
     else
       flash[:error] = I18n.t("admin.complan.financing.update_error")
@@ -41,7 +44,9 @@ class Admin::Complan::FinancingsController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @financing.id
     if @financing.destroy
+      audit_delete("financing", id, "parbudget")
       redirect_to admin_complan_financings_path,  notice: I18n.t("admin.complan.financing.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.financing.destroy_error")

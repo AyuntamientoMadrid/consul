@@ -1,6 +1,7 @@
 class Admin::Complan::CentersController < Admin::Complan::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
-  before_action :load_data, only: [:index]
+  before_action :load_resource
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
 
   def index
@@ -18,6 +19,7 @@ class Admin::Complan::CentersController < Admin::Complan::BaseController
   def create
     @center=  @model.new(center_strong_params)
     if @center.save
+      audit_create(@center)
       redirect_to admin_complan_centers_path,  notice: I18n.t("admin.complan.center.create_success")
     else
       flash[:error] = I18n.t("admin.complan.center.create_error")
@@ -30,6 +32,7 @@ class Admin::Complan::CentersController < Admin::Complan::BaseController
 
   def update
     if @center.update(center_strong_params)
+      audit_update(@center)
       redirect_to admin_complan_centers_path,  notice: I18n.t("admin.complan.center.update_success")
     else
       flash[:error] = I18n.t("admin.complan.center.update_error")
@@ -41,7 +44,9 @@ class Admin::Complan::CentersController < Admin::Complan::BaseController
   end
 
   def destroy
+    id = @center.id
     if @center.destroy
+      audit_delete("center", id, "parbudget")
       redirect_to admin_complan_centers_path,  notice: I18n.t("admin.complan.center.destroy_success")
     else
       flash[:error] = I18n.t("admin.complan.center.destroy_error")

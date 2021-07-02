@@ -1,4 +1,5 @@
 class Admin::Parbudget::ResponsiblesController < Admin::Parbudget::BaseController
+  include Admin::AuditHelper
   respond_to :html, :js, :csv, :pdf
   before_action :load_data, only: [:new,:create,:edit,:update,:index]
   before_action :authenticate_editor, only: [:new, :create, :edit, :update, :destroy]
@@ -17,6 +18,7 @@ class Admin::Parbudget::ResponsiblesController < Admin::Parbudget::BaseControlle
   def create
     @responsible=  @model.new(responsible_strong_params)
     if @responsible.save
+      audit_create(@responsible)
       redirect_to admin_parbudget_responsibles_path,  notice: I18n.t("admin.parbudget.responsible.create_success")
     else
       flash[:error] = I18n.t("admin.parbudget.responsible.create_error")
@@ -29,6 +31,7 @@ class Admin::Parbudget::ResponsiblesController < Admin::Parbudget::BaseControlle
 
   def update
     if @responsible.update(responsible_strong_params)
+      audit_update(@responsible)
       redirect_to admin_parbudget_responsibles_path,  notice: I18n.t("admin.parbudget.responsible.update_success")
     else
       flash[:error] = I18n.t("admin.parbudget.responsible.update_error")
@@ -40,7 +43,9 @@ class Admin::Parbudget::ResponsiblesController < Admin::Parbudget::BaseControlle
   end
 
   def destroy
+    id = @responsible.id
     if @responsible.destroy
+      audit_delete("responsible", id, "parbudget")
       redirect_to admin_parbudget_responsibles_path,  notice: I18n.t("admin.parbudget.responsible.destroy_success")
     else
       flash[:error] = I18n.t("admin.parbudget.responsible.destroy_error")

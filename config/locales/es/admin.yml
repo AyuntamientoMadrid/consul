@@ -1026,22 +1026,22 @@ es:
         update_topic: "Actualizar tema"
         title_delete: Borrar tema
       audit:
-          operation: Acción
-          action: Acción
-          autor: Autor
-          date_from: Fecha desde
-          date_to: Fecha hasta
-          date: Fecha
-          resource: Recurso
-          description: Descripción
-          filters:
-            all: Todos
-            ambits: Ámbitos
-            centers: Centros gestores
-            projects: Proyectos
-            responsibles: Responsables
-            meetings: Reuniones
-            topics: Temas
+        operation: Acción
+        action: Acción
+        autor: Autor
+        date_from: Fecha desde
+        date_to: Fecha hasta
+        date: Fecha
+        resource: Recurso
+        description: Descripción
+        filters:
+          all: Todos
+          ambits: Ámbitos
+          centers: Centros gestores
+          projects: Proyectos
+          responsibles: Responsables
+          meetings: Reuniones
+          topics: Temas
     sures:
       actuations:
         create:
@@ -1172,6 +1172,36 @@ es:
       complan_tracking: "Seguimientos"
       audits: "Auditorías"
       resource_audits: "Auditorías del recurso '%{resource}'"
+      audits_desc:
+        create: "Creación del %{resource}: %{id}"
+        update: "Actualización del %{resource}: %{id}"
+        delete: "Eliminación del %{resource}: %{id}"
+      audit_tabs:
+        performances: Actuaciones
+        centers: Centros
+        projects: Proyectos
+        strategies: Estrategias
+        financings: Financiaciones
+        typologies: Tipologías
+        thecnical_tables: Mesas técnicas
+        ambits: Ámbitos
+        manage_centers: Centros gestores
+        responsibles: Responsables
+        meetings: Reuniones
+        topics: Temas
+      audit_tabs_sing:
+        performance: Actuación
+        center: Centro
+        project: Proyecto
+        strategie: Estrategia
+        financing: Financiación
+        typology: Tipología
+        thecnical_table: Mesa técnica
+        ambit: Ámbito
+        manage_center: Centro gestor
+        responsible: Responsable
+        meeting: Reunión
+        topic: Tema
       complan_tabs:
         performances: Actuaciones
         new_performances: "Nueva actuación"
