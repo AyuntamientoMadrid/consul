@@ -438,7 +438,33 @@ describe "Debates" do
     expect(Flag.flagged?(user, debate)).not_to be
   end
 
-  describe "Debate index order filters" do
+  scenario 'Flagging a debate updates the DOM properly', :js do
+    user   = create(:user)
+    debate = create(:debate)
+
+    login_as(user)
+    visit debate_path(debate)
+
+    within "#debate_#{debate.id}" do
+      find("#flag-expand-debate-#{debate.id}").click
+      find("#flag-debate-#{debate.id}").click
+
+      expect(page).to have_css("#unflag-expand-debate-#{debate.id}")
+    end
+
+    expect(Flag.flagged?(user, debate)).to be
+
+    within "#debate_#{debate.id}" do
+      find("#unflag-expand-debate-#{debate.id}").click
+      find("#unflag-debate-#{debate.id}").click
+
+      expect(page).to have_css("#flag-expand-debate-#{debate.id}")
+    end
+
+    expect(Flag.flagged?(user, debate)).not_to be
+  end
+
+  feature 'Debate index order filters' do
 
     scenario "Default order is hot_score", :js do
       best_debate = create(:debate, title: "Best")
