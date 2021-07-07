@@ -24,6 +24,13 @@ class Admin::SignatureSheetsController < Admin::BaseController
     @voted_signatures = Vote.where(signature: @signature_sheet.signatures.verified).count
   end
 
+  def revalidate
+    @signature_sheet = SignatureSheet.find(params[:id])
+    @signature_sheet.delay.verify_signatures
+
+    redirect_to [:admin, @signature_sheet], notice: I18n.t('flash.actions.revalidate.signature_sheet')
+  end
+
   private
 
     def signature_sheet_params
